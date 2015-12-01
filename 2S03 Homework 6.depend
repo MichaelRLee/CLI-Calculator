@@ -1,0 +1,40 @@
+# depslib dependency file v1.0
+1448651115 source:c:\users\victor\documents\school\university\mcmaster\year 2\term 1\comp sci 2s03\assignments\6\2s03 homework 6\add.cpp
+	"Add.h"
+
+1448649622 c:\users\victor\documents\school\university\mcmaster\year 2\term 1\comp sci 2s03\assignments\6\2s03 homework 6\add.h
+	"ArithmeticExpression.h"
+
+1448935425 c:\users\victor\documents\school\university\mcmaster\year 2\term 1\comp sci 2s03\assignments\6\2s03 homework 6\arithmeticexpression.h
+	"Expression.h"
+
+1448935494 c:\users\victor\documents\school\university\mcmaster\year 2\term 1\comp sci 2s03\assignments\6\2s03 homework 6\expression.h
+	<string>
+
+1448935890 source:c:\users\victor\documents\school\university\mcmaster\year 2\term 1\comp sci 2s03\assignments\6\2s03 homework 6\arithmeticexpression.cpp
+	"ArithmeticExpression.h"
+
+1448935903 source:c:\users\victor\documents\school\university\mcmaster\year 2\term 1\comp sci 2s03\assignments\6\2s03 homework 6\divide.cpp
+	"Divide.h"
+
+1448650452 c:\users\victor\documents\school\university\mcmaster\year 2\term 1\comp sci 2s03\assignments\6\2s03 homework 6\divide.h
+	"ArithmeticExpression.h"
+
+1448590365 source:c:\users\victor\documents\school\university\mcmaster\year 2\term 1\comp sci 2s03\assignments\6\2s03 homework 6\expression.cpp
+	"Expression.h"
+
+1448935548 source:c:\users\victor\documents\school\university\mcmaster\year 2\term 1\comp sci 2s03\assignments\6\2s03 homework 6\hwk6_carriva.cpp
+	<iostream>
+
+1448935913 source:c:\users\victor\documents\school\university\mcmaster\year 2\term 1\comp sci 2s03\assignments\6\2s03 homework 6\multiply.cpp
+	"Multiply.h"
+
+1448650306 c:\users\victor\documents\school\university\mcmaster\year 2\term 1\comp sci 2s03\assignments\6\2s03 homework 6\multiply.h
+	"ArithmeticExpression.h"
+
+1448935926 source:c:\users\victor\documents\school\university\mcmaster\year 2\term 1\comp sci 2s03\assignments\6\2s03 homework 6\subtract.cpp
+	"Subtract.h"
+
+1448649761 c:\users\victor\documents\school\university\mcmaster\year 2\term 1\comp sci 2s03\assignments\6\2s03 homework 6\subtract.h
+	"ArithmeticExpression.h"
+
