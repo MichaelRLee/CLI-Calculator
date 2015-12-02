@@ -2,7 +2,9 @@
 #define ARITHMETICEXPRESSION_H
 
 #include "Expression.h"
+#include <string> // string
 
+using namespace std;
 
 class ArithmeticExpression : public Expression
 {
@@ -27,22 +29,22 @@ class ArithmeticExpression : public Expression
         /** Access left
          * \return The current value of left
          */
-        Expression Getleft() { return left; }
+        Expression* Getleft() { return left; }
 
         /** Set left
          * \param val New value to set
          */
-        void Setleft(Expression val) { left = val; }
+        void Setleft(Expression* val) { left = val; }
 
         /** Access right
          * \return The current value of right
          */
-        Expression Getright() { return right; }
+        Expression* Getright() { return right; }
 
         /** Set right
          * \param val New value to set
          */
-        void Setright(Expression val) { right = val; }
+        void Setright(Expression* val) { right = val; }
 
         /** \brief Evaluates left and right expression and combines them with the appropriate operator.
          * \return A string representation of the result.

@@ -8,21 +8,21 @@ class Addition : public ArithmeticExpression
 {
     public:
         /** Default constructor */
-        Add();
+        Addition();
 
         /** Default destructor */
-        virtual ~Add();
+        virtual ~Addition();
 
         /** Copy constructor
          *  \param other Object to copy from
          */
-        Add(const Add& other);
+        Addition(const Addition& other);
 
         /** Assignment operator
          *  \param other Object to assign from
          *  \return A reference to this
          */
-        Add& operator=(const Add& other);
+        Addition& operator=(const Addition& other);
 
         /** \brief Evaluates the expression.
          * \return A string representing the result of the evaluation of the expression.
