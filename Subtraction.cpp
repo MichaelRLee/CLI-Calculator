@@ -32,7 +32,7 @@ string Subtraction::evaluate()
 
 /** \brief Prints the expression.
 */
-void print()
+void Subtraction::print()
 {
     int i = 1; // Dummy code
 }
