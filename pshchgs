@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Saves me some typing
+git push origin Victor-Mods-1_Creating-Classes-and-Headers # Remember to change the branch name when you change branches!
