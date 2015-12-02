@@ -21,3 +21,7 @@ Expression& Expression::operator=(const Expression& rhs)
     //assignment operator
     return *this;
 }
+
+
+virtual string Expression::evaluate(); // Evaluates the expression and returns a string representation of the result.
+virtual void Expression::print(); // Prints the expression

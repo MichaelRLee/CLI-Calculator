@@ -1,14 +1,15 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
 
-
 class Expression
 {
     public:
         /** Default constructor */
         Expression();
+
         /** Default destructor */
         virtual ~Expression();
+
         /** Copy constructor
          *  \param other Object to copy from
          */
