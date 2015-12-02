@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# Saves me some typing
-
-read -p "Enter the commit description: " commsg # Prompt me for a commit description
-read -p "Enter the names of the files to be committed, separated by spaces (wildcards are supported): " comfiles # Prompt for the files to be commmitted
-git commit -m "$commsg" $comfiles # Commit the files with the given message
