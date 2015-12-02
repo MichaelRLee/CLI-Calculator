@@ -61,8 +61,8 @@ class ArithmeticExpression : public Expression
         float convert(string s);
     protected:
     private:
-        Expression left; //!< Member variable "left"
-        Expression right; //!< Member variable "right"
+        Expression *left; //!< Member variable "left"
+        Expression *right; //!< Member variable "right"
 };
 
 #endif // ARITHMETICEXPRESSION_H

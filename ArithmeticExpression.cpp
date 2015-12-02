@@ -32,7 +32,7 @@ string ArithmeticExpression::evaluate()
 
 /** \brief Prints the evaluated expression.
 */
-void print()
+void ArithmeticExpression::print()
 {
     int i = 1; // Dummy code
 }
@@ -41,7 +41,7 @@ void print()
 * \param s The string representing the value to convert to a floating-point number.
 * \return A floating-point representation of the string.
 */
-float convert(string s)
+float ArithmeticExpression::convert(string s)
 {
     return 1.0; // Dummy code
 }
