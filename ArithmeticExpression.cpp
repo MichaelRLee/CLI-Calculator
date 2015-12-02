@@ -21,3 +21,27 @@ ArithmeticExpression& ArithmeticExpression::operator=(const ArithmeticExpression
     //assignment operator
     return *this;
 }
+
+/** \brief Evaluates left and right expression and combines them with the appropriate operator.
+* \return A string representation of the result.
+*/
+string ArithmeticExpression::evaluate()
+{
+    return ""; // Dummy code
+}
+
+/** \brief Prints the evaluated expression.
+*/
+void print()
+{
+    int i = 1; // Dummy code
+}
+
+/** \brief Converts a string (as returned by evaluate) to a float.
+* \param s The string representing the value to convert to a floating-point number.
+* \return A floating-point representation of the string.
+*/
+float convert(string s)
+{
+    return 1.0; // Dummy code
+}
