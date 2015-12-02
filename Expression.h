@@ -7,8 +7,10 @@ class Expression
     public:
         /** Default constructor */
         Expression();
+
         /** Default destructor */
         virtual ~Expression();
+
         /** Copy constructor
          *  \param other Object to copy from
          */
