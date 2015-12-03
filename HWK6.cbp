@@ -38,6 +38,8 @@
 		<Unit filename="ArithmeticExpression.h" />
 		<Unit filename="Expression.cpp" />
 		<Unit filename="Expression.h" />
+		<Unit filename="Multiplication.cpp" />
+		<Unit filename="Multiplication.h" />
 		<Unit filename="Subtraction.cpp" />
 		<Unit filename="Subtraction.h" />
 		<Unit filename="main.cpp" />
