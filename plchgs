@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Save some typing
+git pull
