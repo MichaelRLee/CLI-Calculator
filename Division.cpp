@@ -25,14 +25,14 @@ Division& Division::operator=(const Division& rhs)
 /** \brief Evaluates the expression.
 * \return A string describing the result of the evaluation of the expression.
 */
-string evaluate()
+string Division::evaluate()
 {
     return ""; // Dummy code
 }
 
 /** \brief Prints the expression.
 */
-void print()
+void Division::print()
 {
     int i = 10; // Dummy code
 }
