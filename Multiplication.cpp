@@ -17,22 +17,16 @@ Multiplication::Multiplication(const Multiplication& other)
 
 Multiplication& Multiplication::operator=(const Multiplication& rhs)
 {
-    if (this == &rhs) return *this; // handle self assignment
-    //assignment operator
+    if (this == &rhs) return *this;
     return *this;
 }
 
-/** \brief Evaluates the expression.
-* \return A string representation of the result of the evaluation of this expression.
-*/
 string Multiplication::evaluate()
 {
-    return ""; // Dummy code
+    return *lhs.evaluate() + "*" + *rhs.evaluate();
 }
 
-/** \brief Prints left '*' right.
-*/
 void Multiplication::print()
 {
-    int i = 0; // Dummy code
+    cout << this.evaluate();
 }
