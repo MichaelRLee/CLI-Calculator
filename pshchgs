@@ -9,7 +9,7 @@ then
 	git push origin "$CURBRANCH" # Push to it
 
 else # Error
-	echo Usage: `basenme $0` \[branchName\]
+	echo Usage: `basename "$0"` \[branchName\]
 	echo You may also define the environment variable CURBRANCH in Git Bash as follows: \"export CURBRANCH=branchName\"
 	echo An argument takes precedence over the environment variable
 fi
