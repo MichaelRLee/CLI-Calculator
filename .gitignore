@@ -42,8 +42,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# My scripts
-addfls 
-comchgs
-pshchgs
-status
+# Code::Blocks files
+HWK6.cbp
+HWK6.layout

@@ -27,12 +27,16 @@ Addition& Addition::operator=(const Addition& rhs)
 */
 string Addition::evaluate()
 {
-    return ""; // Dummy code
+    /**
+    *   Since the left and right halves are themselves Expressions, we need to evaluate them before
+    *   combining them with an addition sign.
+    **/
+    return *left.evaluate() + "+" + *right.evaluate();
 }
 
 /** \brief Prints the expression.
 */
 void Addition::print()
 {
-    int i = 1; // Dummy
+    cout << this.evaluate(); // Print the evaluated expression
 }
