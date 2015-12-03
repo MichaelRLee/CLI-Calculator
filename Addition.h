@@ -2,7 +2,8 @@
 #define ADDITION_H
 
 #include "ArithmeticExpression.h"
-
+#include <iostream> // cout
+using namespace std;
 
 class Addition : public ArithmeticExpression
 {

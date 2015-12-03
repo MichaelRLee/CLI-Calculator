@@ -31,12 +31,12 @@ string Addition::evaluate()
     *   Since the left and right halves are themselves Expressions, we need to evaluate them before
     *   combining them with an addition sign.
     **/
-    return *left.evaluate() + "+" + *right.evaluate();
+    return left->evaluate() + "+" + right->evaluate();
 }
 
 /** \brief Prints the expression.
 */
 void Addition::print()
 {
-    cout << this.evaluate(); // Print the evaluated expression
+    cout << this->evaluate(); // Print the evaluated expression
 }
