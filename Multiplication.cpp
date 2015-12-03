@@ -23,10 +23,10 @@ Multiplication& Multiplication::operator=(const Multiplication& rhs)
 
 string Multiplication::evaluate()
 {
-    return *lhs.evaluate() + "*" + *rhs.evaluate();
+    return left->evaluate() + "*" + right->evaluate();
 }
 
 void Multiplication::print()
 {
-    cout << this.evaluate();
+    cout << this->evaluate();
 }
