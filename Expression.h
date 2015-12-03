@@ -2,6 +2,7 @@
 #define EXPRESSION_H
 
 #include <string> // string
+#include <iostream> //cout
 
 using namespace std;
 

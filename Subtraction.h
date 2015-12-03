@@ -3,7 +3,6 @@
 
 #include "ArithmeticExpression.h"
 
-
 class Subtraction : public ArithmeticExpression
 {
     public:

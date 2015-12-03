@@ -27,12 +27,12 @@ Subtraction& Subtraction::operator=(const Subtraction& rhs)
 */
 string Subtraction::evaluate()
 {
-    return *left.evaluate() + "-" + *right.evalute(); //evalute right and left expression before the subtraction occurs
+    return left->evaluate() + "-" + right->evaluate(); //evalute right and left expression before the subtraction occurs
 }
 
 /** \brief Prints the expression.
 */
 void Subtraction::print()
 {
-    cout << this.evalute(); //prints evaluated expression 
+    cout << this->evaluate(); //prints evaluated expression
 }

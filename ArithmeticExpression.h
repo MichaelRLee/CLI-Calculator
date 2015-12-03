@@ -2,9 +2,6 @@
 #define ARITHMETICEXPRESSION_H
 
 #include "Expression.h"
-#include <string> // string
-
-using namespace std;
 
 class ArithmeticExpression : public Expression
 {
@@ -62,9 +59,9 @@ class ArithmeticExpression : public Expression
          */
         float convert(string s);
     protected:
-    private:
         Expression *left; //!< Member variable "left"
         Expression *right; //!< Member variable "right"
+    private:
 };
 
 #endif // ARITHMETICEXPRESSION_H
