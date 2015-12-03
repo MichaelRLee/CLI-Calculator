@@ -21,3 +21,11 @@ Expression& Expression::operator=(const Expression& rhs)
     //assignment operator
     return *this;
 }
+
+string Expression::evaluate()
+{
+}
+
+void Expression::print()
+{
+}
