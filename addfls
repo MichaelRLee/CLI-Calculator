@@ -1,9 +1,0 @@
-#!/bin/bash
-
-if [ "$#" -gt 0 ] # Have file arguments
-then # Add them
-	git add "$@" # Add them
-
-else # Improper number of arguments
-	echo Usage: `basename "$0"` file{1,2,3,...,n}
-fi
