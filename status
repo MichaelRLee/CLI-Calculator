@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Saves me some typing
+git status
