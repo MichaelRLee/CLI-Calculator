@@ -10,6 +10,7 @@ int main()
 {
     bool reading = true; // Controls input loop
     char input[256]; // The user input
+    ArithmeticExpression ae = new ArithmeticExpression(); // Create the top-level expression
 
     while (reading) // Read until user quits
     {
@@ -41,18 +42,32 @@ int main()
     }
 }
 
-/** \brief Checks if a string is an expression.=
- * \param toCheck - A string which contains the expression to validate.
- * \return True if the string represents a valid expression, false if it doesn't.
+/** \brief Parses a string into an ArithmeticExpression.
+ *
+ * \param expr The expression to parse.
+ * \param startIndex The current index in the expression
+ * \param recursionLevel The recursion level at which this function is.
+ * \return The arithmetic expression.
+ *
  */
-bool validate(string toCheck)
+ArithmeticExpression buildExpression(string expr, int startIndex, int recursionLevel)
 {
-    int i = 0; // Current position in the string
+    ArithmeticExpression curExp; // The expression which will be returned by this function.
+    int i = startIndex; // Current index in the string
 
-    while (i < toCheck.length()) // Loop through the whole string in a controlled manner
+    for (i; i < expr.length; i++) // Loop through the string
     {
-        switch (toCheck[i]) // Perform different actions depending on the state of the machine and the current character
+        switch (expr[i]) // Check what character this is
         {
+            case '(': // Left bracket
+            {
+                // A left bracket is valid if the character before it was an operator
+                // Therefore, it is invalid if the character before it is a number.
+                if (isOperator(expr[i]))
+                {
+
+                }
+            }
         }
     }
 }
