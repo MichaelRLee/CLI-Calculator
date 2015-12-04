@@ -27,12 +27,12 @@ Division& Division::operator=(const Division& rhs)
 */
 string Division::evaluate()
 {
-    return ""; // Dummy code
+    return left->evaluate() + "/" + right->evaluate(); // Dummy code
 }
 
 /** \brief Prints the expression.
 */
 void Division::print()
 {
-    int i = 10; // Dummy code
+    cout<<this->evaluate(); // Dummy code
 }
