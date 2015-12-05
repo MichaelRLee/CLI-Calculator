@@ -1,26 +1,44 @@
-#include <iostream> // cout, cin
-#include <string.h> // strcmp
+/* C++ includes */
 
+// Standard C++ headers
+#include <iostream> // cout, cin
+#include <limits> // numeric_limits
+
+// My header files
+#include "Expression.h" // Expression class
+#include "ArithmeticExpression.h" // ArithmeticExpression class
+#include "Addition.h" // Addition class
+#include "Subtraction.h" // Subtraction class
+#include "Multiplication.h" // Multiplication class
+#include "Division.h" // Division class
+#include "Number.h" // Number class
+
+// Namespaces
 using namespace std;
 
-enum
-{
+/* C includes */
 
-};
+// Standard C headers
+#include <cstring> // strcmp
 
 /* Forward declarations */
-bool validate(string toCheck); // Declare the prototype so that it can be used in main
+string nextToken(string toParse, int* startPos); // Tokenizer function
 
 int main()
 {
     bool reading = true; // Controls input loop
     char input[256]; // The user input
-    ArithmeticExpression ae = new ArithmeticExpression(); // Create the top-level expression
+    //ArithmeticExpression ae = new ArithmeticExpression(); // Create the top-level expression
+    string curToken; // The current token in the expression
+    int curSPos = 0; // Current position in the string
+    int oldSPos = 0; // Old position in string
+    string sInput; // String which represents the input
 
     while (reading) // Read until user quits
     {
         cout << "Please enter an expression: "; // Print the prompt for the user
         cin.getline(input, 256); // Get a line from the user
+        sInput.assign(input); // Convert the C string to a string
 
         if (!strcmp(input, "#")) // Check for the input which terminates the program (#)
         {
@@ -32,51 +50,72 @@ int main()
         **/
         else
         {
-            /* Only proceed if the input is valid */
+            /* DEBUGGING */
+            curToken = nextToken(sInput, &curSPos); // Priming read - get the first token
 
-            if (validate(input)) // The expression is valid
+            while (curToken != "" && curToken != "INVALID") // We can only loop while we haven't reached the end of the string and we haven't encountered an invalid token
             {
-                cout << "Your expression is valid!" << endl; // Test code
+                cout << "main: Token at position " << oldSPos << " = \"" << curToken << "\"" << endl; // Print the token
+                oldSPos = curSPos; // Store old position in string for next loop
+                cout << "main: After assignment, oldSpos = " << oldSPos << endl;
+                curToken = nextToken(sInput, &curSPos); // Get the next token
+                cout << endl << endl;
             }
 
-            else // The expression is invalid
-            {
-                cout << "Error: your expression is invalid!" << endl; // Test code
-            }
+            // Reset string position variables
+            oldSPos = curSPos = 0;
+            cin.clear(); // Clear error flags on cin
+            cin.ignore(numeric_limits<streamsize>::max()); // Ignore any remaining characters in cin
         }
     }
 }
 
-/** \brief Parses a string into an ArithmeticExpression.
+/** \brief Gets the next token from the given arithmetic expression.
  *
- * \param expr The expression to parse.
- * \param startIndex The current index in the expression
- * \param recursionLevel The recursion level at which this function is.
- * \param mode The current BEDMAS mode { 0 = Brackets, 1 = D/M, 2 = A/S }
- * \return The arithmetic expression.
- *
- *  ALGORITHM
- *  ---------
- *  1) Handle brackets by recursing every time you see a '('. (B of BEDMAS)
- *      a) After reading '(', while we haven't read a ')':
- *          i) Read characters until you see a ')'. Check for invalid characters (Work this out later).
- *  2) Handle multiplication and division by recursing and parsing the string generated in 1a). Use a similar algorithm to 1a). (D & M of BEDMAS)
- *  3) Handle addition and subtraction by recursing and parsing the string generated in 2a). Use a similar algorithm to 1a). (A & S o BEDMAS)
- */
-ArithmeticExpression buildExpression(string expr, int startIndex, int recursionLevel, int mode)
-{
-    ArithmeticExpression x;
-    return x;
-}
-
-/** \brief Determines whether a given character is an operator.
- *
- * \param toCheck The character to check
- * \return True if the character is an operator, false otherwise.
+ * \param toParse The string containing the arithmetic expression to parse
+ * \param startPos A pointer to an integer, describing the position in the string at which to beging parsing.
+ * \return The token.
  *
  */
-
-bool isOperator(char toCheck)
+string nextToken(string toParse, int* startPos)
 {
-    return toCheck == '+' || toCheck == '-' || toCheck == '*' || toCheck == '/'; // The character is an operator if one of these conditions is true
+    int sPos = *startPos; // Store the starting position internally, so as not to change it
+    string tokStr; // The string containing the token - will be returned to the caller
+
+    cout << "nextToken: sPos = " << sPos << " at start" << endl;
+
+    /* Simple case */
+    if (toParse[sPos] == '+' || toParse[sPos] == '-' || toParse[sPos] == '*' || toParse[sPos] == '/' || toParse[sPos] == '(' || toParse[sPos] == ')') // Operator or bracket
+    {
+        tokStr += toParse[sPos]; // Add the operator to the string to return
+        (*startPos)++; // Increment the number which represents the starting position in the string for the next call of this function
+        sPos++; // Increment position
+        return tokStr; // Return the token
+    }
+
+    else if (isdigit(toParse[sPos])) // Number
+    {
+        while (isdigit(toParse[sPos])) // Read characters until we don't see any more digits
+        {
+            cout << "nextToken: toParse[" << sPos << "] = '" << toParse[sPos] << "'" << endl;
+            tokStr += toParse[sPos]; // Append the digit to the token string
+            cout << "nextToken: tokStr = \"" << tokStr << "\" after appending" << endl;
+            (*startPos)++; // Increment the starting position for the next loop
+            cout << "nextToken: startPos = " << *startPos << " after increment" << endl;
+            sPos++; // Increment our counter
+            cout << "nextToken: sPos = " << sPos << " after increment" << endl;
+        }
+    }
+
+    else if (sPos == toParse.length()) // We have reached the end of the string
+    {
+        tokStr = ""; // Signal the end of the string
+    }
+
+    else // Invalid token
+    {
+        tokStr = "INVALID"; // Indicate that the string is invalid
+    }
+
+    return tokStr; // Return the token
 }
