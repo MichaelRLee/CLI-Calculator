@@ -3,6 +3,11 @@
 
 using namespace std;
 
+enum
+{
+
+};
+
 /* Forward declarations */
 bool validate(string toCheck); // Declare the prototype so that it can be used in main
 
@@ -47,27 +52,31 @@ int main()
  * \param expr The expression to parse.
  * \param startIndex The current index in the expression
  * \param recursionLevel The recursion level at which this function is.
+ * \param mode The current BEDMAS mode { 0 = Brackets, 1 = D/M, 2 = A/S }
  * \return The arithmetic expression.
  *
+ *  ALGORITHM
+ *  ---------
+ *  1) Handle brackets by recursing every time you see a '('. (B of BEDMAS)
+ *      a) After reading '(', while we haven't read a ')':
+ *          i) Read characters until you see a ')'. Check for invalid characters (Work this out later).
+ *  2) Handle multiplication and division by recursing and parsing the string generated in 1a). Use a similar algorithm to 1a). (D & M of BEDMAS)
+ *  3) Handle addition and subtraction by recursing and parsing the string generated in 2a). Use a similar algorithm to 1a). (A & S o BEDMAS)
  */
-ArithmeticExpression buildExpression(string expr, int startIndex, int recursionLevel)
+ArithmeticExpression buildExpression(string expr, int startIndex, int recursionLevel, int mode)
 {
-    ArithmeticExpression curExp; // The expression which will be returned by this function.
-    int i = startIndex; // Current index in the string
+    ArithmeticExpression x;
+    return x;
+}
 
-    for (i; i < expr.length; i++) // Loop through the string
-    {
-        switch (expr[i]) // Check what character this is
-        {
-            case '(': // Left bracket
-            {
-                // A left bracket is valid if the character before it was an operator
-                // Therefore, it is invalid if the character before it is a number.
-                if (isOperator(expr[i]))
-                {
+/** \brief Determines whether a given character is an operator.
+ *
+ * \param toCheck The character to check
+ * \return True if the character is an operator, false otherwise.
+ *
+ */
 
-                }
-            }
-        }
-    }
+bool isOperator(char toCheck)
+{
+    return toCheck == '+' || toCheck == '-' || toCheck == '*' || toCheck == '/'; // The character is an operator if one of these conditions is true
 }
