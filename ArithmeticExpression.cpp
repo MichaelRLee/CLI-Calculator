@@ -43,5 +43,7 @@ void ArithmeticExpression::print()
 */
 float ArithmeticExpression::convert(string s)
 {
-    return 1.0; // Dummy code
+    float input = atof (string s);
+    printf ("%.2input\n", input);
+    return 0;
 }
