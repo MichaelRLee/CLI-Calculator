@@ -23,6 +23,7 @@ using namespace std;
 
 /* Forward declarations */
 string nextToken(string toParse, int* startPos); // Tokenizer function
+bool isValidExpr(string expr); // Determines whether an expression is valid, using the tokenizer
 
 int main()
 {
@@ -30,17 +31,15 @@ int main()
     char input[256]; // The user input
     //ArithmeticExpression ae = new ArithmeticExpression(); // Create the top-level expression
     string curToken; // The current token in the expression
-    int curSPos = 0; // Current position in the string
-    int oldSPos = 0; // Old position in string
     string sInput; // String which represents the input
 
     while (reading) // Read until user quits
     {
         cout << "Please enter an expression: "; // Print the prompt for the user
         cin.getline(input, sizeof(input)); // Get a line from the user
-        cout << "main: input = \"" << input << "\" after assignment" << endl; // DEBUGGING
+        clog << "main: input = \"" << input << "\" after assignment" << endl; // DEBUGGING
         sInput.assign(input); // Convert the C string to a string
-        cout << "main: sInput = \"" << sInput << "\" after assignment" << endl << endl; // DEBUGGING
+        clog << "main: sInput = \"" << sInput << "\" after assignment" << endl; // DEBUGGING
 
         if (!strcmp(input, "#")) // Check for the input which terminates the program (#)
         {
@@ -52,25 +51,61 @@ int main()
         **/
         else
         {
-            /* DEBUGGING */
-            curToken = nextToken(sInput, &curSPos); // Priming read - get the first token
+            /* Check if the expression is valid */
 
-            while (curToken != "") // We can only loop while we haven't reached the end of the string and we haven't encountered an invalid token
+            if (isValidExpr(sInput)) // The expression is valid
             {
-                // DEBUGGING
-                cout << "main: Token at position " << oldSPos << " = \"" << curToken << "\"" << endl; // Print the token
-                oldSPos = curSPos; // Store old position in string for next loop
-                // DEBUGGING
-                cout << "main: After assignment, oldSpos = " << oldSPos << endl;
-                curToken = nextToken(sInput, &curSPos); // Get the next token
-                // DEBUGGING
-                cout << endl << endl;
+                // DEBUGGING - Print affirmative statement
+                clog << "The expression \"" << sInput << "\" is valid" << endl;
             }
 
-            // Reset string position variables
-            oldSPos = curSPos = 0;
+            else // The expression is invalid
+            {
+                // DEBUGGING - Print negative statement
+                clog << "Expression is not well formed" << endl;
+            }
+
+            clog << endl;
         }
     }
+}
+
+/** \brief Determines whether an expression is valid by checking the tokens returned for any INVALID ones.
+ *
+ * \param expr The string containing the expression to test.
+ * \return True if the expression is valid, false otherwise
+ *
+ */
+
+bool isValidExpr(string expr)
+{
+    string curToken; // The current token in the string
+    int curSPos = 0; // The current position in the string
+    int oldSPos = 0; // The old position in the string
+
+    curToken = nextToken(expr, &curSPos); // Priming read - get the first token
+
+    while (curSPos < expr.length()) // Loop until we reach the end of the string
+    {
+        if (curToken == "INVALID") // Found an invalid token
+        {
+            return false; // No need to look further - the expression is invalid
+        }
+
+        else
+        {
+            // DEBUGGING
+            //cout << "isValidExpr: Token at position " << oldSPos << " = \"" << curToken << "\"" << endl; // Print the token
+            oldSPos = curSPos; // Store old position in string for next loop
+            // DEBUGGING
+            //cout << "isValidExpr: After assignment, oldSpos = " << oldSPos << endl;
+            curToken = nextToken(expr, &curSPos); // Get the next token
+            // DEBUGGING
+            //cout << endl << endl;
+        }
+    }
+
+    return true; // If we have reached here, the expression is valid
 }
 
 /** \brief Gets the next token from the given arithmetic expression.
@@ -117,12 +152,19 @@ string nextToken(string toParse, int* startPos)
 
     else if (sPos == toParse.length()) // We have reached the end of the string
     {
-        tokStr = ""; // Signal the end of the string
+        tokStr = "END"; // Signal the end of the string
+    }
+
+    else if (isspace(toParse[sPos])) // Space character
+    {
+        (*startPos)++; // Increment counter for next loop
+        tokStr = "SPACE"; // Indicate a space token
     }
 
     else // Invalid token
     {
-        tokStr = ""; // Indicate that the string is invalid
+        tokStr = "INVALID"; // Indicate that the string is invalid
+        (*startPos)++; // Increment string counter
     }
 
     return tokStr; // Return the token
