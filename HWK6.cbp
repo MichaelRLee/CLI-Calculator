@@ -42,6 +42,8 @@
 		<Unit filename="Expression.h" />
 		<Unit filename="Multiplication.cpp" />
 		<Unit filename="Multiplication.h" />
+		<Unit filename="Number.cpp" />
+		<Unit filename="Number.h" />
 		<Unit filename="Subtraction.cpp" />
 		<Unit filename="Subtraction.h" />
 		<Unit filename="main.cpp" />
