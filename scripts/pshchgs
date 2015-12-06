@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Push changes to the current branch
+
+if [ -n "$1" ] # Branch name given
+then
+	git push "$1"
+
+elif [ -n "$CURBRANCHNAME" ] # Environment variable set
+then
+	git push "$CURBRANCHNAME" # Push to that branch
+fi
