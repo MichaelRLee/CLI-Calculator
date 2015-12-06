@@ -1,8 +1,13 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
 
+// C++ includes
 #include <string> // string
 #include <iostream> //cout
+
+// C includes
+#include <cstdlib> // atof
+#include <cstdio> // printf
 
 using namespace std;
 

@@ -40,7 +40,7 @@ int main()
         cin.getline(input, sizeof(input)); // Get a line from the user
         cout << "main: input = \"" << input << "\" after assignment" << endl; // DEBUGGING
         sInput.assign(input); // Convert the C string to a string
-        cout << "main: sInput = \"" << sInput << "\" after assignment" << endl; // DEBUGGING
+        cout << "main: sInput = \"" << sInput << "\" after assignment" << endl << endl; // DEBUGGING
 
         if (!strcmp(input, "#")) // Check for the input which terminates the program (#)
         {
@@ -86,7 +86,7 @@ string nextToken(string toParse, int* startPos)
     string tokStr; // The string containing the token - will be returned to the caller
 
     // DEBUGGING
-    cout << "nextToken: sPos = " << sPos << " at start" << endl;
+    //cout << "nextToken: sPos = " << sPos << " at start" << endl;
 
     /* Simple case */
     if (toParse[sPos] == '+' || toParse[sPos] == '-' || toParse[sPos] == '*' || toParse[sPos] == '/' || toParse[sPos] == '(' || toParse[sPos] == ')') // Operator or bracket
@@ -102,16 +102,16 @@ string nextToken(string toParse, int* startPos)
         while (isdigit(toParse[sPos])) // Read characters until we don't see any more digits
         {
             // DEBUGGING
-            cout << "nextToken: toParse[" << sPos << "] = '" << toParse[sPos] << "'" << endl;
+      //      cout << "nextToken: toParse[" << sPos << "] = '" << toParse[sPos] << "'" << endl;
             tokStr += toParse[sPos]; // Append the digit to the token string
             // DEBUGGING
-            cout << "nextToken: tokStr = \"" << tokStr << "\" after appending" << endl;
+        //    cout << "nextToken: tokStr = \"" << tokStr << "\" after appending" << endl;
             (*startPos)++; // Increment the starting position for the next loop
             // DEBUGGING
-            cout << "nextToken: startPos = " << *startPos << " after increment" << endl;
+          //  cout << "nextToken: startPos = " << *startPos << " after increment" << endl;
             sPos++; // Increment our counter
             // DEBUGGING
-            cout << "nextToken: sPos = " << sPos << " after increment" << endl;
+            //cout << "nextToken: sPos = " << sPos << " after increment" << endl;
         }
     }
 
