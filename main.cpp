@@ -38,9 +38,9 @@ int main()
     {
         cout << "Please enter an expression: "; // Print the prompt for the user
         cin.getline(input, sizeof(input)); // Get a line from the user
-        cout << "main: input = \"" << input << "\" after assignment" << endl;
+        cout << "main: input = \"" << input << "\" after assignment" << endl; // DEBUGGING
         sInput.assign(input); // Convert the C string to a string
-        cout << "main: sInput = \"" << sInput << "\" after assignment" << endl;
+        cout << "main: sInput = \"" << sInput << "\" after assignment" << endl; // DEBUGGING
 
         if (!strcmp(input, "#")) // Check for the input which terminates the program (#)
         {
@@ -57,10 +57,13 @@ int main()
 
             while (curToken != "") // We can only loop while we haven't reached the end of the string and we haven't encountered an invalid token
             {
+                // DEBUGGING
                 cout << "main: Token at position " << oldSPos << " = \"" << curToken << "\"" << endl; // Print the token
                 oldSPos = curSPos; // Store old position in string for next loop
+                // DEBUGGING
                 cout << "main: After assignment, oldSpos = " << oldSPos << endl;
                 curToken = nextToken(sInput, &curSPos); // Get the next token
+                // DEBUGGING
                 cout << endl << endl;
             }
 
@@ -73,7 +76,7 @@ int main()
 /** \brief Gets the next token from the given arithmetic expression.
  *
  * \param toParse The string containing the arithmetic expression to parse
- * \param startPos A pointer to an integer, describing the position in the string at which to beging parsing.
+ * \param startPos A pointer to an integer, describing the position in the string at which to begin parsing.
  * \return The token.
  *
  */
@@ -82,6 +85,7 @@ string nextToken(string toParse, int* startPos)
     int sPos = *startPos; // Store the starting position internally, so as not to change it
     string tokStr; // The string containing the token - will be returned to the caller
 
+    // DEBUGGING
     cout << "nextToken: sPos = " << sPos << " at start" << endl;
 
     /* Simple case */
@@ -97,12 +101,16 @@ string nextToken(string toParse, int* startPos)
     {
         while (isdigit(toParse[sPos])) // Read characters until we don't see any more digits
         {
+            // DEBUGGING
             cout << "nextToken: toParse[" << sPos << "] = '" << toParse[sPos] << "'" << endl;
             tokStr += toParse[sPos]; // Append the digit to the token string
+            // DEBUGGING
             cout << "nextToken: tokStr = \"" << tokStr << "\" after appending" << endl;
             (*startPos)++; // Increment the starting position for the next loop
+            // DEBUGGING
             cout << "nextToken: startPos = " << *startPos << " after increment" << endl;
             sPos++; // Increment our counter
+            // DEBUGGING
             cout << "nextToken: sPos = " << sPos << " after increment" << endl;
         }
     }
@@ -122,11 +130,10 @@ string nextToken(string toParse, int* startPos)
 
 /** \brief Returns the precedence of a node in the Expression.
  *
- * \param string node - The operator whose precedence the function will determine
- * \return An integer describing the precedence of the number.
+ * \param string node - The node whose precedence the function will determine
+ * \return An integer describing the precedence of the node.
  *
  */
-
 int precedence(string node)
 {
     if (!node.compare("(") || !node.compare(")")) // Brackets
@@ -143,4 +150,6 @@ int precedence(string node)
     {
         return 1;
     }
+
+    // else if (isnumber(node)) // Need to write this later
 }
