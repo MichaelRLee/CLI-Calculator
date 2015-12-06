@@ -37,8 +37,10 @@ int main()
     while (reading) // Read until user quits
     {
         cout << "Please enter an expression: "; // Print the prompt for the user
-        cin.getline(input, 256); // Get a line from the user
+        cin.getline(input, sizeof(input)); // Get a line from the user
+        cout << "main: input = \"" << input << "\" after assignment" << endl;
         sInput.assign(input); // Convert the C string to a string
+        cout << "main: sInput = \"" << sInput << "\" after assignment" << endl;
 
         if (!strcmp(input, "#")) // Check for the input which terminates the program (#)
         {
@@ -53,7 +55,7 @@ int main()
             /* DEBUGGING */
             curToken = nextToken(sInput, &curSPos); // Priming read - get the first token
 
-            while (curToken != "" && curToken != "INVALID") // We can only loop while we haven't reached the end of the string and we haven't encountered an invalid token
+            while (curToken != "") // We can only loop while we haven't reached the end of the string and we haven't encountered an invalid token
             {
                 cout << "main: Token at position " << oldSPos << " = \"" << curToken << "\"" << endl; // Print the token
                 oldSPos = curSPos; // Store old position in string for next loop
@@ -64,8 +66,6 @@ int main()
 
             // Reset string position variables
             oldSPos = curSPos = 0;
-            cin.clear(); // Clear error flags on cin
-            cin.ignore(numeric_limits<streamsize>::max()); // Ignore any remaining characters in cin
         }
     }
 }
@@ -114,8 +114,33 @@ string nextToken(string toParse, int* startPos)
 
     else // Invalid token
     {
-        tokStr = "INVALID"; // Indicate that the string is invalid
+        tokStr = ""; // Indicate that the string is invalid
     }
 
     return tokStr; // Return the token
+}
+
+/** \brief Returns the precedence of a node in the Expression.
+ *
+ * \param string node - The operator whose precedence the function will determine
+ * \return An integer describing the precedence of the number.
+ *
+ */
+
+int precedence(string node)
+{
+    if (!node.compare("(") || !node.compare(")")) // Brackets
+    {
+        return 3;
+    }
+
+    else if (!node.compare("*") || !node.compare("/")) // Division/Multiplication
+    {
+        return 2;
+    }
+
+    else if (!node.compare("+") || !node.compare("-")) // Addition/Subtraction
+    {
+        return 1;
+    }
 }
