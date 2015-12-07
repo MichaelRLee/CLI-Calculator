@@ -41,7 +41,9 @@ void ArithmeticExpression::print()
 * \param s The string representing the value to convert to a floating-point number.
 * \return A floating-point representation of the string.
 */
-float ArithmeticExpression::convert(string s)
+float ArithmeticExpression::convert(string s) //string s is passed through this function
 {
-    return 1.0; // Dummy code
+    float input = atof (s.c_str()); //convert the string input into a float
+    printf ("%.2input\n", input); //print the input as a float
+    return 0; //if 0 is returned everything worked
 }

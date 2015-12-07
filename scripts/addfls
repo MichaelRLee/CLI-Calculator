@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ "$#" -gt 0 ] # Have filename arguments
+then
+	git add "$@" # Add them
+
+else # No arguments
+	reading=true
+	comfiles=""
+
+	while $reading # Loop until user quits
+	do
+		read -p "Enter the name of a file to add to the commit "'(#'" to quit"')'": " comfile # Prompt the user for a file to add
+
+		if [ "$comfile" = "#" ] # Quit
+		then
+			reading=false
+
+		else # Append the file to the list of files to add
+			comfiles="$comfiles $comfile" # Append the file to the string to pass to git add
+		fi
+	done
+
+	git add "$comfiles"
+fi

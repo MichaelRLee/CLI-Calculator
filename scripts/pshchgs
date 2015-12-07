@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Push changes to the current branch
+
+if [ -n "$1" ] # Branch name given
+then
+	git push origin "$1"
+
+elif [ -n "$CURBRANCHNAME" ] # Environment variable set
+then
+	git push origin "$CURBRANCHNAME" # Push to that branch
+
+else
+	echo Usage: `basename "$0"` branchName
+	echo If you have set the CURBRANCHNAME variable, that will be used if no argument is given \(an argument takes precedence over the environment variable\)
+fi

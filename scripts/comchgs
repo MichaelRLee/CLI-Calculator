@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if [ "$#" -gt 0 ] # Have arguments
+then
+	commsg="$1" # First argument is commit message
+	git commit -m "$commsg" "${@:2}" # Pass git commit the rest of the files as arguments
+
+else # No arguments
+	reading=true # Controls while loop which reads files
+	comfiles="" # List of files to commit
+
+	read -p "Enter the commit message: " commsg # Get the commit message from the user
+
+	while $reading # Loop until user quits
+	do
+		read -p "Enter the names of the file to add to the commit "'(#'" to quit"')'":" comfile
+
+		if [ "$comfile" = \# ] # Sentinel
+		then
+			reading=false # Quit
+
+		else # File to commit
+			comfiles="$comfiles $comfile" # Add the file to the list of files to commit
+		fi
+	done
+
+	git commit -m "$commsg" $comfiles
+fi

@@ -1,0 +1,25 @@
+Parsing Algorithm
+-----------------
+#include <cctype.h> // isdigit
+
+# Current state of parser - parsing 
+# state = enum { BRACKETS = 0, MULTDIV, ADDSUB }
+ArithmeticExpression parse(string expr, int startPos, int state): // Loop through expr, starting at startPos
+	ArithmeticExpression curExpr # Current arithmetic expression which we are building
+	char op = '' # Current operator
+	string curExpStr = "" # Current expression
+	Number num1, num2; // These store the numbers in the current expression, if any
+	
+	if state == BRACKETS: # Looking for innermost bracket
+		for i in range(startPos, len(expr)): # Loop through string
+			if expr[i] == '(': # Left bracket
+				curExpStr = "" # Clear current expression
+			
+			else: # Something else, add it to current expression
+				curExpStr += expr[i]
+
+boolean isOperator(char c): // Determine whether a character is an operator
+	return c is '+' or c is '-' or c is '*' or c is '/'
+
+boolean isBracket(char c): // Determines whether a character is a bracket
+	return c is '(' or c is ')'
