@@ -144,7 +144,7 @@ bool checkOpp (string exp)
         }
         else if (exp [i+1]== '(')//only numbers are left, and the next character can't be an open bracket
         {
-            return false; //return false if it is
+            return false ; //return false if it is
         }
     }
     return true; //if the string passed all the tests, it is valid, and true is returned
