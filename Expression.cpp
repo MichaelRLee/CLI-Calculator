@@ -22,8 +22,9 @@ Expression& Expression::operator=(const Expression& rhs)
     return *this;
 }
 
-virutal string evaluate(input); //evaluates the expression
-return stof(s.answer());//return answer as a string
+virtual string evaluate(input);{ //evaluates the expression
+    return stof(s.answer());//return answer as a string
+}
 
 virtual void print(input); //prints the expression
 
