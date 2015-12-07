@@ -44,6 +44,5 @@ void ArithmeticExpression::print()
 float ArithmeticExpression::convert(string s) //string s is passed through this function
 {
     float input = atof (s.c_str()); //convert the string input into a float
-    printf ("%.2input\n", input); //print the input as a float
-    return 0; //if 0 is returned everything worked
+    return input; //returns the string as a float.
 }
