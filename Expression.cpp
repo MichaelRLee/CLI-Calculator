@@ -27,4 +27,4 @@ virtual string evaluate() { //evaluates the expression
 }
 
 virtual void print(); //prints the expression
-
+cout <<expression; << "= " << answer;
