@@ -70,7 +70,7 @@ int main()
     }
 }
 
-/** \brief Determines whether an expression is valid by checking the tokens returned for any INVALID ones.
+/** \brief Determines whether an expression is valid by checking the tokens returned.
  *
  * \param expr The string containing the expression to test.
  * \return True if the expression is valid, false otherwise
@@ -82,31 +82,74 @@ bool isValidExpr(string expr)
     string curToken; // The current token in the string
     int curSPos = 0; // The current position in the string
     int oldSPos = 0; // The old position in the string
+    bool toReturn = true; // The value to return to the caller - true if the expression is valid, false otherwise
 
     curToken = nextToken(expr, &curSPos); // Priming read - get the first token
 
-    while (curSPos < expr.length()) // Loop until we reach the end of the string
+    while (curToken != "END") // Loop until we reach the end of the string
     {
         if (curToken == "INVALID") // Found an invalid token
         {
-            return false; // No need to look further - the expression is invalid
+            toReturn = false; // No need to look further - the expression is invalid
+            break;
         }
 
         else
         {
             // DEBUGGING
-            //cout << "isValidExpr: Token at position " << oldSPos << " = \"" << curToken << "\"" << endl; // Print the token
+            cout << "isValidExpr: Token at position " << oldSPos << " = \"" << curToken << "\"" << endl; // Print the token
             oldSPos = curSPos; // Store old position in string for next loop
             // DEBUGGING
-            //cout << "isValidExpr: After assignment, oldSpos = " << oldSPos << endl;
+            cout << "isValidExpr: After assignment, oldSpos = " << oldSPos << endl;
             curToken = nextToken(expr, &curSPos); // Get the next token
             // DEBUGGING
-            //cout << endl << endl;
+            cout << endl << endl;
         }
     }
-
-    return true; // If we have reached here, the expression is valid
+    return checkOpp(expr); // If we have reached here, the expression is valid
 }
+
+/** \brief Check if the expression is arethmetically valid.
+ *
+ * \param expr The string containing the expression to test.
+ * \return True if the expression is valid, false otherwise
+ */
+
+bool checkOpp (string exp)
+{
+    if (!(exp[0] == '(' || isdigit(exp[0] ))) //check if the first character is a number or an open bracket
+    {
+        return false; //return false if it isn't
+    }
+
+    if (!(exp[exp.length()-1] == ')' || isdigit(exp[exp.length()-1]))) //check if the last character is a number or an close bracket
+    {
+        return false; //return false if it isn't
+    }
+
+    for (size_t i = 0; i< exp.length()-1; i++){ // go through the string checking the character at the index and at the index++ for proper formatting
+        if ((exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/') && !(exp [i+1] = '(' || isdigit (exp[i+1])))
+                //if the character is an arithmetic opperation, the next character must be an open bracket or a number
+        {
+            return false; //return false if the next character is not
+        }
+        else if (exp [i] == '(' && !(exp [i+1] = '(' || isdigit (exp[i+1]) || exp [i+1] == '-')) //if the character is an open bracket, the next character
+                              //must be another open bracket, a number, or a - (for negatives)
+        {
+            return false; //return false if the next character isn't
+        }
+        else if (exp [i] == ')' && (exp [i+1] = '(' || isdigit (exp[i+1]))) //if the char is a closed bracket, next char can't be an open bracket or number
+        {
+            return false;//return false if it is
+        }
+        else if (exp [i+1]== '(')//only numbers are left, and the next character can't be an open bracket
+        {
+            return false ; //return false if it is
+        }
+    }
+    return true; //if the string passed all the tests, it is valid, and true is returned
+}
+
 
 /** \brief Gets the next token from the given arithmetic expression.
  *
@@ -178,20 +221,23 @@ string nextToken(string toParse, int* startPos)
  */
 int precedence(string node)
 {
-    if (!node.compare("(") || !node.compare(")")) // Brackets
+    /*if (isnum(node)) // A number has the highest precedence
     {
         return 3;
     }
 
-    else if (!node.compare("*") || !node.compare("/")) // Division/Multiplication
+    else*/ if (!node.compare("(") || !node.compare(")")) // Brackets
     {
         return 2;
     }
 
-    else if (!node.compare("+") || !node.compare("-")) // Addition/Subtraction
+    else if (!node.compare("*") || !node.compare("/")) // Division/Multiplication
     {
         return 1;
     }
 
-    // else if (isnumber(node)) // Need to write this later
+    else if (!node.compare("+") || !node.compare("-")) // Addition/Subtraction
+    {
+        return 0;
+    }
 }
