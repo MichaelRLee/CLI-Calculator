@@ -23,7 +23,8 @@ using namespace std;
 
 /* Forward declarations */
 string nextToken(string toParse, int* startPos); // Tokenizer function
-bool isValidExpr(string expr); // Determines whether an expression is valid, using the tokenizer
+bool isValidExpr(string expr); // Determines whether an expression is valid by checking the tokens in the string.
+bool checkOpp (string exp); // Determines whether there are any invalid combinations of characters.
 
 int main()
 {
@@ -106,7 +107,8 @@ bool isValidExpr(string expr)
             cout << endl << endl;
         }
     }
-    return checkOpp(expr); // If we have reached here, the expression is valid
+    cout << "checkOpp(\"" << expr << "\") = " << checkOpp(expr) << endl;
+    return checkOpp(expr); // Check the string
 }
 
 /** \brief Check if the expression is arethmetically valid.
@@ -127,13 +129,13 @@ bool checkOpp (string exp)
         return false; //return false if it isn't
     }
 
-    for (size_t i = 0; i< exp.length()-1; i++){ // go through the string checking the character at the index and at the index++ for proper formatting
-        if ((exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/') && !(exp [i+1] = '(' || isdigit (exp[i+1])))
+    for (size_t i = 0; i< exp.length()/*-1*/; i++){ // go through the string checking the character at the index and at the index++ for proper formatting
+        if ((exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/') && !(exp [i+1] == '(' || isdigit (exp[i+1])))
                 //if the character is an arithmetic opperation, the next character must be an open bracket or a number
         {
             return false; //return false if the next character is not
         }
-        else if (exp [i] == '(' && !(exp [i+1] = '(' || isdigit (exp[i+1]) || exp [i+1] == '-')) //if the character is an open bracket, the next character
+        else if (exp [i] == '(' && !(exp [i+1] == '(' || isdigit (exp[i+1]) || exp [i+1] == '-')) //if the character is an open bracket, the next character
                               //must be another open bracket, a number, or a - (for negatives)
         {
             return false; //return false if the next character isn't
