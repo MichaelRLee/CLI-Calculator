@@ -117,6 +117,8 @@ bool isValidExpr(string expr)
 
 bool checkOpp (string exp)
 {
+    int numBrackets = 0;
+
     if (!(exp[0] == '(' || isdigit(exp[0] ))) //check if the first character is a number or an open bracket
     {
         return false; //return false if it isn't
@@ -127,7 +129,20 @@ bool checkOpp (string exp)
         return false; //return false if it isn't
     }
 
+    if (exp[exp.length()-1] == ')')
+    {
+        numBrackets--;
+    }
+
     for (size_t i = 0; i< exp.length()-1; i++){ // go through the string checking the character at the index and at the index++ for proper formatting
+        if (exp[i]=='(')
+        {
+            numBrackets++;
+        }
+        else if (exp [i] == ')')
+        {
+            numBrackets--;
+        }
         if ((exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/') && !(exp [i+1] = '(' || isdigit (exp[i+1])))
                 //if the character is an arithmetic opperation, the next character must be an open bracket or a number
         {
@@ -147,8 +162,10 @@ bool checkOpp (string exp)
             return false ; //return false if it is
         }
     }
-    return true; //if the string passed all the tests, it is valid, and true is returned
+    return (numBrackets==0); //if the string passed all the tests, it is valid, and true is returned
 }
+
+
 
 
 /** \brief Gets the next token from the given arithmetic expression.
