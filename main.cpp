@@ -83,7 +83,6 @@ bool isValidExpr(string expr)
     string curToken; // The current token in the string
     int curSPos = 0; // The current position in the string
     int oldSPos = 0; // The old position in the string
-    bool toReturn = true; // The value to return to the caller - true if the expression is valid, false otherwise
 
     curToken = nextToken(expr, &curSPos); // Priming read - get the first token
 
@@ -91,7 +90,7 @@ bool isValidExpr(string expr)
     {
         if (curToken == "INVALID") // Found an invalid token
         {
-            toReturn = false; // No need to look further - the expression is invalid
+            return false; // No need to look further - the expression is invalid
             break;
         }
 
@@ -121,34 +120,41 @@ bool checkOpp (string exp)
 {
     if (!(exp[0] == '(' || isdigit(exp[0] ))) //check if the first character is a number or an open bracket
     {
+        clog << "checkOpp: return 1" << endl;
         return false; //return false if it isn't
     }
 
     if (!(exp[exp.length()-1] == ')' || isdigit(exp[exp.length()-1]))) //check if the last character is a number or an close bracket
     {
+        clog << "checkOpp: return 2" << endl;
         return false; //return false if it isn't
     }
 
-    for (size_t i = 0; i< exp.length()/*-1*/; i++){ // go through the string checking the character at the index and at the index++ for proper formatting
+    for (size_t i = 0; i< exp.length()-1; i++){ // go through the string checking the character at the index and at the index++ for proper formatting
         if ((exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/') && !(exp [i+1] == '(' || isdigit (exp[i+1])))
                 //if the character is an arithmetic opperation, the next character must be an open bracket or a number
         {
+            clog << "checkOpp: return 3" << endl;
             return false; //return false if the next character is not
         }
         else if (exp [i] == '(' && !(exp [i+1] == '(' || isdigit (exp[i+1]) || exp [i+1] == '-')) //if the character is an open bracket, the next character
                               //must be another open bracket, a number, or a - (for negatives)
         {
+            clog << "checkOpp: return 4" << endl;
             return false; //return false if the next character isn't
         }
         else if (exp [i] == ')' && (exp [i+1] = '(' || isdigit (exp[i+1]))) //if the char is a closed bracket, next char can't be an open bracket or number
         {
+            clog << "checkOpp: return 5" << endl;
             return false;//return false if it is
         }
         else if (exp [i+1]== '(')//only numbers are left, and the next character can't be an open bracket
         {
+            clog << "checkOpp: return 6: i = " << i << endl;
             return false ; //return false if it is
         }
     }
+    clog << "checkOpp: reached end, expression is valid." << endl;
     return true; //if the string passed all the tests, it is valid, and true is returned
 }
 
