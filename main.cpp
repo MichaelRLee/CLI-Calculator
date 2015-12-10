@@ -24,6 +24,7 @@ using namespace std;
 /* Forward declarations */
 string nextToken(string toParse, int* startPos); // Tokenizer function
 bool isValidExpr(string expr); // Determines whether an expression is valid, using the tokenizer
+bool checkOpp(string exp); //check if expression is arithmetically correct
 
 int main()
 {
