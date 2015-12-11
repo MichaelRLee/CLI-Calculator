@@ -7,13 +7,15 @@ ArithmeticExpression::ArithmeticExpression()
 
 ArithmeticExpression::~ArithmeticExpression()
 {
-    //dtor
+    delete this->left; // Delete the left half
+    delete this->right; // Delete the right half
 }
 
-ArithmeticExpression::ArithmeticExpression(const ArithmeticExpression& other)
+/*ArithmeticExpression::ArithmeticExpression(const ArithmeticExpression& other)
 {
-    //copy ctor
-}
+    this->left = new Expression(other->left); // Construct the left half of this expression
+    this->right = new Expression(other->right); // Construct the right half of this expression
+}*/
 
 ArithmeticExpression& ArithmeticExpression::operator=(const ArithmeticExpression& rhs)
 {
@@ -27,14 +29,14 @@ ArithmeticExpression& ArithmeticExpression::operator=(const ArithmeticExpression
 */
 string ArithmeticExpression::evaluate()
 {
-    return ""; // Dummy code
+    return left->evaluate(); // Print the evaluated left half of the expression (that's the only part that contains the expression)
 }
 
 /** \brief Prints the evaluated expression.
 */
 void ArithmeticExpression::print()
 {
-    int i = 1; // Dummy code
+    left->print(); // Print the expression
 }
 
 /** \brief Converts a string (as returned by evaluate) to a float.

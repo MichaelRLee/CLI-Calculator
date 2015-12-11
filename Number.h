@@ -35,8 +35,6 @@ class Number : public ArithmeticExpression
 
         string evaluate(); // Returns a string representation of this Number
 
-        float convert(); // Converts this number to a floating-point representation
-
         void print(); // Prints this number
     protected:
     private:

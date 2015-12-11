@@ -34,8 +34,3 @@ void Number::print() // Print a string representation of this Number
 {
     cout << this->value; // Print the value of this number
 }
-
-float Number::convert() // Convert this number to a floating-point representation
-{
-    return atof(this->value.c_str()); // Convert it to a float
-}

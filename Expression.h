@@ -4,6 +4,7 @@
 // C++ includes
 #include <string> // string
 #include <iostream> //cout
+#include <sstream> // stringstream
 
 // C includes
 #include <cstdlib> // atof
