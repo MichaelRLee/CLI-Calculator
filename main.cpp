@@ -101,18 +101,71 @@ int bracketCount(string exp, bool retNum)
     }
 }
 
+/** \brief Determines whether a string contains only spaces.
+ *
+ * \param toCheck - The string to check.
+ * \return True if the string contains only whitespace, false otherwise
+ *
+ */
+bool isAllSpaces(string toCheck)
+{
+    int i; // Current position in the string
+
+    cout << "toCheck = \"" << toCheck << "\"" << endl;
+
+    for (i = 0; i < toCheck.length(); i++) // Loop through the string
+    {
+        if (!isspace(toCheck[i])) // If the current character isn't whitespace, we can stop looking
+        {
+            cout << "isAllSpaces: found non-whitespace character at position " << i << endl;
+            return false; // The string doesn't contain only whitespace characters
+        }
+    }
+
+    cout << "isAllSpaces - returning true" << endl;
+    return true; // If we got here, the string contained only whitespace characters
+}
+
+/** \brief Determines whether a given string contains only numeric characters (i.e. it is a valid integer)
+ *
+ * \param toCheck - The string to check the characters of.
+ * \return True if the string contains only numeric characters, false otherwise.
+ *
+ */
+bool isNumericString(string toCheck)
+{
+    int i; // Loop counter
+
+    if (toCheck == "") // Empty string
+    {
+        return false; // An empty string isn't a valid number
+    }
+
+    // If we got here, the string isn't empty
+    for (i = 0; i < toCheck.length(); i++) // Loop through the string
+    {
+        if (!isdigit(toCheck[i])) // If the current character isn't a digit, the string doesn't represent a numeric string
+        {
+            return false; // No need to look further
+        }
+    }
+
+    return true; // If we got here, the string contained only numeric characters
+}
+
 /** \brief Determines whether an expression is valid by checking the tokens returned.
  *
  * \param expr The string containing the expression to test.
  * \return True if the expression is valid, false otherwise
  *
  */
-
 bool isValidExpr(string expr)
 {
     string curToken; // The current token in the string
     int curSPos = 0; // The current position in the string
     int oldSPos = 0; // The old position in the string
+    string prevToken = ""; // Holds the token from 1 parse ago
+    string befPrevToken = ""; // Holds the token from 2 parses ago
 
     curToken = nextToken(expr, &curSPos); // Priming read - get the first token
 
@@ -120,22 +173,37 @@ bool isValidExpr(string expr)
     {
         if (curToken == "INVALID") // Found an invalid token
         {
+            clog << "Found invalid token" << endl;
             return false; // No need to look further - the expression is invalid
+            break;
+        }
+
+        else if (isNumericString(befPrevToken) && isAllSpaces(prevToken) && isNumericString(curToken)) // A sequence of "(number)(space)(number)"
+        {
+            cout << "Returning false in if 2" << endl << "isNumericString(" << befPrevToken << ") = " << isNumericString(befPrevToken) << endl << "isAllSpaces(\"" << prevToken << "\") = " << isAllSpaces(prevToken) << endl << "isNumericString(" << curToken << ") = " << isNumericString(curToken) << endl;
+            return false; // No need to look further
         }
 
         else
         {
             // DEBUGGING
             cout << "isValidExpr: Token at position " << oldSPos << " = \"" << curToken << "\"" << endl; // Print the token
-            oldSPos = curSPos; // Store old position in string for next loop
+
             // DEBUGGING
             cout << "isValidExpr: After assignment, oldSpos = " << oldSPos << endl;
-            curToken = nextToken(expr, &curSPos); // Get the next token
+
             // DEBUGGING
             cout << endl << endl;
         }
+
+        oldSPos = curSPos; // Store old position in string for next loop
+        befPrevToken = prevToken; // Store the token from 2 parses ago for use in the next loop
+        prevToken = curToken; // Store the old token for use in the next loop
+        curToken = nextToken(expr, &curSPos); // Get the next token
+        clog << "isValidExpr: befPrevToken = \"" << befPrevToken << "\", prevToken = \"" << prevToken << "\", curToken = \"" << curToken << "\" at the end of the loop" << endl;
     }
-    return checkOpp(expr); // If we have reached here, the expression is valid
+    cout << "checkOpp(\"" << expr << "\") = " << checkOpp(expr) << endl;
+    return checkOpp(expr); // Check the string
 }
 
 /** \brief Check if the expression is arethmetically valid.
@@ -143,7 +211,6 @@ bool isValidExpr(string expr)
  * \param expr The string containing the expression to test.
  * \return True if the expression is valid, false otherwise
  */
-
 bool checkOpp (string exp)
 {
     if (!(exp[0] == '(' || isdigit(exp[0] ))) //check if the first character is a number or an open bracket
@@ -183,10 +250,9 @@ bool checkOpp (string exp)
         }
     }
     return (bracketCount(exp, false)==0); //if the string passed all the tests, it is valid, and true is returned
+            clog << "checkOpp: return 6: i = " << i << endl;
+            return false ; //return false if it is
 }
-
-
-
 
 /** \brief Gets the next token from the given arithmetic expression.
  *
@@ -221,7 +287,7 @@ string nextToken(string toParse, int* startPos)
             tokStr += toParse[sPos]; // Append the digit to the token string
             // DEBUGGING
         //    cout << "nextToken: tokStr = \"" << tokStr << "\" after appending" << endl;
-            (*startPos)++; // Increment the starting position for the next loop
+            (*startPos)++; // Increment the starting position for the next call
             // DEBUGGING
           //  cout << "nextToken: startPos = " << *startPos << " after increment" << endl;
             sPos++; // Increment our counter
@@ -237,8 +303,13 @@ string nextToken(string toParse, int* startPos)
 
     else if (isspace(toParse[sPos])) // Space character
     {
-        (*startPos)++; // Increment counter for next loop
-        tokStr = "SPACE"; // Indicate a space token
+        /* Skip all spaces from the current position to the first non-space character after the current position */
+        while (isspace(toParse[sPos])) // While the current character is a space
+        {
+            tokStr += toParse[sPos]; // Add the space to the token string to return
+            sPos++; // Increment position in the string
+            (*startPos)++; // Increment the counter passed to us for the next call
+        }
     }
 
     else // Invalid token
