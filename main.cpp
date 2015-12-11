@@ -32,7 +32,7 @@ int main()
 {
     bool reading = true; // Controls input loop
     char input[256]; // The user input
-    size_t bracketLoc=0;
+    size_t bracketLoc=0; //used to store location of first bracket in expression
     //ArithmeticExpression ae = new ArithmeticExpression(); // Create the top-level expression
     string curToken; // The current token in the expression
     string sInput; // String which represents the input
@@ -59,11 +59,11 @@ int main()
 
             if (isValidExpr(sInput)) // The expression is valid
             {
+                while(sInput[bracketLoc++]!='('); //gets the index after the first bracket
+                removeBrackets(sInput, bracketLoc); //function to remove unnessicary brackets
+                //TODO remove spaces
                 // DEBUGGING - Print affirmative statement
                 clog << "The expression \"" << sInput << "\" is valid" << endl;
-                while(sInput[bracketLoc++]!='(');
-                removeBrackets(sInput, bracketLoc);
-                //TODO remove spaces
             }
 
             else // The expression is invalid
@@ -77,6 +77,12 @@ int main()
     }
 }
 
+/** \brief Counts the number of openning and closing brackets in a string.  Can return either the difference between the two or the number of openning brackets
+ *
+ * \param expr: The string containing the expression to test. retNum: whenther to return the number of openning brackets or the difference
+ * \return Number of openning brackets or difference between the number of openning and closing brackets
+ *
+ */
 int bracketCount(string exp, bool retNum)
 {
     int numLBracket = 0;
@@ -351,26 +357,30 @@ int precedence(string node)
     return -1;
 }
 
+/** \brief Removes unnessicary brackets from the expression.
+ *
+ * \param exp: expression to evaluate (pass by reference), strIndex: current location we are examining the string at.
+ */
 void removeBrackets(string& exp, size_t& strIndex)
 {
-    bool hasOpp=false;
-    size_t bracketIndex = strIndex-1;
-    while (strIndex<exp.length() && exp[strIndex]!=')')
+    bool hasOpp=false; //whether a set of brackets have an opperator in them
+    size_t bracketIndex = strIndex-1; //index of openning bracket
+    while (strIndex<exp.length() && exp[strIndex]!=')') //while the index is less than the string's length and the next character isn't a ')'
     {
-        if (exp[strIndex]=='+' || exp[strIndex]=='-' || exp[strIndex]=='*' || exp[strIndex]=='/')
+        if (exp[strIndex]=='+' || exp[strIndex]=='-' || exp[strIndex]=='*' || exp[strIndex]=='/') //if the next character is an opperation
         {
-            hasOpp=true;
+            hasOpp=true; //the brackets have an opperation in them
         }
-        else if (exp [strIndex]=='(')
+        else if (exp [strIndex]=='(') //if the next character is an open bracket
         {
-            removeBrackets(exp, ++strIndex);
+            removeBrackets(exp, ++strIndex);//recurse starting at different index
         }
-        strIndex++;
+        strIndex++;//incriment the index by one
     }
-    if (!hasOpp)
+    if (!hasOpp)//if there was no opperator in the brackets
     {
-        exp[bracketIndex]=' ';
-        exp[strIndex]=' ';
+        exp[bracketIndex]=' ';//replace the openning bracket with a space
+        exp[strIndex]=' ';//replace the closing brackets with a space
     }
 }
 
