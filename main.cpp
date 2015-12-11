@@ -61,7 +61,7 @@ int main()
             if (isValidExpr(sInput)) // The expression is valid
             {
                 while(sInput[bracketLoc++]!='('&&bracketLoc<sInput.length()); //gets the index after the first bracket
-                removeBrackets(sInput, bracketLoc); //function to remove unnessicary brackets
+                if (bracketLoc<sInput.length())removeBrackets(sInput, bracketLoc); //function to remove unnessicary brackets (if there are any)
                 sInput=removeSpaces(sInput); //remove spaces
                 bracketLoc=0; //reset bracketLoc value
                 // DEBUGGING - Print affirmative statement
