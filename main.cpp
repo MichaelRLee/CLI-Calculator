@@ -60,8 +60,10 @@ int main()
 
             if (isValidExpr(sInput)) // The expression is valid
             {
-                while(sInput[bracketLoc++]!='('&&bracketLoc<sInput.length()); //gets the index after the first bracket
-                if (bracketLoc<sInput.length())removeBrackets(sInput, bracketLoc); //function to remove unnessicary brackets (if there are any)
+                while(bracketLoc<sInput.length()) //going through each character of the output...
+                {
+                    if (sInput[bracketLoc++]=='(')removeBrackets(sInput, bracketLoc); //find brackets and remove them if the ayre unnessicary
+                }
                 sInput=removeSpaces(sInput); //remove spaces
                 bracketLoc=0; //reset bracketLoc value
                 // DEBUGGING - Print affirmative statement
