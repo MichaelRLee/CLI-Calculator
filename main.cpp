@@ -27,6 +27,7 @@ bool isValidExpr(string expr); // Determines whether an expression is valid, usi
 bool checkOpp(string exp); //check if expression is arithmetically correct
 void removeBrackets(string& exp, size_t &strIndex); //removes unnessicary brackets from expression
 int bracketCount (string exp, bool retNum);  //counts brackets and returns based on boolean;
+string removeSpaces (string exp); //removes spaces from expression
 
 int main()
 {
@@ -61,7 +62,8 @@ int main()
             {
                 while(sInput[bracketLoc++]!='('&&bracketLoc<sInput.length()); //gets the index after the first bracket
                 removeBrackets(sInput, bracketLoc); //function to remove unnessicary brackets
-                //TODO remove spaces
+                sInput=removeSpaces(sInput);
+                bracketLoc=0;
                 // DEBUGGING - Print affirmative statement
                 clog << "The expression \"" << sInput << "\" is valid" << endl;
             }
@@ -256,9 +258,7 @@ bool checkOpp (string exp)
         }
     }
     return (bracketCount(exp, false)==0); //if the string passed all the tests, it is valid, and true is returned
-            clog << "checkOpp: return 6: i = " << i << endl;
-            return false ; //return false if it is
-}
+    }
 
 /** \brief Gets the next token from the given arithmetic expression.
  *
@@ -384,3 +384,15 @@ void removeBrackets(string& exp, size_t& strIndex)
     }
 }
 
+string removeSpaces(string exp)
+{
+    string output="";
+    for (size_t i =0; i<exp.length();i++)
+    {
+        if (exp[i]!=' ')
+        {
+            output+=exp[i];
+        }
+    }
+    return output;
+}
