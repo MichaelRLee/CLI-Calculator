@@ -1,18 +1,39 @@
 #include "Division.h"
 
-Division::Division()
+/** \brief Constructor. Builds a new Division expression by adding 2 expressions to its left and right.
+ *
+ * \param left A pointer to the Expression which will become this Division's left half.
+ * \param right A pointer to the Expression which will become this Division's right half.
+ *
+ */
+Division::Division(Expression& left, Expression& right)
 {
-    //ctor
+    this->left = new Expression(left); // Copy the left Expression to this Division's left half
+    this->right = new Expression(right); // Copy the right Expression to this Division's right half
 }
 
+/** \brief Destroys this Division object.
+ *
+ * \return
+ *
+ */
 Division::~Division()
 {
-    //dtor
+    delete this->left; // Deletes the left half of this Division
+    delete this->right; // Deletes the right half of this Division
 }
 
+/** \brief Copy constructor. Copies another Division's left and right halves to this one.
+ *
+ * \param
+ * \param
+ * \return
+ *
+ */
 Division::Division(const Division& other)
 {
-    //copy ctor
+    this->left = new Expression(other->left); // Copy the left half of the other Expression to this Division
+    this->right = new Expression(other->right); // Copy the right half of the other Expression to this one
 }
 
 Division& Division::operator=(const Division& rhs)
@@ -40,5 +61,5 @@ string Division::evaluate()
 */
 void Division::print()
 {
-    cout << left->evaluate() + "/" + right->evaluate(); // Print the evaluated left and right halves, separated by a '/'
+    cout << left->print() + "/" + right->print(); // Print the left and right halves, separated by a '/'
 }

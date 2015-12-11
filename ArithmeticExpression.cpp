@@ -1,21 +1,38 @@
 #include "ArithmeticExpression.h"
 
-ArithmeticExpression::ArithmeticExpression()
+/** \brief  Constructs a new ArithmeticExpression by copying the given left and right halves to
+ *          this ArithmeticExpression's left and right halves. This is done because an
+ *          an ArithmeticExpression contains more ArithmeticExpressions - it is a recursive object.
+ * \param   left The ArithmeticExpression to copy to this ArithmeticExpression's left half.
+ * \param   right The ArithmeticExpression to copy to this ArithmeticExpression's right half.
+ * \return  A new ArithmeticExpression.
+ *
+ */
+ArithmeticExpression::ArithmeticExpression(ArithmeticExpression& left, ArithmeticExpression& right)
 {
-    //ctor
+    this->left = new ArithmeticExpression(left); // Copy the given ArithmeticExpression to this ArithmeticExpression's left half
+    this->right = new ArithmeticExpression(right); // Copy the given Expression to this ArithmeticExpression's right half
 }
 
+/** \brief Destroys an ArithmeticExpression.
+ */
 ArithmeticExpression::~ArithmeticExpression()
 {
     delete this->left; // Delete the left half
     delete this->right; // Delete the right half
 }
 
-/*ArithmeticExpression::ArithmeticExpression(const ArithmeticExpression& other)
+/** \brief Copies a given ArithmeticExpression's left and right halves to this one.
+ *
+ * \param other The other ArithmeticExpression to copy from.
+ * \return A new ArithmeticExpression containing the other one's left and right halves.
+ *
+ */
+ArithmeticExpression::ArithmeticExpression(const ArithmeticExpression& other)
 {
-    this->left = new Expression(other->left); // Construct the left half of this expression
-    this->right = new Expression(other->right); // Construct the right half of this expression
-}*/
+    this->left = new ArithmeticExpression(other->left); // Construct the left half of this expression
+    this->right = new ArithmeticExpression(other->right); // Construct the right half of this expression
+}
 
 ArithmeticExpression& ArithmeticExpression::operator=(const ArithmeticExpression& rhs)
 {

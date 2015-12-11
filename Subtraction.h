@@ -6,10 +6,10 @@
 class Subtraction : public ArithmeticExpression
 {
     public:
-        /** Default constructor */
-        Subtraction();
+        /** Constructor */
+        Subtraction(Expression& left, Expression& right);
 
-        /** Default destructor */
+        /** Destructor */
         virtual ~Subtraction();
 
         /** Copy constructor

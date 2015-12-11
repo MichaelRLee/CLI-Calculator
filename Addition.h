@@ -8,7 +8,7 @@ class Addition : public ArithmeticExpression
 {
     public:
         /** Default constructor */
-        Addition();
+        Addition(ArithmeticExpression& left, ArithmeticExpression& right);
 
         /** Default destructor */
         virtual ~Addition();

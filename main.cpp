@@ -60,19 +60,21 @@ int main()
 
             if (isValidExpr(sInput)) // The expression is valid
             {
+                /* Remove extra brackets */
                 while(bracketLoc<sInput.length()) //going through each character of the output...
                 {
                     if (sInput[bracketLoc++]=='(')removeBrackets(sInput, bracketLoc); //find brackets and remove them if the ayre unnessicary
                 }
+
                 sInput=removeSpaces(sInput); //remove spaces
                 bracketLoc=0; //reset bracketLoc value
+
                 // DEBUGGING - Print affirmative statement
                 clog << "The expression \"" << sInput << "\" is valid" << endl;
             }
 
             else // The expression is invalid
             {
-                // DEBUGGING - Print negative statement
                 clog << "Expression is not well formed" << endl;
             }
 
@@ -403,4 +405,97 @@ string removeSpaces(string exp)
         }
     }
     return output;//return the output string
+}
+
+/** \brief  Builds an ArithmeticExpression object by parsing a string representing an arithmetic
+ *          expression. This function assumes that the string contains a valid arithmetic
+ *          expression.
+ * \param   str A reference to the string containing the arithmetic expression to parse and build.
+ * \return  A pointer to the expression object containing a representation of the expression
+ *
+ */
+ArithmeticExpression* strToExp(string &str)
+{
+    int level = 0;//inside parentheses check
+
+    //case + or -
+    //most right '+' or '-' (but not inside '()') search and split
+    for(int i=str.size()-1;i>=0;--i){
+        char c = str[i];
+        if(c == ')'){
+            ++level;
+            continue;
+        }
+        if(c == '('){
+            --level;
+            continue;
+        }
+        if(level>0) continue;
+        if((c == '+' || c == '-') && i!=0 ){//if i==0 then s[0] is sign
+            string left(str.substr(0,i));
+            string right(str.substr(i+1));
+            //return new Node(c, strToExp(left), strToExp(right));
+
+            if (c == '+') // Addition expression
+            {
+                return new Addition(strToExp(left), strToExp(right)); // Create a new Addition node
+            }
+
+            else if (c == '-') // Subtraction expression
+            {
+                return new Subtraction(strToExp(left), strToExp(right)); // Create a new Subtraction node
+            }
+        }
+    }
+    //case * or /
+    //most right '*' or '/' (but not inside '()') search and split
+    for(int i=str.size()-1;i>=0;--i){
+        char c = str[i];
+        if(c == ')'){
+            ++level;
+            continue;
+        }
+        if(c == '('){
+            --level;
+            continue;
+        }
+        if(level>0) continue;
+        if(c == '*' || c == '/'){
+            string left(str.substr(0,i));
+            string right(str.substr(i+1));
+            //return new Node(c, strToExp(left), strToExp(right));
+
+            if (c == '*') // Multiplication
+            {
+                return new Multiplication(strToExp(left), strToExp(right)); // Create a new Multiplication Expression with the left and right halves of the string
+            }
+
+            else if (c == '/') // Division
+            {
+                return new Division(strToExp(left), strToExp(right)); // Create a new Division node and return it
+            }
+        }
+    }
+    if(str[0]=='('){
+    //case ()
+    //pull out inside and to strToExp
+        for(int i=0;i<str.size();++i){
+            if(str[i]=='('){
+                ++level;
+                continue;
+            }
+            if(str[i]==')'){
+                --level;
+                if(level==0){
+                    string exp(str.substr(1, i-1));
+                    return strToExp(exp);
+                }
+                continue;
+            }
+        }
+    } else
+    //case value - This is a number
+        return new Number(str); // Create a new Number and return it - base case
+cerr << "Error:never execute point" << endl;
+    return NULL;//never
 }

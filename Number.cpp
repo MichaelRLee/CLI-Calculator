@@ -5,7 +5,7 @@ using namespace std;
 
 Number::Number(string num) // Constructor
 {
-    this->value = num; // Store the number
+    this->value = new string(num); // Store the number
 }
 
 Number::~Number() // Destructor
@@ -15,7 +15,7 @@ Number::~Number() // Destructor
 
 Number::Number(const Number& other) // Copy constructor
 {
-    this->value = other.value; // Copy the other number's value to this one
+    this->value = new string(other.value); // Copy the other number's value to this one
 }
 
 Number& Number::operator=(const Number& rhs) // Assignment

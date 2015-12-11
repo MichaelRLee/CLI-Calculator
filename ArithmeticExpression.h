@@ -7,7 +7,7 @@ class ArithmeticExpression : public Expression
 {
     public:
         /** Default constructor */
-        ArithmeticExpression();
+        ArithmeticExpression(ArithmeticExpression& left, ArithmeticExpression& right);
 
         /** Default destructor */
         virtual ~ArithmeticExpression();

@@ -6,8 +6,8 @@
 class Division : public ArithmeticExpression
 {
     public:
-        /** Default constructor */
-        Division();
+        /** Constructor. */
+        Division(Expression& left, Expression& right);
 
         /** Default destructor */
         virtual ~Division();

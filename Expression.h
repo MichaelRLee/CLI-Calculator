@@ -10,13 +10,18 @@
 #include <cstdlib> // atof
 #include <cstdio> // printf
 
+// Our classes
+
+class ArithmeticExpression;
+#include "ArithmeticExpression.h"
+
 using namespace std;
 
 class Expression
 {
     public:
-        /** Default constructor */
-        Expression();
+        /** Constructs an Expression containing an ArithmeticExpression. */
+        Expression(ArithmeticExpression& contained);
 
         /** Default destructor */
         virtual ~Expression();

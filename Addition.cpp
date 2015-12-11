@@ -1,23 +1,42 @@
 #include "Addition.h"
 
-Addition::Addition()
+/** \brief  Constructor.Creates a new Addition by copying two Expressions to its left and right
+ *          halves.
+ * \param left A pointer to the left half of the new Expression to create.
+ * \param right A pointer to the right half of the new Expression to create.
+ *
+ */
+Addition::Addition(ArithmeticExpression& left, ArithmeticExpression& right) : ArithmeticExpression(left, right)
 {
-    this->left = new Expression(); // Allocate memory for an Expression
-    this->right = new Expression(); // Allocate memory for an expression
+    this->left = new Expression(left); // Copy the given Expression to this Addition's left half
+    this->right = new Expression(right); // Copy the given Expression to this Addition's right half
 }
 
+/** \brief Destructor. Deletes this Addition and it's left and right halves
+ */
 Addition::~Addition()
 {
     delete this->left; // Delete the left Expression
     delete this->right; // Delete the right Expression
 }
 
-/*Addition::Addition(const Addition& other)
+/** \brief  Copy constructor. Copies another Addition's left and right halves to this one.
+ *
+ * \param   other The other Addition to copy.
+ *
+ */
+Addition::Addition(const Addition& other) : ArithmeticExpression(other)
 {
-    this->left = new Expression(other.left); // Copy the left half of the other Expression to this one
-    this->right = new Expression(other.right); // Copy the right half of the other Expression to this one
-}*/
+    this->left = new ArithmeticExpression(other.left); // Copy the left half of the other Expression to this one
+    this->right = new ArithmeticExpression(other.right); // Copy the right half of the other Expression to this one
+}
 
+/** \brief Assignment operator.
+ *
+ * \param rhs The other Addition to assign.
+ * \return A reference to an Addition.
+ *
+ */
 Addition& Addition::operator=(const Addition& rhs)
 {
     if (this == &rhs) return *this; // handle self assignment
@@ -32,9 +51,7 @@ string Addition::evaluate()
 {
     /**
     *   Since the left and right halves are themselves Expressions, we need to evaluate them before
-    *   combining them with an addition sign.
-    *
-    *   TODO: For each evaluate: check if it returns a number. If they do, convert the numbers to strings, add them, convert the result back to a string, and return that.
+    *   returning the result/
     **/
     //return left->evaluate() + "+" + right->evaluate();
     string lNumStr = left->evaluate(); // Get the number from the left half of the expression
@@ -50,5 +67,5 @@ string Addition::evaluate()
 */
 void Addition::print()
 {
-    cout << left->evaluate() + "+" + right->evaluate(); // Print the evaluated left and right halves, separated by a '+'
+    cout << left->print() + "+" + right->print(); // Print the left and right halves, separated by a '+'
 }

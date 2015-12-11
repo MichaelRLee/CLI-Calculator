@@ -1,9 +1,15 @@
 #include "Subtraction.h"
 
-Subtraction::Subtraction()
+/** \brief Creates a new Subtraction by copying the given left and right halves to this
+ *         Subtraction's left and right halves.
+ * \param left The Expression which will be copied to the left half of this Subtraction.
+ * \param right The Expression which will be copied to the right half of this Subtraction.
+ *
+ */
+Subtraction::Subtraction(Expression& left, Expression& right)
 {
-    this->left = new Expression(); // Create the left half
-    this->right = new Expression(); // Create the right half.
+    this->left = new Expression(left); // Copy the given Expression to this Subtraction's left half
+    this->right = new Expression(right); // Copy the given Expression to this Subtraction's right half
 }
 
 Subtraction::~Subtraction()
@@ -15,8 +21,8 @@ Subtraction::~Subtraction()
 Subtraction::Subtraction(const Subtraction& other)
 {
     //this = new ArithmeticExpression(); // Initialise the base class
-    this->left = other.left; // Copy the left half
-    this->right = other.right; // Copy the right half
+    this->left = new Expression(other.left); // Copy the left half
+    this->right = new Expression(other.right); // Copy the right half
 }
 
 Subtraction& Subtraction::operator=(const Subtraction& rhs)
@@ -44,5 +50,5 @@ string Subtraction::evaluate()
 */
 void Subtraction::print()
 {
-    cout << this->evaluate(); //prints evaluated expression
+    cout << left->print() + "-" + right->print(); // Prints the left and right halves of the subtraction, separated by a minus sign
 }
