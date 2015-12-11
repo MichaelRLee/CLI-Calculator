@@ -25,11 +25,14 @@ using namespace std;
 string nextToken(string toParse, int* startPos); // Tokenizer function
 bool isValidExpr(string expr); // Determines whether an expression is valid, using the tokenizer
 bool checkOpp(string exp); //check if expression is arithmetically correct
+void removeBrackets(string& exp, size_t &strIndex); //removes unnessicary brackets from expression
+int bracketCount (string exp, bool retNum);  //counts brackets and returns based on boolean;
 
 int main()
 {
     bool reading = true; // Controls input loop
     char input[256]; // The user input
+    size_t bracketLoc=0;
     //ArithmeticExpression ae = new ArithmeticExpression(); // Create the top-level expression
     string curToken; // The current token in the expression
     string sInput; // String which represents the input
@@ -58,6 +61,9 @@ int main()
             {
                 // DEBUGGING - Print affirmative statement
                 clog << "The expression \"" << sInput << "\" is valid" << endl;
+                while(sInput[bracketLoc++]!='(');
+                removeBrackets(sInput, bracketLoc);
+                //TODO remove spaces
             }
 
             else // The expression is invalid
@@ -68,6 +74,30 @@ int main()
 
             clog << endl;
         }
+    }
+}
+
+int bracketCount(string exp, bool retNum)
+{
+    int numLBracket = 0;
+    int numRBracket = 0;
+    for (size_t i = 0; i<exp.length(); i++)
+    {
+        if (exp[i]=='(')
+        {
+            numLBracket++;
+        }
+        else if (exp [i] == ')')
+        {
+            numRBracket++;
+        }
+    }
+    if (retNum==true)
+    {
+        return numLBracket;
+    }else
+    {
+        return numLBracket-numRBracket;
     }
 }
 
@@ -83,7 +113,6 @@ bool isValidExpr(string expr)
     string curToken; // The current token in the string
     int curSPos = 0; // The current position in the string
     int oldSPos = 0; // The old position in the string
-    bool toReturn = true; // The value to return to the caller - true if the expression is valid, false otherwise
 
     curToken = nextToken(expr, &curSPos); // Priming read - get the first token
 
@@ -91,8 +120,7 @@ bool isValidExpr(string expr)
     {
         if (curToken == "INVALID") // Found an invalid token
         {
-            toReturn = false; // No need to look further - the expression is invalid
-            break;
+            return false; // No need to look further - the expression is invalid
         }
 
         else
@@ -118,52 +146,43 @@ bool isValidExpr(string expr)
 
 bool checkOpp (string exp)
 {
-    int numBrackets = 0;
-
     if (!(exp[0] == '(' || isdigit(exp[0] ))) //check if the first character is a number or an open bracket
     {
+        cout << "Invalid Start";
         return false; //return false if it isn't
     }
 
     if (!(exp[exp.length()-1] == ')' || isdigit(exp[exp.length()-1]))) //check if the last character is a number or an close bracket
     {
+        cout << "Invalid end"<<endl;
         return false; //return false if it isn't
     }
 
-    if (exp[exp.length()-1] == ')')
-    {
-        numBrackets--;
-    }
-
     for (size_t i = 0; i< exp.length()-1; i++){ // go through the string checking the character at the index and at the index++ for proper formatting
-        if (exp[i]=='(')
-        {
-            numBrackets++;
-        }
-        else if (exp [i] == ')')
-        {
-            numBrackets--;
-        }
-        if ((exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/') && !(exp [i+1] = '(' || isdigit (exp[i+1])))
+        if ((exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/') && !(exp [i+1] == '(' || isdigit (exp[i+1])))
                 //if the character is an arithmetic opperation, the next character must be an open bracket or a number
         {
+            cout << "Invalid token after opperator"<<endl;
             return false; //return false if the next character is not
         }
-        else if (exp [i] == '(' && !(exp [i+1] = '(' || isdigit (exp[i+1]) || exp [i+1] == '-')) //if the character is an open bracket, the next character
+        else if (exp [i] == '(' && !(exp [i+1] == '(' || isdigit (exp[i+1]) || exp [i+1] == '-')) //if the character is an open bracket, the next character
                               //must be another open bracket, a number, or a - (for negatives)
         {
+            cout << "Invalid token after open bracket"<<endl;
             return false; //return false if the next character isn't
         }
-        else if (exp [i] == ')' && (exp [i+1] = '(' || isdigit (exp[i+1]))) //if the char is a closed bracket, next char can't be an open bracket or number
+        else if (exp [i] == ')' && (exp [i+1] == '(' || isdigit (exp[i+1]))) //if the char is a closed bracket, next char can't be an open bracket or number
         {
+            cout << "invalid token after end bracket" << endl;
             return false;//return false if it is
         }
-        else if (exp [i+1]== '(')//only numbers are left, and the next character can't be an open bracket
+        else if (isdigit(exp[i]) && exp [i+1]== '(')//only numbers are left, and the next character can't be an open bracket
         {
+            cout << "invalid token after number"<<endl;
             return false ; //return false if it is
         }
     }
-    return (numBrackets==0); //if the string passed all the tests, it is valid, and true is returned
+    return (bracketCount(exp, false)==0); //if the string passed all the tests, it is valid, and true is returned
 }
 
 
@@ -211,7 +230,7 @@ string nextToken(string toParse, int* startPos)
         }
     }
 
-    else if (sPos == toParse.length()) // We have reached the end of the string
+    else if ((unsigned)sPos == toParse.length()) // We have reached the end of the string
     {
         tokStr = "END"; // Signal the end of the string
     }
@@ -258,4 +277,29 @@ int precedence(string node)
     {
         return 0;
     }
+    return -1;
 }
+
+void removeBrackets(string& exp, size_t& strIndex)
+{
+    bool hasOpp=false;
+    size_t bracketIndex = strIndex-1;
+    while (strIndex<exp.length() && exp[strIndex]!=')')
+    {
+        if (exp[strIndex]=='+' || exp[strIndex]=='-' || exp[strIndex]=='*' || exp[strIndex]=='/')
+        {
+            hasOpp=true;
+        }
+        else if (exp [strIndex]=='(')
+        {
+            removeBrackets(exp, ++strIndex);
+        }
+        strIndex++;
+    }
+    if (!hasOpp)
+    {
+        exp[bracketIndex]=' ';
+        exp[strIndex]=' ';
+    }
+}
+
