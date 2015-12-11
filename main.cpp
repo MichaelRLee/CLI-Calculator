@@ -62,8 +62,8 @@ int main()
             {
                 while(sInput[bracketLoc++]!='('&&bracketLoc<sInput.length()); //gets the index after the first bracket
                 removeBrackets(sInput, bracketLoc); //function to remove unnessicary brackets
-                sInput=removeSpaces(sInput);
-                bracketLoc=0;
+                sInput=removeSpaces(sInput); //remove spaces
+                bracketLoc=0; //reset bracketLoc value
                 // DEBUGGING - Print affirmative statement
                 clog << "The expression \"" << sInput << "\" is valid" << endl;
             }
@@ -87,25 +87,26 @@ int main()
  */
 int bracketCount(string exp, bool retNum)
 {
-    int numLBracket = 0;
-    int numRBracket = 0;
-    for (size_t i = 0; i<exp.length(); i++)
+    int numLBracket = 0; //number of openning brackets
+    int numRBracket = 0; //numberof closing brackets
+    for (size_t i = 0; i<exp.length(); i++) //for each character in exp
     {
-        if (exp[i]=='(')
+        if (exp[i]=='(') //if the char is a '('
         {
-            numLBracket++;
+            numLBracket++; //add 1
         }
-        else if (exp [i] == ')')
+        else if (exp [i] == ')')//if char is ')'
         {
-            numRBracket++;
+            numRBracket++;//add 1
         }
     }
-    if (retNum==true)
+    if (retNum==true)//if we are returning the number of brackets
     {
-        return numLBracket;
-    }else
+        return numLBracket;//return number of brackets
+    }
+    else//otherwise
     {
-        return numLBracket-numRBracket;
+        return numLBracket-numRBracket; //return difference
     }
 }
 
@@ -383,16 +384,21 @@ void removeBrackets(string& exp, size_t& strIndex)
         exp[strIndex]=' ';//replace the closing brackets with a space
     }
 }
-
+/** \brief Returns a string with all spaces removed from it.
+ *
+ * \param string exp - input string to be stripped of spaces
+ * \return String exp with all space characters removed.
+ *
+ */
 string removeSpaces(string exp)
 {
-    string output="";
-    for (size_t i =0; i<exp.length();i++)
+    string output=""; //output string
+    for (size_t i =0; i<exp.length();i++)//for each character in the string
     {
-        if (exp[i]!=' ')
+        if (exp[i]!=' ')//if the character is not a space
         {
-            output+=exp[i];
+            output+=exp[i];//add the character to the output string
         }
     }
-    return output;
+    return output;//return the output string
 }
