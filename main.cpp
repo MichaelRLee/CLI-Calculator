@@ -42,9 +42,9 @@ int main()
     {
         cout << "Please enter an expression: "; // Print the prompt for the user
         cin.getline(input, sizeof(input)); // Get a line from the user
-        clog << "main: input = \"" << input << "\" after assignment" << endl; // DEBUGGING
+        cout << "main: input = \"" << input << "\" after assignment" << endl; // DEBUGGING
         sInput.assign(input); // Convert the C string to a string
-        clog << "main: sInput = \"" << sInput << "\" after assignment" << endl; // DEBUGGING
+        cout << "main: sInput = \"" << sInput << "\" after assignment" << endl; // DEBUGGING
 
         if (!strcmp(input, "#")) // Check for the input which terminates the program (#)
         {
