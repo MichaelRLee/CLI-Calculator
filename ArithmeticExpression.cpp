@@ -8,10 +8,10 @@
  * \return  A new ArithmeticExpression.
  *
  */
-ArithmeticExpression::ArithmeticExpression(ArithmeticExpression& left, ArithmeticExpression& right)
+ArithmeticExpression::ArithmeticExpression(Expression& left, Expression& right)
 {
-    this->left = new ArithmeticExpression(left); // Copy the given ArithmeticExpression to this ArithmeticExpression's left half
-    this->right = new ArithmeticExpression(right); // Copy the given Expression to this ArithmeticExpression's right half
+    this->left = new Expression(left); // Copy the given ArithmeticExpression to this ArithmeticExpression's left half
+    this->right = new Expression(right); // Copy the given Expression to this ArithmeticExpression's right half
 }
 
 /** \brief Destroys an ArithmeticExpression.
@@ -30,8 +30,8 @@ ArithmeticExpression::~ArithmeticExpression()
  */
 ArithmeticExpression::ArithmeticExpression(const ArithmeticExpression& other)
 {
-    this->left = new ArithmeticExpression(other->left); // Construct the left half of this expression
-    this->right = new ArithmeticExpression(other->right); // Construct the right half of this expression
+    this->left = new ArithmeticExpression(other.left, nullptr); // Construct the left half of this expression
+    this->right = new ArithmeticExpression(other.right, nullptr); // Construct the right half of this expression
 }
 
 ArithmeticExpression& ArithmeticExpression::operator=(const ArithmeticExpression& rhs)

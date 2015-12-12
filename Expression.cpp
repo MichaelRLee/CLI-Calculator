@@ -1,11 +1,18 @@
 #include "Expression.h"
 
-/** \brief  Constructor. Creates a new Expression containing an ArithmeticExpression by
+/** \brief  Constructor 1. Creates a new Expression containing an ArithmeticExpression by
  *          assigning it to this Expression's private variable.
  */
 Expression::Expression(ArithmeticExpression& contained)
 {
     this->contained = new ArithmeticExpression(contained); // Copy the ArithmeticExpression to this Expression's container
+}
+
+
+/** \brief  Constructor 2. Builds an Expression object with an empty ArithmeticExpression.
+ */
+Expression::Expression()
+{
 }
 
 /** \brief Destructor. Destroys an Expression object by deleting it's left and right halves.

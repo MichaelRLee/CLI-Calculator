@@ -22,14 +22,14 @@ Addition::~Addition()
 
 /** \brief  Copy constructor. Copies another Addition's left and right halves to this one.
  *
- * \param   other The other Addition to copy.
+ * \param   other The other Additiown to copy.
  *
  */
-Addition::Addition(const Addition& other) : ArithmeticExpression(other)
+/*Addition::Addition(const Addition& other) : ArithmeticExpression(other)
 {
-    this->left = new ArithmeticExpression(other.left); // Copy the left half of the other Expression to this one
-    this->right = new ArithmeticExpression(other.right); // Copy the right half of the other Expression to this one
-}
+    this->left = new Expression(other.left); // Copy the left half of the other Expression to this one
+    this->right = new Expression(other.right); // Copy the right half of the other Expression to this one
+}*/
 
 /** \brief Assignment operator.
  *
@@ -67,5 +67,7 @@ string Addition::evaluate()
 */
 void Addition::print()
 {
-    cout << left->print() + "+" + right->print(); // Print the left and right halves, separated by a '+'
+    left->print(); // Print the left half of the expression
+    cout << "+"; // Print the plus sign
+    right->print(); // Print the right half of the expression
 }

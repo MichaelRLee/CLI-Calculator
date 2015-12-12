@@ -20,6 +20,9 @@ using namespace std;
 class Expression
 {
     public:
+        /** Constructs an Expression with a null ArithmeticExpression **/
+        Expression();
+
         /** Constructs an Expression containing an ArithmeticExpression. */
         Expression(ArithmeticExpression& contained);
 
@@ -41,6 +44,7 @@ class Expression
         virtual void print(); // Prints the evaluated expression
     protected:
     private:
+        ArithmeticExpression* contained; // The ArithmeticExpression contained inside this Expression
 };
 
 #endif // EXPRESSION_H
