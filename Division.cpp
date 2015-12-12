@@ -1,18 +1,15 @@
 #include "Division.h"
 
-Division::Division()
-{
-    //ctor
-}
+Division::Division(Expression* left, Expression* right):ArithmeticExpression(left,right){}
 
 Division::~Division()
 {
-    //dtor
+    delete left;
+    delete right;
 }
 
-Division::Division(const Division& other)
+Division::Division(const Division& other): ArithmeticExpression(other)
 {
-    //copy ctor
 }
 
 Division& Division::operator=(const Division& rhs)
@@ -27,12 +24,18 @@ Division& Division::operator=(const Division& rhs)
 */
 string Division::evaluate()
 {
-    return left->evaluate() + "/" + right->evaluate(); // Dummy code
+    string lEval = left->evaluate(); // Store the evaluated left half
+    string rEval = right->evaluate(); // Store the evaluated right half
+    float lNum = this->convert(lEval); // Convert the evaluated left half to a float
+    float rNum = this->convert(rEval); // Convert the evaluated right half to a float
+    stringstream ss; // Stringstream for converted a float to a string
+    ss << lNum/rNum; // Store the quotient of the 2 halves in the stringstream
+    return ss.str(); // Convert the quotient to a string and return it
 }
 
 /** \brief Prints the expression.
 */
 void Division::print()
 {
-    cout<<this->evaluate(); // Dummy code
+    cout<< this->evaluate(); // Dummy code
 }

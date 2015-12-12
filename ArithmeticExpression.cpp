@@ -1,9 +1,8 @@
 #include "ArithmeticExpression.h"
 
-ArithmeticExpression::ArithmeticExpression()
-{
-    //ctor
-}
+ArithmeticExpression::ArithmeticExpression(Expression* left, Expression* right):left(left), right (right){}
+
+ArithmeticExpression::ArithmeticExpression(Expression* finalExp):left(finalExp){}
 
 ArithmeticExpression::~ArithmeticExpression()
 {
@@ -27,14 +26,14 @@ ArithmeticExpression& ArithmeticExpression::operator=(const ArithmeticExpression
 */
 string ArithmeticExpression::evaluate()
 {
-    return ""; // Dummy code
+    return left->evaluate(); // Evaluate the left half of the Expression
 }
 
 /** \brief Prints the evaluated expression.
 */
 void ArithmeticExpression::print()
 {
-    int i = 1; // Dummy code
+    left->print();
 }
 
 /** \brief Converts a string (as returned by evaluate) to a float.

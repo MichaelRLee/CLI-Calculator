@@ -8,7 +8,7 @@
 class Multiplication : public ArithmeticExpression
 {
     public:
-        Multiplication();
+        Multiplication(Expression* left, Expression* right);
 
         virtual ~Multiplication();
 

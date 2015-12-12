@@ -7,7 +7,7 @@ class Subtraction : public ArithmeticExpression
 {
     public:
         /** Default constructor */
-        Subtraction();
+        Subtraction(Expression* left, Expression* right);
 
         /** Default destructor */
         virtual ~Subtraction();
