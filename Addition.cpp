@@ -36,5 +36,5 @@ string Addition::evaluate()
 */
 void Addition::print()
 {
-    cout << "(" << this->evaluate() << ")"; // Print the evaluated expression
+    cout << this->evaluate(); // Print the evaluated expression
 }

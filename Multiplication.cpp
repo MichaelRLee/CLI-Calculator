@@ -18,12 +18,15 @@ Multiplication& Multiplication::operator=(const Multiplication& rhs)
     return *this;
 }
 
+
 string Multiplication::evaluate()
 {
     return left->evaluate() + "*" + right->evaluate();
 }
 
+
+
 void Multiplication::print()
 {
-    cout << "(" << this->evaluate() << ")";
+    cout << this->evaluate();
 }

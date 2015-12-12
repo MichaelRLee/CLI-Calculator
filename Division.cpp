@@ -31,5 +31,5 @@ string Division::evaluate()
 */
 void Division::print()
 {
-    cout<< "(" << this->evaluate() << ")"; // Dummy code
+    cout<< this->evaluate(); // Dummy code
 }

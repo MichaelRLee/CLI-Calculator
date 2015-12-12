@@ -407,7 +407,6 @@ string removeSpaces(string exp)
 }
 
 Expression* strToExp(string &str){
-    cout << str << endl;
     int level = 0;//inside parentheses check
     //case + or -
     //most right '+' or '-' (but not inside '()') search and split
@@ -448,10 +447,10 @@ Expression* strToExp(string &str){
             string left(str.substr(0,i));
             string right(str.substr(i+1));
             return new Multiplication(strToExp(left), strToExp(right));
-        }else if (str[i] == '/'){
+        }else if(str[i] == '/'){
             string left(str.substr(0,i));
-            string right(str.substr(0+i));
-            return new Division(strToExp(left),strToExp(right));
+            string right(str.substr(i+1));
+            return new Division(strToExp(left), strToExp(right));
         }
     }
     if(str[0]=='('){

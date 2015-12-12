@@ -32,5 +32,5 @@ string Subtraction::evaluate()
 */
 void Subtraction::print()
 {
-    cout << "(" << this->evaluate() << ")"; //prints evaluated expression
+    cout << this->evaluate(); //prints evaluated expression
 }
