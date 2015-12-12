@@ -1,18 +1,15 @@
 #include "Multiplication.h"
 
-Multiplication::Multiplication()
-{
-    //ctor
-}
+Multiplication::Multiplication(Expression* left, Expression* right):ArithmeticExpression(left,right){}
 
 Multiplication::~Multiplication()
 {
-    //dtor
+    delete left;
+    delete right;
 }
 
 Multiplication::Multiplication(const Multiplication& other)
 {
-    //copy ctor
 }
 
 Multiplication& Multiplication::operator=(const Multiplication& rhs)
@@ -28,5 +25,5 @@ string Multiplication::evaluate()
 
 void Multiplication::print()
 {
-    cout << this->evaluate();
+    cout << "(" << this->evaluate() << ")";
 }

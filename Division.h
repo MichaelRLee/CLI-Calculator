@@ -7,7 +7,7 @@ class Division : public ArithmeticExpression
 {
     public:
         /** Default constructor */
-        Division();
+        Division(Expression* left, Expression* right);
 
         /** Default destructor */
         virtual ~Division();

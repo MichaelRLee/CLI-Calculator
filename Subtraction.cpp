@@ -1,18 +1,16 @@
 #include "Subtraction.h"
 
-Subtraction::Subtraction()
-{
-    //ctor
-}
+Subtraction::Subtraction(Expression* left, Expression* right):ArithmeticExpression(left,right){}
 
 Subtraction::~Subtraction()
 {
-    //dtor
+    delete left;
+    delete right;
 }
 
 Subtraction::Subtraction(const Subtraction& other)
 {
-    //copy ctor
+
 }
 
 Subtraction& Subtraction::operator=(const Subtraction& rhs)
@@ -34,5 +32,5 @@ string Subtraction::evaluate()
 */
 void Subtraction::print()
 {
-    cout << this->evaluate(); //prints evaluated expression
+    cout << "(" << this->evaluate() << ")"; //prints evaluated expression
 }

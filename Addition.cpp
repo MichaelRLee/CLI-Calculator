@@ -1,18 +1,16 @@
 #include "Addition.h"
 
-Addition::Addition()
-{
-    //ctor
-}
+Addition::Addition(Expression* left, Expression* right):ArithmeticExpression(left,right){}
 
 Addition::~Addition()
 {
-    //dtor
+    delete left;
+    delete right;
 }
 
-Addition::Addition(const Addition& other)
+Addition::Addition(const Addition& other):ArithmeticExpression(other)
 {
-    //copy ctor
+
 }
 
 Addition& Addition::operator=(const Addition& rhs)
@@ -38,5 +36,5 @@ string Addition::evaluate()
 */
 void Addition::print()
 {
-    cout << this->evaluate(); // Print the evaluated expression
+    cout << "(" << this->evaluate() << ")"; // Print the evaluated expression
 }

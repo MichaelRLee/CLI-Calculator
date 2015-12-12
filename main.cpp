@@ -28,6 +28,7 @@ bool checkOpp(string exp); //check if expression is arithmetically correct
 void removeBrackets(string& exp, size_t &strIndex); //removes unnessicary brackets from expression
 int bracketCount (string exp, bool retNum);  //counts brackets and returns based on boolean;
 string removeSpaces (string exp); //removes spaces from expression
+Expression* strToExp(string& str);
 
 int main()
 {
@@ -37,14 +38,13 @@ int main()
     //ArithmeticExpression ae = new ArithmeticExpression(); // Create the top-level expression
     string curToken; // The current token in the expression
     string sInput; // String which represents the input
+    Expression aExp;
 
     while (reading) // Read until user quits
     {
         cout << "Please enter an expression: "; // Print the prompt for the user
         cin.getline(input, sizeof(input)); // Get a line from the user
-        clog << "main: input = \"" << input << "\" after assignment" << endl; // DEBUGGING
         sInput.assign(input); // Convert the C string to a string
-        clog << "main: sInput = \"" << sInput << "\" after assignment" << endl; // DEBUGGING
 
         if (!strcmp(input, "#")) // Check for the input which terminates the program (#)
         {
@@ -53,7 +53,7 @@ int main()
 
         /**
         * The user's input was not a message to quit, so we need to first validate and then parse the expression.
-        **/
+        */
         else
         {
             /* Check if the expression is valid */
@@ -67,7 +67,8 @@ int main()
                 sInput=removeSpaces(sInput); //remove spaces
                 bracketLoc=0; //reset bracketLoc value
                 // DEBUGGING - Print affirmative statement
-                clog << "The expression \"" << sInput << "\" is valid" << endl;
+                //clog << "The expression \"" << sInput << "\" is valid" << endl;
+                aExp = new ArithmeticExpression(strToExp(sInput));
             }
 
             else // The expression is invalid
@@ -120,15 +121,13 @@ int bracketCount(string exp, bool retNum)
  */
 bool isAllSpaces(string toCheck)
 {
-    int i; // Current position in the string
+    //cout << "toCheck = \"" << toCheck << "\"" << endl;
 
-    cout << "toCheck = \"" << toCheck << "\"" << endl;
-
-    for (i = 0; i < toCheck.length(); i++) // Loop through the string
+    for (size_t i = 0; i < toCheck.length(); i++) // Loop through the string
     {
         if (!isspace(toCheck[i])) // If the current character isn't whitespace, we can stop looking
         {
-            cout << "isAllSpaces: found non-whitespace character at position " << i << endl;
+            //cout << "isAllSpaces: found non-whitespace character at position " << i << endl;
             return false; // The string doesn't contain only whitespace characters
         }
     }
@@ -136,6 +135,8 @@ bool isAllSpaces(string toCheck)
     cout << "isAllSpaces - returning true" << endl;
     return true; // If we got here, the string contained only whitespace characters
 }
+
+
 
 /** \brief Determines whether a given string contains only numeric characters (i.e. it is a valid integer)
  *
@@ -145,15 +146,13 @@ bool isAllSpaces(string toCheck)
  */
 bool isNumericString(string toCheck)
 {
-    int i; // Loop counter
-
     if (toCheck == "") // Empty string
     {
         return false; // An empty string isn't a valid number
     }
 
     // If we got here, the string isn't empty
-    for (i = 0; i < toCheck.length(); i++) // Loop through the string
+    for (size_t i = 0; i < toCheck.length(); i++) // Loop through the string
     {
         if (!isdigit(toCheck[i])) // If the current character isn't a digit, the string doesn't represent a numeric string
         {
@@ -174,7 +173,7 @@ bool isValidExpr(string expr)
 {
     string curToken; // The current token in the string
     int curSPos = 0; // The current position in the string
-    int oldSPos = 0; // The old position in the string
+    //int oldSPos = 0; // The old position in the string
     string prevToken = ""; // Holds the token from 1 parse ago
     string befPrevToken = ""; // Holds the token from 2 parses ago
 
@@ -191,29 +190,29 @@ bool isValidExpr(string expr)
 
         else if (isNumericString(befPrevToken) && isAllSpaces(prevToken) && isNumericString(curToken)) // A sequence of "(number)(space)(number)"
         {
-            cout << "Returning false in if 2" << endl << "isNumericString(" << befPrevToken << ") = " << isNumericString(befPrevToken) << endl << "isAllSpaces(\"" << prevToken << "\") = " << isAllSpaces(prevToken) << endl << "isNumericString(" << curToken << ") = " << isNumericString(curToken) << endl;
+            //cout << "Returning false in if 2" << endl << "isNumericString(" << befPrevToken << ") = " << isNumericString(befPrevToken) << endl << "isAllSpaces(\"" << prevToken << "\") = " << isAllSpaces(prevToken) << endl << "isNumericString(" << curToken << ") = " << isNumericString(curToken) << endl;
             return false; // No need to look further
         }
 
         else
         {
             // DEBUGGING
-            cout << "isValidExpr: Token at position " << oldSPos << " = \"" << curToken << "\"" << endl; // Print the token
+            //cout << "isValidExpr: Token at position " << oldSPos << " = \"" << curToken << "\"" << endl; // Print the token
 
             // DEBUGGING
-            cout << "isValidExpr: After assignment, oldSpos = " << oldSPos << endl;
+            //cout << "isValidExpr: After assignment, oldSpos = " << oldSPos << endl;
 
             // DEBUGGING
-            cout << endl << endl;
+            //cout << endl << endl;
         }
 
-        oldSPos = curSPos; // Store old position in string for next loop
+        //oldSPos = curSPos; // Store old position in string for next loop
         befPrevToken = prevToken; // Store the token from 2 parses ago for use in the next loop
         prevToken = curToken; // Store the old token for use in the next loop
         curToken = nextToken(expr, &curSPos); // Get the next token
-        clog << "isValidExpr: befPrevToken = \"" << befPrevToken << "\", prevToken = \"" << prevToken << "\", curToken = \"" << curToken << "\" at the end of the loop" << endl;
+        //clog << "isValidExpr: befPrevToken = \"" << befPrevToken << "\", prevToken = \"" << prevToken << "\", curToken = \"" << curToken << "\" at the end of the loop" << endl;
     }
-    cout << "checkOpp(\"" << expr << "\") = " << checkOpp(expr) << endl;
+    //cout << "checkOpp(\"" << expr << "\") = " << checkOpp(expr) << endl;
     return checkOpp(expr); // Check the string
 }
 
@@ -403,4 +402,75 @@ string removeSpaces(string exp)
         }
     }
     return output;//return the output string
+}
+
+Expression* strToExp(string &str){
+    int level = 0;//inside parentheses check
+    //case + or -
+    //most right '+' or '-' (but not inside '()') search and split
+    for(int i = str.size()-1;i>=0;--i){
+        if(str[i] == ')'){
+            ++level;
+            continue;
+        }
+        if(str[i] == '('){
+            --level;
+            continue;
+        }
+        if(level>0) continue;
+        if (str[i] == '+'){
+            string left(str.substr(0,i));
+            string right(str.substr(i+1));
+            return new Addition (strToExp(left),strToExp(right);
+        } else if (str[i] == '-'){
+            string left(str.substr(0,i));
+            string right(str.substr(i+1));
+            return new Subtraction (strToExp(left),strToExp(right));
+        }
+    }
+    //case * or /
+    //most right '*' or '/' (but not inside '()') search and split
+    for(size_t i= str.size()-1; i>=0;++i){
+        if(str[i] == ')'){
+            ++level;
+            continue;
+        }
+        if(str[i] == '('){
+            --level;
+            continue;
+        }
+        if(level>0) continue;
+        if(str[i] == '*'){
+            string left(str.substr(0,i));
+            string right(str.substr(i+1));
+            return new Multiplication(strToExp(left), strToExp(right));
+        }else if (str[i] == '/'){
+            string left(str.substr(0,i));
+            string right(str.substr(0+i));
+            return new Division(strToExp(left),strToExp(right));
+        }
+    }
+    if(str[0]=='('){
+    //case ()
+    //pull out inside and to strToExp
+        for(int i=0;i<str.size();++i){
+            if(str[i]=='('){
+                ++level;
+                continue;
+            }
+            if(str[i]==')'){
+                --level;
+                if(level==0){
+                    string exp(str.substr(1, i-1));
+                    return strToExp(exp);
+                }
+                continue;
+            }
+        }
+    } else{
+        //case value
+        return new Number(str);
+    }
+    cerr << "Error:never execute point" << endl;
+    return NULL;//never
 }

@@ -1,18 +1,15 @@
 #include "Division.h"
 
-Division::Division()
-{
-    //ctor
-}
+Division::Division(Expression* left, Expression* right):ArithmeticExpression(left,right){}
 
 Division::~Division()
 {
-    //dtor
+    delete left;
+    delete right;
 }
 
-Division::Division(const Division& other)
+Division::Division(const Division& other): ArithmeticExpression(other)
 {
-    //copy ctor
 }
 
 Division& Division::operator=(const Division& rhs)
@@ -34,5 +31,5 @@ string Division::evaluate()
 */
 void Division::print()
 {
-    cout<<this->evaluate(); // Dummy code
+    cout<< "(" << this->evaluate() << ")"; // Dummy code
 }

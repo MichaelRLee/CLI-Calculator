@@ -3,10 +3,7 @@
 #include <cstdlib> // atof
 using namespace std;
 
-Number::Number(string num) // Constructor
-{
-    this->value = num; // Store the number
-}
+Number::Number(string v):value(v){}
 
 Number::~Number() // Destructor
 {

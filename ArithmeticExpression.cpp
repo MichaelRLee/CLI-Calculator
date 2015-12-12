@@ -1,9 +1,6 @@
 #include "ArithmeticExpression.h"
 
-ArithmeticExpression::ArithmeticExpression()
-{
-    //ctor
-}
+ArithmeticExpression::ArithmeticExpression(Expression* left, Expression* right):left(left), right (right){}
 
 ArithmeticExpression::~ArithmeticExpression()
 {
