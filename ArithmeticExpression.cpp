@@ -2,6 +2,8 @@
 
 ArithmeticExpression::ArithmeticExpression(Expression* left, Expression* right):left(left), right (right){}
 
+ArithmeticExpression::ArithmeticExpression(Expression* finalExp):left(finalExp){};
+
 ArithmeticExpression::~ArithmeticExpression()
 {
     //dtor
@@ -31,7 +33,7 @@ string ArithmeticExpression::evaluate()
 */
 void ArithmeticExpression::print()
 {
-    int i = 1; // Dummy code
+    left->print();
 }
 
 /** \brief Converts a string (as returned by evaluate) to a float.

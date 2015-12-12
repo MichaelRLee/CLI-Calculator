@@ -8,7 +8,7 @@ Multiplication::~Multiplication()
     delete right;
 }
 
-Multiplication::Multiplication(const Multiplication& other)
+Multiplication::Multiplication(const Multiplication& other):ArithmeticExpression(other)
 {
 }
 

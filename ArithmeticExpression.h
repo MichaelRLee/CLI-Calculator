@@ -8,7 +8,11 @@ class ArithmeticExpression : public Expression
     public:
 
         /** Default constructor */
+        ArithmeticExpression () {}
+
         ArithmeticExpression(Expression* left, Expression* right);
+
+        ArithmeticExpression(Expression* finalExp);
 
         /** Default destructor */
         virtual ~ArithmeticExpression();

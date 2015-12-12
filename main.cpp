@@ -69,6 +69,7 @@ int main()
                 // DEBUGGING - Print affirmative statement
                 //clog << "The expression \"" << sInput << "\" is valid" << endl;
                 aExp = new ArithmeticExpression(strToExp(sInput));
+                aExp.print();
             }
 
             else // The expression is invalid
@@ -421,7 +422,7 @@ Expression* strToExp(string &str){
         if (str[i] == '+'){
             string left(str.substr(0,i));
             string right(str.substr(i+1));
-            return new Addition (strToExp(left),strToExp(right);
+            return new Addition (strToExp(left),strToExp(right));
         } else if (str[i] == '-'){
             string left(str.substr(0,i));
             string right(str.substr(i+1));
@@ -453,7 +454,7 @@ Expression* strToExp(string &str){
     if(str[0]=='('){
     //case ()
     //pull out inside and to strToExp
-        for(int i=0;i<str.size();++i){
+        for(size_t i=0;i<str.size();++i){
             if(str[i]=='('){
                 ++level;
                 continue;
