@@ -68,8 +68,9 @@ int main()
                 bracketLoc=0; //reset bracketLoc value
                 // DEBUGGING - Print affirmative statement
                 //clog << "The expression \"" << sInput << "\" is valid" << endl;
-                aExp = new ArithmeticExpression(strToExp(sInput));
-                aExp.print();
+                strToExp(sInput)->print();
+                //aExp = new ArithmeticExpression(strToExp(sInput));
+                //aExp.print();
             }
 
             else // The expression is invalid
@@ -406,6 +407,7 @@ string removeSpaces(string exp)
 }
 
 Expression* strToExp(string &str){
+    cout << str << endl;
     int level = 0;//inside parentheses check
     //case + or -
     //most right '+' or '-' (but not inside '()') search and split
@@ -429,9 +431,10 @@ Expression* strToExp(string &str){
             return new Subtraction (strToExp(left),strToExp(right));
         }
     }
+
     //case * or /
     //most right '*' or '/' (but not inside '()') search and split
-    for(size_t i= str.size()-1; i>=0;++i){
+    for(int i= str.size()-1; i>=0;--i){
         if(str[i] == ')'){
             ++level;
             continue;
