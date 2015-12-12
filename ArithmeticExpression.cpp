@@ -8,10 +8,19 @@
  * \return  A new ArithmeticExpression.
  *
  */
-ArithmeticExpression::ArithmeticExpression(Expression& left, Expression& right)
+ArithmeticExpression::ArithmeticExpression(Expression* left, Expression* right) : ArithmeticExpression(left, right)
 {
-    this->left = new Expression(left); // Copy the given ArithmeticExpression to this ArithmeticExpression's left half
-    this->right = new Expression(right); // Copy the given Expression to this ArithmeticExpression's right half
+    if (left != nullptr && right != nullptr) // Check for base case (Number at the bottom of the tree)
+    {
+        this->left = new Expression(*left); // Copy the given ArithmeticExpression to this ArithmeticExpression's left half
+        this->right = new Expression(*right); // Copy the given Expression to this ArithmeticExpression's right half
+    }
+
+    else
+    {
+        left = nullptr; // Store a null pointer to indicate the end of the tree
+        right = nullptr; // Store a null pointer to indicate the end of the tree
+    }
 }
 
 /** \brief Destroys an ArithmeticExpression.
@@ -30,8 +39,8 @@ ArithmeticExpression::~ArithmeticExpression()
  */
 ArithmeticExpression::ArithmeticExpression(const ArithmeticExpression& other)
 {
-    this->left = new ArithmeticExpression(other.left, nullptr); // Construct the left half of this expression
-    this->right = new ArithmeticExpression(other.right, nullptr); // Construct the right half of this expression
+    this->left = new Expression(*(other).left); // Construct the left half of this expression
+    this->right = new Expression(*(other).right); // Construct the right half of this expression
 }
 
 ArithmeticExpression& ArithmeticExpression::operator=(const ArithmeticExpression& rhs)

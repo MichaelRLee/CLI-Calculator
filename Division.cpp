@@ -6,10 +6,10 @@
  * \param right A pointer to the Expression which will become this Division's right half.
  *
  */
-Division::Division(Expression& left, Expression& right)
+Division::Division(Expression* left, Expression* right) : ArithmeticExpression(left, right)
 {
-    this->left = new Expression(left); // Copy the left Expression to this Division's left half
-    this->right = new Expression(right); // Copy the right Expression to this Division's right half
+    /*this->left = new Expression(*left); // Copy the left Expression to this Division's left half
+    this->right = new Expression(*right); // Copy the right Expression to this Division's right half*/
 }
 
 /** \brief Destroys this Division object.
@@ -30,10 +30,10 @@ Division::~Division()
  * \return
  *
  */
-Division::Division(const Division& other)
+Division::Division(const Division& other) : ArithmeticExpression(other)
 {
-    this->left = new Expression(other->left); // Copy the left half of the other Expression to this Division
-    this->right = new Expression(other->right); // Copy the right half of the other Expression to this one
+    /*this->left = new Expression(*(other).left); // Copy the left half of the other Expression to this Division
+    this->right = new Expression(*(other).right); // Copy the right half of the other Expression to this one*/
 }
 
 Division& Division::operator=(const Division& rhs)
@@ -61,5 +61,7 @@ string Division::evaluate()
 */
 void Division::print()
 {
-    cout << left->print() + "/" + right->print(); // Print the left and right halves, separated by a '/'
+    left->print(); // Print the left half of the Division
+    cout << "/"; // Print a slash to separate the left and right halves
+    right->print(); // Print the right half of the Division
 }

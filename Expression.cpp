@@ -3,10 +3,10 @@
 /** \brief  Constructor 1. Creates a new Expression containing an ArithmeticExpression by
  *          assigning it to this Expression's private variable.
  */
-Expression::Expression(ArithmeticExpression& contained)
+/*Expression::Expression(ArithmeticExpression& contained)
 {
     this->contained = new ArithmeticExpression(contained); // Copy the ArithmeticExpression to this Expression's container
-}
+}*/
 
 
 /** \brief  Constructor 2. Builds an Expression object with an empty ArithmeticExpression.
@@ -19,7 +19,7 @@ Expression::Expression()
  */
 Expression::~Expression()
 {
-    delete this->contained; // Delete the contained ArithmeticExpression
+    //delete this->contained; // Delete the contained ArithmeticExpression
 }
 
 /** \brief Copy constructor. Copies another Expression's ArithmeticExpression object to
@@ -28,7 +28,7 @@ Expression::~Expression()
  */
 Expression::Expression(const Expression& other)
 {
-    this->contained = new ArithmeticExpression(other->contained); // Copy the contained ArithmeticExpression from the other Expression to this one
+    //this->contained = new ArithmeticExpression(other->contained); // Copy the contained ArithmeticExpression from the other Expression to this one
 }
 
 Expression& Expression::operator=(const Expression& rhs)
@@ -43,7 +43,8 @@ Expression& Expression::operator=(const Expression& rhs)
  */
 string Expression::evaluate()
 {
-    return this->contained.evaluate(); // Return the result of the evaluated ArithmeticExpression
+    //return this->contained.evaluate(); // Return the result of the evaluated ArithmeticExpression
+    return "";
 }
 
 /** \brief Prints an Expression by printing it's contained ArithmeticExpression object.

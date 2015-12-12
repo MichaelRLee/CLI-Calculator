@@ -6,10 +6,10 @@
  * \param right The Expression which will be copied to the right half of this Subtraction.
  *
  */
-Subtraction::Subtraction(Expression& left, Expression& right)
+Subtraction::Subtraction(Expression* left, Expression* right) : ArithmeticExpression(left, right)
 {
-    this->left = new Expression(left); // Copy the given Expression to this Subtraction's left half
-    this->right = new Expression(right); // Copy the given Expression to this Subtraction's right half
+    /*this->left = new Expression(left); // Copy the given Expression to this Subtraction's left half
+    this->right = new Expression(right); // Copy the given Expression to this Subtraction's right half*/
 }
 
 Subtraction::~Subtraction()
@@ -18,11 +18,11 @@ Subtraction::~Subtraction()
     delete this->right; // Free the right half
 }
 
-Subtraction::Subtraction(const Subtraction& other)
+Subtraction::Subtraction(const Subtraction& other) : ArithmeticExpression(other)
 {
     //this = new ArithmeticExpression(); // Initialise the base class
-    this->left = new Expression(other.left); // Copy the left half
-    this->right = new Expression(other.right); // Copy the right half
+    /*this->left = new Expression(other.left); // Copy the left half
+    this->right = new Expression(other.right); // Copy the right half*/
 }
 
 Subtraction& Subtraction::operator=(const Subtraction& rhs)
@@ -50,5 +50,7 @@ string Subtraction::evaluate()
 */
 void Subtraction::print()
 {
-    cout << left->print() + "-" + right->print(); // Prints the left and right halves of the subtraction, separated by a minus sign
+    left->print(); // Print the left half of the Subtraction
+    cout << "-"; // Print a minus sign
+    right->print(); // Print the right half of the Subtraction
 }

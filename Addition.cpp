@@ -6,10 +6,10 @@
  * \param right A pointer to the right half of the new Expression to create.
  *
  */
-Addition::Addition(ArithmeticExpression& left, ArithmeticExpression& right) : ArithmeticExpression(left, right)
+Addition::Addition(ArithmeticExpression* left, ArithmeticExpression* right) : ArithmeticExpression(left, right)
 {
-    this->left = new Expression(left); // Copy the given Expression to this Addition's left half
-    this->right = new Expression(right); // Copy the given Expression to this Addition's right half
+    /*this->left = new ArithmeticExpression(*left); // Copy the given Expression to this Addition's left half
+    this->right = new ArithmeticExpression(*right); // Copy the given Expression to this Addition's right half*/
 }
 
 /** \brief Destructor. Deletes this Addition and it's left and right halves

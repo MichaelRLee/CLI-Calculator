@@ -10,11 +10,6 @@
 #include <cstdlib> // atof
 #include <cstdio> // printf
 
-// Our classes
-
-class ArithmeticExpression;
-#include "ArithmeticExpression.h"
-
 using namespace std;
 
 class Expression
@@ -24,7 +19,7 @@ class Expression
         Expression();
 
         /** Constructs an Expression containing an ArithmeticExpression. */
-        Expression(ArithmeticExpression& contained);
+        //Expression(ArithmeticExpression& contained);
 
         /** Default destructor */
         virtual ~Expression();
@@ -44,7 +39,7 @@ class Expression
         virtual void print(); // Prints the evaluated expression
     protected:
     private:
-        ArithmeticExpression* contained; // The ArithmeticExpression contained inside this Expression
+        //ArithmeticExpression* contained; // The ArithmeticExpression contained inside this Expression
 };
 
 #endif // EXPRESSION_H

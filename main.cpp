@@ -28,6 +28,7 @@ bool checkOpp(string exp); //check if expression is arithmetically correct
 void removeBrackets(string& exp, size_t &strIndex); //removes unnessicary brackets from expression
 int bracketCount (string exp, bool retNum);  //counts brackets and returns based on boolean;
 string removeSpaces (string exp); //removes spaces from expression
+ArithmeticExpression* strToExp(string &str, int recLevel); // Build the ArithmeticExpression object
 
 int main()
 {
@@ -69,8 +70,9 @@ int main()
                 sInput=removeSpaces(sInput); //remove spaces
                 bracketLoc=0; //reset bracketLoc value
 
-                // DEBUGGING - Print affirmative statement
-                clog << "The expression \"" << sInput << "\" is valid" << endl;
+                // DEBUGGING - Print affirmative statement and tell user that we are building the Expression
+                clog << "The expression \"" << sInput << "\" is valid" << endl << "Building expression..." << endl;
+                strToExp(sInput, 0); // Build the expression -TEST
             }
 
             else // The expression is invalid
@@ -122,7 +124,7 @@ int bracketCount(string exp, bool retNum)
  */
 bool isAllSpaces(string toCheck)
 {
-    int i; // Current position in the string
+    size_t i; // Current position in the string
 
     cout << "toCheck = \"" << toCheck << "\"" << endl;
 
@@ -147,7 +149,7 @@ bool isAllSpaces(string toCheck)
  */
 bool isNumericString(string toCheck)
 {
-    int i; // Loop counter
+    size_t i; // Loop counter
 
     if (toCheck == "") // Empty string
     {
@@ -340,12 +342,12 @@ string nextToken(string toParse, int* startPos)
  */
 int precedence(string node)
 {
-    /*if (isnum(node)) // A number has the highest precedence
+    if (isNumericString(node)) // A number has the highest precedence
     {
         return 3;
     }
 
-    else*/ if (!node.compare("(") || !node.compare(")")) // Brackets
+    else if (!node.compare("(") || !node.compare(")")) // Brackets
     {
         return 2;
     }
@@ -411,39 +413,54 @@ string removeSpaces(string exp)
  *          expression. This function assumes that the string contains a valid arithmetic
  *          expression.
  * \param   str A reference to the string containing the arithmetic expression to parse and build.
+ * \param   recLevel For debugging - recursion level.
  * \return  A pointer to the expression object containing a representation of the expression
  *
  */
-ArithmeticExpression* strToExp(string &str)
+ArithmeticExpression* strToExp(string &str, int recLevel)
 {
     int level = 0;//inside parentheses check
 
     //case + or -
     //most right '+' or '-' (but not inside '()') search and split
     for(int i=str.size()-1;i>=0;--i){
+        cout << "strToExp (" << recLevel << "): In + or - loop, i = " << i << endl;
         char c = str[i];
         if(c == ')'){
+            cout << "strToExp (" << recLevel << "): found right bracket: old level = " << level << endl;
             ++level;
+            cout << "strToExp (" << recLevel << "): found right bracket: new level = " << level << endl;
             continue;
         }
         if(c == '('){
+            cout << "strToExp (" << recLevel << "): found left bracket: old level = " << level << endl;
             --level;
+            cout << "strToExp (" << recLevel << "): found left bracket: new level = " << level << endl;
             continue;
         }
-        if(level>0) continue;
+        if(level>0)
+        {
+            cout << "strToExp (" << recLevel << "): in level>0 if" << endl;
+            continue;
+        }
+
         if((c == '+' || c == '-') && i!=0 ){//if i==0 then s[0] is sign
+            cout << "strToExp (" << recLevel << "): in '+' || '-' if" << endl;
             string left(str.substr(0,i));
             string right(str.substr(i+1));
+            cout << "strToExp (" << recLevel << "): left = \"" << left << "\", right = \"" << right << "\"" << endl;
             //return new Node(c, strToExp(left), strToExp(right));
 
             if (c == '+') // Addition expression
             {
-                return new Addition(strToExp(left), strToExp(right)); // Create a new Addition node
+                cout << "strToExp (" << recLevel << "): returning Addition" << endl;
+                return new Addition(strToExp(left, recLevel+1), strToExp(right, recLevel+1)); // Create a new Addition node
             }
 
             else if (c == '-') // Subtraction expression
             {
-                return new Subtraction(strToExp(left), strToExp(right)); // Create a new Subtraction node
+                cout << "strToExp (" << recLevel << "): returning Subtraction" << endl;
+                return new Subtraction(strToExp(left, recLevel+1), strToExp(right, recLevel+1)); // Create a new Subtraction node
             }
         }
     }
@@ -467,19 +484,19 @@ ArithmeticExpression* strToExp(string &str)
 
             if (c == '*') // Multiplication
             {
-                return new Multiplication(strToExp(left), strToExp(right)); // Create a new Multiplication Expression with the left and right halves of the string
+                return new Multiplication(strToExp(left, recLevel+1), strToExp(right, recLevel+1)); // Create a new Multiplication Expression with the left and right halves of the string
             }
 
             else if (c == '/') // Division
             {
-                return new Division(strToExp(left), strToExp(right)); // Create a new Division node and return it
+                return new Division(strToExp(left, recLevel+1), strToExp(right, recLevel+1)); // Create a new Division node and return it
             }
         }
     }
     if(str[0]=='('){
     //case ()
     //pull out inside and to strToExp
-        for(int i=0;i<str.size();++i){
+        for(size_t i=0;i<str.size();++i){
             if(str[i]=='('){
                 ++level;
                 continue;
@@ -488,7 +505,7 @@ ArithmeticExpression* strToExp(string &str)
                 --level;
                 if(level==0){
                     string exp(str.substr(1, i-1));
-                    return strToExp(exp);
+                    return strToExp(exp, recLevel+1);
                 }
                 continue;
             }

@@ -7,10 +7,10 @@
  * \return
  *
  */
-Multiplication::Multiplication(Expression& left, Expression& right)
+Multiplication::Multiplication(Expression* left, Expression* right) : ArithmeticExpression(left, right)
 {
-    this->left = new Expression(left); // Copy the given Expression to this Multiplication's LHS
-    this->right = new Expression(right); // Copy the given Expression to this Multiplication's RHS
+    /*this->left = new Expression(*left); // Copy the given Expression to this Multiplication's LHS
+    this->right = new Expression(*right); // Copy the given Expression to this Multiplication's RHS*/
 }
 
 /** \brief Destructor. Frees this Multiplication's memory
@@ -31,10 +31,10 @@ Multiplication::~Multiplication()
  * \return
  *
  */
-Multiplication::Multiplication(const Multiplication& other)
+Multiplication::Multiplication(const Multiplication& other) : ArithmeticExpression(other)
 {
-    this->left = new Expression(other->left); // Copy the LHS of the other Multiplication
-    this->right = new Expression(other->right); // Copy the RHS of the other Multiplication
+    this->left = new Expression(*(other).left); // Copy the LHS of the other Multiplication
+    this->right = new Expression(*(other).right); // Copy the RHS of the other Multiplication
 }
 
 /** \brief Assignment operator.
@@ -77,5 +77,7 @@ string Multiplication::evaluate()
  */
 void Multiplication::print()
 {
-    cout << left->print() + "*" + right->print(); // Print the left and right halves, separated by an asterisk
+    left->print(); // Print the left half
+    cout << "*"; // Print a multiplication sign
+    right->print(); // Print the right half
 }

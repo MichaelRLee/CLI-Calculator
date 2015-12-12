@@ -3,19 +3,25 @@
 #include <cstdlib> // atof
 using namespace std;
 
-Number::Number(string num) // Constructor
+// Constructor
+Number::Number(string num) : ArithmeticExpression(nullptr, nullptr) // Null pointers are used to indicate the end of the Expression
 {
-    this->value = new string(num); // Store the number
+    //value = new string(); // Allocate memory for the string
+    //value.assign(num); // Store the contents of the number in the new string
+    value = num; // Store string
 }
 
 Number::~Number() // Destructor
 {
-    delete &((*this).value); // Delete the value
+    //delete &((*this).value); // Delete the value
+    delete &value; // Delete the string which represents the number
 }
 
-Number::Number(const Number& other) // Copy constructor
+// Copy constructor
+Number::Number(const Number& other) : ArithmeticExpression(nullptr, nullptr) // Null pointers are used to indicate the end of the Expression
 {
-    this->value = new string(other.value); // Copy the other number's value to this one
+    //value = new string(other.value); // Copy the other number's value to this one
+    value = other.value; // Copy the other number's value
 }
 
 Number& Number::operator=(const Number& rhs) // Assignment

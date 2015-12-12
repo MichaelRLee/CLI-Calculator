@@ -7,7 +7,7 @@ class Multiplication : public ArithmeticExpression
 {
     public:
         /** Constructor **/
-        Multiplication();
+        Multiplication(Expression* left, Expression* right);
 
         /** Destructor **/
         virtual ~Multiplication();
