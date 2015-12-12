@@ -18,8 +18,8 @@ ArithmeticExpression::ArithmeticExpression(Expression* left, Expression* right) 
 
     else
     {
-        left = nullptr; // Store a null pointer to indicate the end of the tree
-        right = nullptr; // Store a null pointer to indicate the end of the tree
+        this->left = nullptr; // Store a null pointer to indicate the end of the tree
+        this->right = nullptr; // Store a null pointer to indicate the end of the tree
     }
 }
 
@@ -37,7 +37,7 @@ ArithmeticExpression::~ArithmeticExpression()
  * \return A new ArithmeticExpression containing the other one's left and right halves.
  *
  */
-ArithmeticExpression::ArithmeticExpression(const ArithmeticExpression& other)
+ArithmeticExpression::ArithmeticExpression(const ArithmeticExpression& other) : Expression()
 {
     this->left = new Expression(*(other).left); // Construct the left half of this expression
     this->right = new Expression(*(other).right); // Construct the right half of this expression

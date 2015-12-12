@@ -6,7 +6,7 @@
 class Number : public ArithmeticExpression
 {
     public:
-        /** Default constructor */
+        /** Constructs a number by storing its value */
         Number(string num);
 
         /** Default destructor */

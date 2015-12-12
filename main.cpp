@@ -29,6 +29,7 @@ void removeBrackets(string& exp, size_t &strIndex); //removes unnessicary bracke
 int bracketCount (string exp, bool retNum);  //counts brackets and returns based on boolean;
 string removeSpaces (string exp); //removes spaces from expression
 ArithmeticExpression* strToExp(string &str, int recLevel); // Build the ArithmeticExpression object
+bool isNumericString(string toCheck); // Determines whether or not a string is numeric
 
 int main()
 {
@@ -50,6 +51,11 @@ int main()
         if (!strcmp(input, "#")) // Check for the input which terminates the program (#)
         {
             reading = false; // End the input loop
+        }
+
+        else if (isNumericString(sInput)) // Determines whether or not a string is an input
+        {
+            cout << "Bare number entered: " << sInput << endl;
         }
 
         /**
@@ -424,42 +430,41 @@ ArithmeticExpression* strToExp(string &str, int recLevel)
     //case + or -
     //most right '+' or '-' (but not inside '()') search and split
     for(int i=str.size()-1;i>=0;--i){
-        cout << "strToExp (" << recLevel << "): In + or - loop, i = " << i << endl;
         char c = str[i];
+        cout << "strToExp (" << recLevel << ") (+/- for): c = '" << c << "'" << endl;
         if(c == ')'){
-            cout << "strToExp (" << recLevel << "): found right bracket: old level = " << level << endl;
+            cout << "strToExp (" << recLevel << ") (+/- for)->(')' if): old level = " << level << endl;
             ++level;
-            cout << "strToExp (" << recLevel << "): found right bracket: new level = " << level << endl;
+            cout << "strToExp (" << recLevel << ") (+/- for)->(')' if): new level = " << level << endl;
             continue;
         }
         if(c == '('){
-            cout << "strToExp (" << recLevel << "): found left bracket: old level = " << level << endl;
+            cout << "strToExp (" << recLevel << ") (+/- for)->('(' if): old level = " << level << endl;
             --level;
-            cout << "strToExp (" << recLevel << "): found left bracket: new level = " << level << endl;
+            cout << "strToExp (" << recLevel << "): (+/- for)->('(' if): new level = " << level << endl;
             continue;
         }
         if(level>0)
         {
-            cout << "strToExp (" << recLevel << "): in level>0 if" << endl;
+            cout << "strToExp (" << recLevel << "): (+/- for)->(level>0 if)" << endl;
             continue;
         }
 
         if((c == '+' || c == '-') && i!=0 ){//if i==0 then s[0] is sign
-            cout << "strToExp (" << recLevel << "): in '+' || '-' if" << endl;
             string left(str.substr(0,i));
             string right(str.substr(i+1));
-            cout << "strToExp (" << recLevel << "): left = \"" << left << "\", right = \"" << right << "\"" << endl;
+            cout << "strToExp (" << recLevel << ") (+/- for)->(+/- if): left = \"" << left << "\", right = \"" << right << "\"" << endl;
             //return new Node(c, strToExp(left), strToExp(right));
 
             if (c == '+') // Addition expression
             {
-                cout << "strToExp (" << recLevel << "): returning Addition" << endl;
+                cout << "strToExp (" << recLevel << ") (+/- for)->(+/- if)->(+ if): returning new Addition" << endl;
                 return new Addition(strToExp(left, recLevel+1), strToExp(right, recLevel+1)); // Create a new Addition node
             }
 
             else if (c == '-') // Subtraction expression
             {
-                cout << "strToExp (" << recLevel << "): returning Subtraction" << endl;
+                cout << "strToExp (" << recLevel << ") (+/- for)->(+/- if)->(+ if): returning Subtraction" << endl;
                 return new Subtraction(strToExp(left, recLevel+1), strToExp(right, recLevel+1)); // Create a new Subtraction node
             }
         }
@@ -468,51 +473,78 @@ ArithmeticExpression* strToExp(string &str, int recLevel)
     //most right '*' or '/' (but not inside '()') search and split
     for(int i=str.size()-1;i>=0;--i){
         char c = str[i];
+        cout << "strToExp (" << recLevel << ") (* or / for): c = '" << c << "'" << endl;
         if(c == ')'){
+            cout << "strToExp (" << recLevel << ") (* or / for)->(')' if): level = " << level << " before inc" << endl;
             ++level;
+            cout << "strToExp (" << recLevel << ") (* or / for)->(')' if): level = " << level << " after inc" << endl;
             continue;
         }
         if(c == '('){
+            cout << "strToExp (" << recLevel << ") (* or / for)->('(' if): level = " << level << " before inc" << endl;
             --level;
+            cout << "strToExp (" << recLevel << ") (* or / for)->('(' if): level = " << level << " before inc" << endl;
             continue;
         }
-        if(level>0) continue;
+        if(level>0)
+        {
+            cout << "strToExp (" << recLevel << ") (* or / for)->(level > 0 if)" << endl;
+            continue;
+        }
         if(c == '*' || c == '/'){
+            cout << "strToExp (" << recLevel << ") (* or / for)->(* or / if)" << endl;
             string left(str.substr(0,i));
             string right(str.substr(i+1));
+            cout << "strToExp (" << recLevel << ") (* or / for)->(* or / if): left = \"" << left << "\", right = \"" << right << "\"" << endl;
             //return new Node(c, strToExp(left), strToExp(right));
 
             if (c == '*') // Multiplication
             {
+                cout << "strToExp (" << recLevel << ") (* or / for)->(* or / if)->(c == '*' if): Returning new Multiplication" << endl;
                 return new Multiplication(strToExp(left, recLevel+1), strToExp(right, recLevel+1)); // Create a new Multiplication Expression with the left and right halves of the string
             }
 
             else if (c == '/') // Division
             {
+                cout << "strToExp (" << recLevel << ") (* or / for)->(* or / if)->(c == '/' if): Returning new Division" << endl;
                 return new Division(strToExp(left, recLevel+1), strToExp(right, recLevel+1)); // Create a new Division node and return it
             }
         }
     }
     if(str[0]=='('){
+    cout << "strToExp (" << recLevel << ") (str[0] == '(' if)" << endl;
     //case ()
     //pull out inside and to strToExp
         for(size_t i=0;i<str.size();++i){
+            cout << "strToExp (" << recLevel << ") (str[0] == '(' if)->for 1: i = " << i << endl;
             if(str[i]=='('){
+               cout << "strToExp (" << recLevel << ") (str[0] == '(' if)->for 1->(str[i] == '(' if): level = " << level << " before increment" << endl;
                 ++level;
+    cout << "strToExp (" << recLevel << ") (str[0] == '(' if)->for 1->(str[i] == '(' if): level = " << level << " after increment" << endl;
                 continue;
             }
             if(str[i]==')'){
+                cout << "strToExp (" << recLevel << ") (str[0] == '(' if)->for 1->(str[i] == ')' if): level = " << level << " before decrement" << endl;
                 --level;
+                cout << "strToExp (" << recLevel << ") (str[0] == '(' if)->for 1->(str[i] == ')' if): level = " << level << " after decrement" << endl;
                 if(level==0){
                     string exp(str.substr(1, i-1));
+                    cout << "strToExp (" << recLevel << ") (str[0] == '(' if)->for 1->(str[i] == ')' if)->(level==0 if): exp = \"" << exp << "\"" << endl;
                     return strToExp(exp, recLevel+1);
                 }
                 continue;
             }
         }
-    } else
+    }
+
+    else
+    {
     //case value - This is a number
-        return new Number(str); // Create a new Number and return it - base case
+        cout << "strToExp: (" << recLevel << "): returning new Number(" << str << ")" << endl;
+        Number *x = new Number(str);
+        cout << "x->value = \"" << x->Getvalue() << "\"" << endl;
+        return x; // Create a new Number and return it - base case
+    }
 cerr << "Error:never execute point" << endl;
     return NULL;//never
 }

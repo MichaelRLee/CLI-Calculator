@@ -25,11 +25,9 @@ Addition::~Addition()
  * \param   other The other Additiown to copy.
  *
  */
-/*Addition::Addition(const Addition& other) : ArithmeticExpression(other)
+Addition::Addition(const Addition& other) : ArithmeticExpression(other)
 {
-    this->left = new Expression(other.left); // Copy the left half of the other Expression to this one
-    this->right = new Expression(other.right); // Copy the right half of the other Expression to this one
-}*/
+}
 
 /** \brief Assignment operator.
  *
