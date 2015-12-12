@@ -38,7 +38,7 @@ int main()
     //ArithmeticExpression ae = new ArithmeticExpression(); // Create the top-level expression
     string curToken; // The current token in the expression
     string sInput; // String which represents the input
-    Expression aExp;
+    Expression* aExp;
 
     while (reading) // Read until user quits
     {
@@ -66,11 +66,8 @@ int main()
                 }
                 sInput=removeSpaces(sInput); //remove spaces
                 bracketLoc=0; //reset bracketLoc value
-                // DEBUGGING - Print affirmative statement
-                //clog << "The expression \"" << sInput << "\" is valid" << endl;
-                strToExp(sInput)->print();
-                //aExp = new ArithmeticExpression(strToExp(sInput));
-                //aExp.print();
+                aExp = strToExp(sInput); // Convert the string to an Expression
+                aExp->print(); // Print the Expression
             }
 
             else // The expression is invalid
@@ -329,36 +326,6 @@ string nextToken(string toParse, int* startPos)
     }
 
     return tokStr; // Return the token
-}
-
-/** \brief Returns the precedence of a node in the Expression.
- *
- * \param string node - The node whose precedence the function will determine
- * \return An integer describing the precedence of the node.
- *
- */
-int precedence(string node)
-{
-    /*if (isnum(node)) // A number has the highest precedence
-    {
-        return 3;
-    }
-
-    else*/ if (!node.compare("(") || !node.compare(")")) // Brackets
-    {
-        return 2;
-    }
-
-    else if (!node.compare("*") || !node.compare("/")) // Division/Multiplication
-    {
-        return 1;
-    }
-
-    else if (!node.compare("+") || !node.compare("-")) // Addition/Subtraction
-    {
-        return 0;
-    }
-    return -1;
 }
 
 /** \brief Removes unnessicary brackets from the expression.
