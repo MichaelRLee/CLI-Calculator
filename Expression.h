@@ -15,7 +15,8 @@ using namespace std;
 class Expression
 {
     public:
-        /** Default constructor */
+        /** Constructor */
+        //Expression(ArithmeticExpression* ae); // Copies a given arithmeticExpression into this one
         Expression();
 
         /** Default destructor */
@@ -36,6 +37,7 @@ class Expression
         virtual void print(); // Prints the evaluated expression
     protected:
     private:
+        //ArithmeticExpression myAE;
 };
 
 #endif // EXPRESSION_H
