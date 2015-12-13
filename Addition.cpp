@@ -38,5 +38,10 @@ string Addition::evaluate()
 */
 void Addition::print()
 {
-    cout << this->evaluate(); // Print the evaluated expression
+    cout << "(";
+    left -> print();
+    cout << "+";
+    right -> print();
+    cout << ")";
+    //cout << this->evaluate(); // Print the evaluated expression
 }

@@ -37,5 +37,10 @@ string Division::evaluate()
 */
 void Division::print()
 {
-    cout<< this->evaluate(); // Dummy code
+    cout << "(";
+    left -> print();
+    cout << "/";
+    right -> print();
+    cout << ")";
+    //cout<< this->evaluate(); // Dummy code
 }
