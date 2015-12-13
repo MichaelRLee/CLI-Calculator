@@ -24,6 +24,7 @@ Expression& Expression::operator=(const Expression& rhs)
 
 string Expression::evaluate()
 {
+    return "";
 }
 
 void Expression::print()
