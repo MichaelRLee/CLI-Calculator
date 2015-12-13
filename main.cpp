@@ -30,7 +30,8 @@ bool checkOpp(string exp); //check if expression is arithmetically correct
 void removeBrackets(string& exp, size_t &strIndex); //removes unnessicary brackets from expression
 int bracketCount (string exp, bool retNum);  //counts brackets and returns based on boolean;
 string removeSpaces (string exp); //removes spaces from expression
-Expression* strToExp(string& str);
+//Expression* strToExp(string& str); // Builds the ArithmeticExpression object, given a string
+ArithmeticExpression* strToExp(string& str);
 
 int main()
 {
@@ -40,7 +41,7 @@ int main()
     //ArithmeticExpression ae = new ArithmeticExpression(); // Create the top-level expression
     string curToken; // The current token in the expression
     string sInput; // String which represents the input
-    Expression* aExp;
+    ArithmeticExpression* aExp;
 
     while (reading) // Read until user quits
     {
@@ -68,10 +69,11 @@ int main()
                 }
                 sInput=removeSpaces(sInput); //remove spaces
                 bracketLoc=0; //reset bracketLoc value
-                aExp = strToExp(sInput); // Convert the string to an Expression
+                aExp = new ArithmeticExpression(strToExp(sInput)); // Convert the string to an Expression
                 aExp->print(); // Print the Expression
-                cout << "=" << roundf(atof((aExp->evaluate()).c_str())*100)/100 << endl;
+                cout << " = " << roundf(atof((aExp->evaluate()).c_str())*100)/100 << endl;
                 //printf("=%0.2f\n",atof((aExp->evaluate()).c_str()));
+                delete aExp; // Free the memory allocated to aExp
             }
 
             else // The expression is invalid
@@ -378,7 +380,8 @@ string removeSpaces(string exp)
     return output;//return the output string
 }
 
-Expression* strToExp(string &str){
+//Expression* strToExp(string &str){
+ArithmeticExpression* strToExp(string& str){
     int level = 0;//inside parentheses check
     //case + or -
     //most right '+' or '-' (but not inside '()') search and split

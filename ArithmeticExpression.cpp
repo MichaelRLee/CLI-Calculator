@@ -11,7 +11,8 @@ ArithmeticExpression::~ArithmeticExpression()
 
 ArithmeticExpression::ArithmeticExpression(const ArithmeticExpression& other)
 {
-    //copy ctor
+    this->left = new ArithmeticExpression(other.left); // Copy the other Expression to this one
+    this->right = new ArithmeticExpression(other.right); // Copy the other Expression to this one
 }
 
 ArithmeticExpression& ArithmeticExpression::operator=(const ArithmeticExpression& rhs)
