@@ -34,5 +34,10 @@ string Multiplication::evaluate()
 
 void Multiplication::print()
 {
-    cout << this->evaluate();
+    cout << "(";
+    left -> print();
+    cout << "*";
+    right -> print();
+    cout << ")";
+    //cout << this->evaluate();
 }

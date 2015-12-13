@@ -3,6 +3,8 @@
 // Standard C++ headers
 #include <iostream> // cout, cin
 #include <limits> // numeric_limits
+//#include <iomanip> //rounding decimal places
+#include <math.h> //for rounding
 
 // My header files
 #include "Expression.h" // Expression class
@@ -68,6 +70,8 @@ int main()
                 bracketLoc=0; //reset bracketLoc value
                 aExp = strToExp(sInput); // Convert the string to an Expression
                 aExp->print(); // Print the Expression
+                cout << "=" << roundf(atof((aExp->evaluate()).c_str())*100)/100 << endl;
+                //printf("=%0.2f\n",atof((aExp->evaluate()).c_str()));
             }
 
             else // The expression is invalid
@@ -79,6 +83,7 @@ int main()
             clog << endl;
         }
     }
+    return 0;
 }
 
 /** \brief Counts the number of openning and closing brackets in a string.  Can return either the difference between the two or the number of openning brackets
@@ -131,7 +136,7 @@ bool isAllSpaces(string toCheck)
         }
     }
 
-    cout << "isAllSpaces - returning true" << endl;
+    //cout << "isAllSpaces - returning true" << endl;
     return true; // If we got here, the string contained only whitespace characters
 }
 
@@ -182,7 +187,7 @@ bool isValidExpr(string expr)
     {
         if (curToken == "INVALID") // Found an invalid token
         {
-            clog << "Found invalid token" << endl;
+            //clog << "Found invalid token" << endl;
             return false; // No need to look further - the expression is invalid
             break;
         }
@@ -212,7 +217,7 @@ bool isValidExpr(string expr)
         //clog << "isValidExpr: befPrevToken = \"" << befPrevToken << "\", prevToken = \"" << prevToken << "\", curToken = \"" << curToken << "\" at the end of the loop" << endl;
     }
     //cout << "checkOpp(\"" << expr << "\") = " << checkOpp(expr) << endl;
-    return checkOpp(expr); // Check the string
+    return checkOpp(removeSpaces(expr)); // Check the string
 }
 
 /** \brief Check if the expression is arethmetically valid.
@@ -224,13 +229,13 @@ bool checkOpp (string exp)
 {
     if (!(exp[0] == '(' || isdigit(exp[0] ))) //check if the first character is a number or an open bracket
     {
-        cout << "Invalid Start";
+        //clog << "Invalid Start";
         return false; //return false if it isn't
     }
 
     if (!(exp[exp.length()-1] == ')' || isdigit(exp[exp.length()-1]))) //check if the last character is a number or an close bracket
     {
-        cout << "Invalid end"<<endl;
+        //clog << "Invalid end"<<endl;
         return false; //return false if it isn't
     }
 
@@ -238,23 +243,23 @@ bool checkOpp (string exp)
         if ((exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/') && !(exp [i+1] == '(' || isdigit (exp[i+1])))
                 //if the character is an arithmetic opperation, the next character must be an open bracket or a number
         {
-            cout << "Invalid token after opperator"<<endl;
+            //clog << "Invalid token after opperator"<<endl;
             return false; //return false if the next character is not
         }
         else if (exp [i] == '(' && !(exp [i+1] == '(' || isdigit (exp[i+1]) || exp [i+1] == '-')) //if the character is an open bracket, the next character
                               //must be another open bracket, a number, or a - (for negatives)
         {
-            cout << "Invalid token after open bracket"<<endl;
+            //clog << "Invalid token after open bracket"<<endl;
             return false; //return false if the next character isn't
         }
         else if (exp [i] == ')' && (exp [i+1] == '(' || isdigit (exp[i+1]))) //if the char is a closed bracket, next char can't be an open bracket or number
         {
-            cout << "invalid token after end bracket" << endl;
+            //clog << "invalid token after end bracket" << endl;
             return false;//return false if it is
         }
         else if (isdigit(exp[i]) && exp [i+1]== '(')//only numbers are left, and the next character can't be an open bracket
         {
-            cout << "invalid token after number"<<endl;
+            //clog << "invalid token after number"<<endl;
             return false ; //return false if it is
         }
     }
