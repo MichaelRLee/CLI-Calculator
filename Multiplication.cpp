@@ -2,31 +2,31 @@
 * Name: Michael Robert Lee, Victor Carri, Shilp Pancholi
 * MacID: leemr2, carriva, panchosm
 * Student Number: 1406823, 001406904, 1419055
-* Description: This file runs the program
+* Description: Multiplies numbers
 */
 
-#include "Multiplication.h"
+#include "Multiplication.h"//header
 
-Multiplication::Multiplication(Expression* left, Expression* right):ArithmeticExpression(left,right){}
+Multiplication::Multiplication(Expression* left, Expression* right):ArithmeticExpression(left,right){}//assigns left and right
 
-Multiplication::~Multiplication()
+Multiplication::~Multiplication()//destructor
 {
     delete left;
     delete right;
 }
 
-Multiplication::Multiplication(const Multiplication& other):ArithmeticExpression(other)
+Multiplication::Multiplication(const Multiplication& other):ArithmeticExpression(other)//constructor for arithemtic expression
 {
 }
 
-Multiplication& Multiplication::operator=(const Multiplication& rhs)
+Multiplication& Multiplication::operator=(const Multiplication& rhs)//copy constructor
 {
     if (this == &rhs) return *this;
     return *this;
 }
 
 
-string Multiplication::evaluate()
+string Multiplication::evaluate()//evaluates string
 {
     string lEval = left->evaluate(); // Store the evaluated left half
     string rEval = right->evaluate(); // Store the evaluated right half
@@ -39,13 +39,13 @@ string Multiplication::evaluate()
 
 
 
-void Multiplication::print()
+void Multiplication::print()//prints string
 {
-    cout << "(";
-    left -> print();
-    cout << "*";
-    right -> print();
-    cout << ")";
+    cout << "("; //bracket
+    left -> print();//lhs
+    cout << "*";//times
+    right -> print();//rhs
+    cout << ")";//bracket
     //cout << this->evaluate();
 }
 

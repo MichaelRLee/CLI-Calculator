@@ -2,34 +2,34 @@
 * Name: Michael Robert Lee, Victor Carri, Shilp Pancholi
 * MacID: leemr2, carriva, panchosm
 * Student Number: 1406823, 001406904, 1419055
-* Description: This file runs the program
+* Description: Header for multiplication stuff
 */
 
-#ifndef MULTIPLICATION_H
-#define MULTIPLICATION_H
+#ifndef MULTIPLICATION_H //def gaurd
+#define MULTIPLICATION_H //header def
 
-#include "ArithmeticExpression.h"
+#include "ArithmeticExpression.h" //child of ArithmeticExpression
 
 
 
-class Multiplication : public ArithmeticExpression
+class Multiplication : public ArithmeticExpression //class deff
 {
-    public:
-        Multiplication(Expression* left, Expression* right);
+    public: //public variables and methods
+        Multiplication(Expression* left, Expression* right); //constructor with left and right hand side parameters
 
-        virtual ~Multiplication();
+        virtual ~Multiplication(); //destructor
 
-        Multiplication (const Multiplication& other);
+        Multiplication (const Multiplication& other); //copy constructor
 
-        Multiplication& operator=(const Multiplication& other);
+        Multiplication& operator=(const Multiplication& other); //= opperator def
 
-        string evaluate ();
+        string evaluate (); //evaluate expression (multiplies)
 
-        void print ();
-                void increment();
+        void print (); //prints expression 
+        void increment(); //increment digits by 1
 
-    protected:
-    private:
+    protected: //no protected values
+    private: //no private values
 };
 
 #endif // MULTIPLICATION_H

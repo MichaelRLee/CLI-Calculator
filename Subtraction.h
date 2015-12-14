@@ -2,17 +2,17 @@
 * Name: Michael Robert Lee, Victor Carri, Shilp Pancholi
 * MacID: leemr2, carriva, panchosm
 * Student Number: 1406823, 001406904, 1419055
-* Description: This file runs the program
+* Description: Header for finding the difference
 */
 
-#ifndef SUBTRACTION_H
-#define SUBTRACTION_H
+#ifndef SUBTRACTION_H //include gaurd
+#define SUBTRACTION_H //header
 
-#include "ArithmeticExpression.h"
+#include "ArithmeticExpression.h"//extends ArithmeticExpression
 
-class Subtraction : public ArithmeticExpression
+class Subtraction : public ArithmeticExpression//class def
 {
-    public:
+    public: //public methods and variables
         /** Default constructor */
         Subtraction(Expression* left, Expression* right);
 
@@ -38,10 +38,10 @@ class Subtraction : public ArithmeticExpression
         /** \brief Prints the expression.
          */
         void print();
-                void increment();
+        void increment();//will increment each digit recursively
 
-    protected:
-    private:
+    protected: //no protected values
+    private: //no private values
 };
 
 #endif // SUBTRACTION_H
