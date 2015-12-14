@@ -13,7 +13,6 @@
 #include "Subtraction.h" // Subtraction class
 #include "Multiplication.h" // Multiplication class
 #include "Division.h" // Division class
-#include "Number.h" // Number class
 
 // Namespaces
 using namespace std;
@@ -97,10 +96,11 @@ int main()
                 clog << "Expression is not well formed" << endl;
             }
 
-            clog << endl;
         }
+        cout << endl;
     }
     if (oldExp!=NULL)delete oldExp;
+    if (newExp!=NULL)delete newExp;
     return 0;
 }
 

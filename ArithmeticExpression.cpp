@@ -56,6 +56,6 @@ float ArithmeticExpression::convert(string s) //string s is passed through this 
 void ArithmeticExpression::increment()
 {
     left -> increment();
-    right -> increment();
+    if (right!=NULL)right -> increment();
 }
 

@@ -40,10 +40,12 @@ class Expression
         virtual string evaluate(); // Evaluates the expression
         virtual void print(); // Prints the evaluated expression
         float convert ();
-        void increment();
+        virtual void increment();
+        Expression* retExp ();
     protected:
     private:
         string value;
+        Expression* exp;
 };
 
 #endif // EXPRESSION_H
