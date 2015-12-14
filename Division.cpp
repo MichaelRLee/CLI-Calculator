@@ -2,24 +2,24 @@
 * Name: Michael Robert Lee, Victor Carri, Shilp Pancholi
 * MacID: leemr2, carriva, panchosm
 * Student Number: 1406823, 001406904, 1419055
-* Description: This file runs the program
+* Description: divides numbers
 */
 
-#include "Division.h"
+#include "Division.h"//header
 
-Division::Division(Expression* left, Expression* right):ArithmeticExpression(left,right){}
+Division::Division(Expression* left, Expression* right):ArithmeticExpression(left,right){}//assigns left and right
 
-Division::~Division()
+Division::~Division()//deconstructor
 {
-    delete left;
-    delete right;
+    delete left; //delete left
+    delete right;//free right
 }
 
-Division::Division(const Division& other): ArithmeticExpression(other)
+Division::Division(const Division& other): ArithmeticExpression(other)//a default constructor
 {
 }
 
-Division& Division::operator=(const Division& rhs)
+Division& Division::operator=(const Division& rhs)//copy constructor
 {
     if (this == &rhs) return *this; // handle self assignment
     //assignment operator
@@ -44,16 +44,16 @@ string Division::evaluate()
 */
 void Division::print()
 {
-    cout << "(";
-    left -> print();
-    cout << "/";
-    right -> print();
-    cout << ")";
+    cout << "(";//bracket
+    left -> print();//lhs
+    cout << "/";// divide
+    right -> print();//rhs
+    cout << ")";// bracket
     //cout<< this->evaluate(); // Dummy code
 }
 
-void Division::increment()
+void Division::increment()//increment digit by 1
 {
-    left -> increment();
-    right -> increment();
+    left -> increment();//tell left to do it
+    right -> increment();//tell right to do it
 }

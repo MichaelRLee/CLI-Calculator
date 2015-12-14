@@ -2,25 +2,25 @@
 * Name: Michael Robert Lee, Victor Carri, Shilp Pancholi
 * MacID: leemr2, carriva, panchosm
 * Student Number: 1406823, 001406904, 1419055
-* Description: This file runs the program
+* Description: Finds the difference
 */
 
 #include "Subtraction.h"
 
-Subtraction::Subtraction(Expression* left, Expression* right):ArithmeticExpression(left,right){}
+Subtraction::Subtraction(Expression* left, Expression* right):ArithmeticExpression(left,right){}//assigns left and right
 
-Subtraction::~Subtraction()
+Subtraction::~Subtraction()//destructor
 {
     delete left;
     delete right;
 }
 
-Subtraction::Subtraction(const Subtraction& other)
+Subtraction::Subtraction(const Subtraction& other)// a default constructor
 {
 
 }
 
-Subtraction& Subtraction::operator=(const Subtraction& rhs)
+Subtraction& Subtraction::operator=(const Subtraction& rhs)// copy constructor
 {
     if (this == &rhs) return *this; // handle self assignment
     //assignment operator
@@ -45,15 +45,15 @@ string Subtraction::evaluate()
 */
 void Subtraction::print()
 {
-    cout << "(";
-    left -> print();
-    cout << "-";
-    right -> print();
-    cout << ")";
+    cout << "(";//bracket
+    left -> print();//lhs
+    cout << "-";//minus
+    right -> print();//rhs
+    cout << ")";//bracket
     //cout << this->evaluate(); //prints evaluated expression
 }
-void Subtraction::increment()
+void Subtraction::increment()//increments digits by 1
 {
-    left -> increment();
-    right -> increment();
+    left -> increment();//tell left to do it
+    right -> increment();//tell right to do it
 }

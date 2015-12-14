@@ -2,74 +2,74 @@
 * Name: Michael Robert Lee, Victor Carri, Shilp Pancholi
 * MacID: leemr2, carriva, panchosm
 * Student Number: 1406823, 001406904, 1419055
-* Description: This file runs the program
+* Description: Stores top level expression or number
 */
 
-#include "Expression.h"
+#include "Expression.h" //header
 
-Expression::Expression()
+Expression::Expression() //blank constructor
 {
-    value="0";
-    exp=NULL;
+    value="0";//zero
+    exp=NULL;//null
 }
 
 
-Expression::Expression(Expression* exp)
+Expression::Expression(Expression* exp)//new constructor
 {
-    this->exp=exp;
+    this->exp=exp;//assign pointer
 }
 
 
-Expression::Expression(string str):value(str),exp(NULL)
+Expression::Expression(string str):value(str),exp(NULL)//number constructor
 {
 }
 
-Expression::~Expression()
+Expression::~Expression()//delete
 {
-    if (exp!=NULL) delete exp;
+    if (exp!=NULL) delete exp;//delete the pointer if it's there (will delete other new's)
 }
 
-Expression::Expression(const Expression& other)
+Expression::Expression(const Expression& other)//blank copy constructor
 {
     //copy ctor
 }
 
-Expression& Expression::operator=(const Expression& rhs)
+Expression& Expression::operator=(const Expression& rhs)//other copy constructor
 {
     if (this == &rhs) return *this; // handle self assignment
-    this->value = rhs.value;
-    this ->exp = rhs.exp;
-    return *this;
+    this->value = rhs.value;//assign value
+    this ->exp = rhs.exp;//assign value
+    return *this;//ret val
 }
 
-string Expression::evaluate()
+string Expression::evaluate() //evaluate expression
 {
-    if (exp!=NULL) return exp->evaluate();
-    else return value;
+    if (exp!=NULL) return exp->evaluate();//if there's already an equation, compute
+    else return value;//otherwise return number
 }
 
-void Expression::print()
+void Expression::print()//print
 {
-    if (exp!=NULL) exp->print();
-    else {
-        if (convert()<0) cout << "(" << value << ")";
-        else cout << value;
+    if (exp!=NULL) exp->print();//if there's an expression stored, print
+    else {//otherwise
+        if (convert()<0) cout << "(" << value << ")";//if negative print w/ brackets
+        else cout << value;//otherwise just print numbers
     }
 }
 
 float Expression::convert() // Convert this number to a floating-point representation
 {
-    if (exp!=NULL) return exp->convert();
+    if (exp!=NULL) return exp->convert(); //if there's an expression, call convert on it
     else return atof(this->value.c_str()); // Convert it to a float
 }
 
-void Expression::increment()
+void Expression::increment()//increment digit
 {
-    if (exp!=NULL) exp->increment();
-    else
+    if (exp!=NULL) exp->increment();//if expression, call it's increment
+    else//otherise
     {
-        stringstream temp;
-        temp << atoi(value.c_str())+1;
-        value = temp.str();
+        stringstream temp;//temp string
+        temp << atoi(value.c_str())+1;//add one to integer and convert to string
+        value = temp.str();//return string
     }
 }

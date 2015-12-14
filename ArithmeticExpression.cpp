@@ -2,7 +2,7 @@
 * Name: Michael Robert Lee, Victor Carri, Shilp Pancholi
 * MacID: leemr2, carriva, panchosm
 * Student Number: 1406823, 001406904, 1419055
-* Description: This file runs the program
+* Description: Stores equations
 */
 
 #include "ArithmeticExpression.h"//header
