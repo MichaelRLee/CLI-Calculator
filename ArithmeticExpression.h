@@ -67,7 +67,6 @@ class ArithmeticExpression : public Expression
     protected:
         Expression *left; //!< Member variable "left"
         Expression *right; //!< Member variable "right"
-    private:
 };
 
 #endif // ARITHMETICEXPRESSION_H

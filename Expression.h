@@ -19,6 +19,10 @@ class Expression
         //Expression(ArithmeticExpression* ae); // Copies a given arithmeticExpression into this one
         Expression();
 
+        Expression (Expression* exp);
+
+        Expression (string str);
+
         /** Default destructor */
         virtual ~Expression();
 
@@ -36,8 +40,8 @@ class Expression
         virtual string evaluate(); // Evaluates the expression
         virtual void print(); // Prints the evaluated expression
         virtual void increment();
-    protected:
     private:
+        string value;
         //ArithmeticExpression myAE;
 };
 

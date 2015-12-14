@@ -2,7 +2,9 @@
 
 ArithmeticExpression::ArithmeticExpression(Expression* left, Expression* right):left(left), right (right){}
 
-ArithmeticExpression::ArithmeticExpression(Expression* finalExp):left(finalExp){}
+ArithmeticExpression::ArithmeticExpression(Expression* finalExp):left(finalExp),right(NULL)
+{
+}
 
 ArithmeticExpression::~ArithmeticExpression()
 {
@@ -34,7 +36,13 @@ string ArithmeticExpression::evaluate()
 */
 void ArithmeticExpression::print()
 {
-    left->print();
+    cout << "fkl;jsd" << endl;
+    if (left != NULL) left->print();
+    else cout << "Left is Null" <<endl;
+    if (right!=NULL) {
+            cout << " ";
+            right -> print();
+    }
 }
 
 /** \brief Converts a string (as returned by evaluate) to a float.

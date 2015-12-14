@@ -31,7 +31,7 @@ void removeBrackets(string& exp, size_t &strIndex); //removes unnessicary bracke
 int bracketCount (string exp, bool retNum);  //counts brackets and returns based on boolean;
 string removeSpaces (string exp); //removes spaces from expression
 //Expression* strToExp(string& str); // Builds the ArithmeticExpression object, given a string
-ArithmeticExpression* strToExp(string& str);
+Expression* strToExp(string& str);
 
 int main()
 {
@@ -40,7 +40,8 @@ int main()
     size_t bracketLoc=0; //used to store location of first bracket in expression
     string curToken; // The current token in the expression
     string sInput; // String which represents the input
-    Expression* aExp;
+    Expression* newExp=NULL;
+    Expression* oldExp=NULL;
 
     while (reading) // Read until user quits
     {
@@ -51,6 +52,30 @@ int main()
         if (!strcmp(input, "#")) // Check for the input which terminates the program (#)
         {
             reading = false; // End the input loop
+        }
+        else if (!strcmp(input, "@"))
+        {
+            if (oldExp!=NULL)
+            {
+                newExp=new Expression(oldExp);
+                if (newExp!=NULL)
+                {
+                    newExp->increment();
+                    newExp->print(); // Print the Expression
+                    cout << " = " << roundf(atof((newExp->evaluate()).c_str())*100)/100 << endl;
+                    if (oldExp!=NULL )delete oldExp;
+                    oldExp = new Expression (newExp);
+                    if (newExp!=NULL) delete newExp;
+                }
+                else
+                {
+                    cout << "Could not allocate memory" <<endl;
+                }
+            }
+            else
+            {
+                cout << "No expression to increment has been entered yet.  Please enter an expression first" << endl;
+            }
         }
 
         /**
@@ -68,11 +93,13 @@ int main()
                 }
                 sInput=removeSpaces(sInput); //remove spaces
                 bracketLoc=0; //reset bracketLoc value
-                aExp = new ArithmeticExpression(strToExp(sInput)); // Convert the string to an Expression
-                aExp->print(); // Print the Expression
-                cout << " = " << roundf(atof((aExp->evaluate()).c_str())*100)/100 << endl;
+                newExp = new ArithmeticExpression(strToExp(sInput)); // Convert the string to an Expression
+                newExp->print(); // Print the Expression
+                cout << " = " << roundf(atof((newExp->evaluate()).c_str())*100)/100 << endl;
                 //printf("=%0.2f\n",atof((aExp->evaluate()).c_str()));
-                delete aExp; // Free the memory allocated to aExp a
+                if (oldExp!=NULL) delete oldExp; // Free the memory allocated to aExp a
+                oldExp = new Expression (newExp);
+                delete newExp;
             }
 
             else // The expression is invalid
@@ -84,6 +111,7 @@ int main()
             clog << endl;
         }
     }
+    delete oldExp;
     return 0;
 }
 
@@ -380,7 +408,7 @@ string removeSpaces(string exp)
 }
 
 //Expression* strToExp(string &str){
-ArithmeticExpression* strToExp(string& str){
+Expression* strToExp(string& str){
     int level = 0;//inside parentheses check
     //case + or -
     //most right '+' or '-' (but not inside '()') search and split
@@ -397,7 +425,9 @@ ArithmeticExpression* strToExp(string& str){
         if (str[i] == '+'){
             string left(str.substr(0,i));
             string right(str.substr(i+1));
-            return new Addition (strToExp(left),strToExp(right));
+            Expression* temp = new Addition (strToExp(left),strToExp(right));
+            temp->print();
+            return temp;
         } else if (str[i] == '-'){
             string left(str.substr(0,i));
             string right(str.substr(i+1));
@@ -446,7 +476,7 @@ ArithmeticExpression* strToExp(string& str){
         }
     } else{
         //case value
-        return new Number(str);
+        return new Expression(str);
     }
     cerr << "Error:never execute point" << endl;
     return NULL;//never
