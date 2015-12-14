@@ -38,7 +38,6 @@ int main()
     bool reading = true; // Controls input loop
     char input[256]; // The user input
     size_t bracketLoc=0; //used to store location of first bracket in expression
-    //ArithmeticExpression ae = new ArithmeticExpression(); // Create the top-level expression
     string curToken; // The current token in the expression
     string sInput; // String which represents the input
     Expression* aExp;

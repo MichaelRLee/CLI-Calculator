@@ -38,6 +38,7 @@ class Number : public ArithmeticExpression
         float convert(); // Converts this number to a floating-point representation
 
         void print(); // Prints this number
+        void increment();
     protected:
     private:
         string value; // The value of this number

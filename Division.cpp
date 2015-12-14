@@ -44,3 +44,9 @@ void Division::print()
     cout << ")";
     //cout<< this->evaluate(); // Dummy code
 }
+
+void Division::increment()
+{
+    left->increment();
+    right->increment();
+}

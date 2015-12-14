@@ -34,5 +34,12 @@ void Number::print() // Print a string representation of this Number
 
 float Number::convert() // Convert this number to a floating-point representation
 {
-    return atof(this->value.c_str()); // Convert it to a float
+    stringstream temp;
+    temp << atof(this->value.c_str())+1; // Convert it to a float
+    value = temp.str();
+}
+
+void Number::increment()
+{
+    value= atoi(value.c_str)
 }
