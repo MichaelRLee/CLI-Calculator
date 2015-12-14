@@ -1,4 +1,10 @@
-/* C++ includes */
+/*
+* Name: Michael Robert Lee, Victor Carri, Shilp Pancholi
+* MacID: leemr2, carriva, panchosm
+* Student Number: 1406823, 001406904, 1419055
+* Description: This file runs the program
+*/
+
 
 // Standard C++ headers
 #include <iostream> // cout, cin
@@ -29,9 +35,9 @@ bool checkOpp(string exp); //check if expression is arithmetically correct
 void removeBrackets(string& exp, size_t &strIndex); //removes unnessicary brackets from expression
 int bracketCount (string exp, bool retNum);  //counts brackets and returns based on boolean;
 string removeSpaces (string exp); //removes spaces from expression
-Expression* strToExp(string& str);
+Expression* strToExp(string& str); //returns a built expression tree
 
-int main()
+int main() //main
 {
     bool reading = true; // Controls input loop
     char input[256]; // The user input
@@ -39,8 +45,8 @@ int main()
     //ArithmeticExpression ae = new ArithmeticExpression(); // Create the top-level expression
     string curToken; // The current token in the expression
     string sInput; // String which represents the input
-    Expression* oldExp =NULL;
-    Expression* newExp = NULL;
+    Expression* oldExp =NULL; //old expression
+    Expression* newExp = NULL; //new expression
 
     while (reading) // Read until user quits
     {
@@ -52,19 +58,17 @@ int main()
         {
             reading = false; // End the input loop
         }
-        else if (!strcmp(input,"@"))
+        else if (!strcmp(input,"@")) //if input is @
         {
-            if (oldExp==NULL){
-                cout << "No expression has been entered. Please enter an expression first\n" << endl;
+            if (oldExp==NULL){ //if @ is entered before an expression has been
+                cout << "No expression has been entered. Please enter an expression first\n" << endl; //error msg
             }
-            else{
-                newExp = new Expression(oldExp);
-                //if (oldExp != NULL) delete oldExp; // Free the memory allocated to aExp a
-                newExp->increment();
+            else{ //else
+                newExp = new Expression(oldExp); //copy old expression
+                newExp->increment(); //incriment expression
                 newExp->print(); // Print the Expression
-                cout << " = " << roundf(atof((newExp->evaluate()).c_str())*100)/100 << endl;
-                oldExp = new Expression(newExp);
-                //if (newExp!=NULL)delete newExp;
+                cout << " = " << roundf(atof((newExp->evaluate()).c_str())*100)/100 << endl; //print value
+                oldExp = new Expression(newExp); //copy expression
             }
         }
 
@@ -86,21 +90,21 @@ int main()
                 if (oldExp != NULL) delete oldExp; // Free the memory allocated to aExp a
                 oldExp = new ArithmeticExpression(strToExp(sInput)); // Convert the string to an Expression
                 oldExp->print(); // Print the Expression
-                cout << " = " << roundf(atof((oldExp->evaluate()).c_str())*100)/100 << endl;
+                cout << " = " << roundf(atof((oldExp->evaluate()).c_str())*100)/100 << endl; //print value
                 //printf("=%0.2f\n",atof((aExp->evaluate()).c_str()));
             }
 
             else // The expression is invalid
             {
                 // DEBUGGING - Print negative statement
-                clog << "Expression is not well formed" << endl;
+                clog << "Expression is not well formed" << endl; //print error
             }
 
         }
-        cout << endl;
+        cout << endl; //new line
     }
-    if (oldExp!=NULL)delete oldExp;
-    return 0;
+    if (oldExp!=NULL)delete oldExp; //if old expression is not null, delete oldExp which would also delete newExp
+    return 0;//default ret val
 }
 
 /** \brief Counts the number of openning and closing brackets in a string.  Can return either the difference between the two or the number of openning brackets
@@ -206,25 +210,13 @@ bool isValidExpr(string expr)
         {
             //clog << "Found invalid token" << endl;
             return false; // No need to look further - the expression is invalid
-            break;
+            break; //JUST IN CASE
         }
 
         else if (isNumericString(befPrevToken) && isAllSpaces(prevToken) && isNumericString(curToken)) // A sequence of "(number)(space)(number)"
         {
             //cout << "Returning false in if 2" << endl << "isNumericString(" << befPrevToken << ") = " << isNumericString(befPrevToken) << endl << "isAllSpaces(\"" << prevToken << "\") = " << isAllSpaces(prevToken) << endl << "isNumericString(" << curToken << ") = " << isNumericString(curToken) << endl;
             return false; // No need to look further
-        }
-
-        else
-        {
-            // DEBUGGING
-            //cout << "isValidExpr: Token at position " << oldSPos << " = \"" << curToken << "\"" << endl; // Print the token
-
-            // DEBUGGING
-            //cout << "isValidExpr: After assignment, oldSpos = " << oldSPos << endl;
-
-            // DEBUGGING
-            //cout << endl << endl;
         }
 
         //oldSPos = curSPos; // Store old position in string for next loop
@@ -279,25 +271,25 @@ bool checkOpp (string exp)
             //clog << "invalid token after number"<<endl;
             return false ; //return false if it is
         }
-        if (exp[i]=='('&&exp[i+1]=='-')
+        if (exp[i]=='('&&exp[i+1]=='-') //check for negative numbers
         {
-            size_t j = i+2;
-            while (!(exp[j]==')')&&j<exp.length())
+            size_t j = i+2; //where digits should start
+            while (!(exp[j]==')')&&j<exp.length()) //if next char isn't a ) or j is bigger than the string
             {
-                if (!isdigit(exp[j]))
+                if (!isdigit(exp[j])) //if the char is a number
                 {
-                    return false;
+                    return false; //return false
                 }
-                j++;
+                j++;//increment
             }
-            if (j==i+2 || j==exp.length())
+            if (j==i+2 || j==exp.length()) //if the digit after the -
             {
                 return false;
             }
         }
     }
     return (bracketCount(exp, false)==0); //if the string passed all the tests, it is valid, and true is returned
-    }
+}
 
 /** \brief Gets the next token from the given arithmetic expression.
  *
