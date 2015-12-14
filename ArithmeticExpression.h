@@ -1,20 +1,35 @@
+/*
+* Name: Michael Robert Lee, Victor Carri, Shilp Pancholi
+* MacID: leemr2, carriva, panchosm
+* Student Number: 1406823, 001406904, 1419055
+* Description: This file defines all methods and properties common to all ArithmeticExpressions.
+*/
+
+/* Beginning of include guard */
 #ifndef ARITHMETICEXPRESSION_H
 #define ARITHMETICEXPRESSION_H
 
-#include "Expression.h"
+#include "Expression.h" // Parent class
 
-class ArithmeticExpression : public Expression
+class ArithmeticExpression : public Expression // Inherits from the Expression class
 {
     public:
 
-        /** Default constructor */
-        ArithmeticExpression () {}
+        /** Constructs an ArithmeticExpression object with empty left and right sides. */
+        ArithmeticExpression();
 
+        /** Constructs an ArithmeticExpression object with copies of the given expressions stored as its
+        left and right hand sides. **/
         ArithmeticExpression(Expression* left, Expression* right);
 
+        /** \brief Constructs a top-level ArithmeticExpression.
+         *
+         * \param finalExp The expression contained in this top-level ArithmeticExpression.
+         *
+         */
         ArithmeticExpression(Expression* finalExp);
 
-        /** Default destructor */
+        /** Destroys an ArithmeticExpression. Made virtual to allow for polymorphic destruction. */
         virtual ~ArithmeticExpression();
 
         /** Copy constructor
@@ -63,10 +78,14 @@ class ArithmeticExpression : public Expression
          * \return A floating-point representation of the string.
          */
         float convert(string s);
+
+        /** \brief Increments the numbers in this ArithmeticExpression
+         */
+        void increment();
     protected:
-        Expression *left; //!< Member variable "left"
-        Expression *right; //!< Member variable "right"
-    private:
+        Expression *left; //!< The left half of the ArithmeticExpression
+        Expression *right; //!< The right half of the ArithmeticExpression.
 };
 
+/* End include guard */
 #endif // ARITHMETICEXPRESSION_H

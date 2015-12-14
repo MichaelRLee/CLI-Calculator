@@ -1,23 +1,30 @@
-#include "Addition.h"
+/*
+* Name: Michael Robert Lee, Victor Carri, Shilp Pancholi
+* MacID: leemr2, carriva, panchosm
+* Student Number: 1406823, 001406904, 1419055
+* Description: Summing adding numbers
+*/
 
-Addition::Addition(Expression* left, Expression* right):ArithmeticExpression(left,right){}
+#include "Addition.h"//header
 
-Addition::~Addition()
+Addition::Addition(Expression* left, Expression* right):ArithmeticExpression(left,right){} //constructor assigns left and right
+
+Addition::~Addition()//deletes left and right
 {
-    delete left;
-    delete right;
+    delete left;//delete left
+    delete right;//dealocate right
 }
 
-Addition::Addition(const Addition& other):ArithmeticExpression(other)
+Addition::Addition(const Addition& other):ArithmeticExpression(other)//assigns arithmetic expression
 {
 
 }
 
-Addition& Addition::operator=(const Addition& rhs)
+Addition& Addition::operator=(const Addition& rhs) //copy constructor
 {
     if (this == &rhs) return *this; // handle self assignment
     //assignment operator
-    return *this;
+    return *this; //return this
 }
 
 /** \brief Evaluates the expression.
@@ -38,10 +45,17 @@ string Addition::evaluate()
 */
 void Addition::print()
 {
-    cout << "(";
-    left -> print();
-    cout << "+";
-    right -> print();
-    cout << ")";
+    cout << "("; //bracket
+    left -> print();//lhs
+    cout << "+";//+
+    right -> print();//rhs
+    cout << ")";//bracket
     //cout << this->evaluate(); // Print the evaluated expression
+}
+
+
+void Addition::increment()//increase value of digits by 1
+{
+    left -> increment();//tell lhs to do it
+    right -> increment();//tell hrs to do it
 }

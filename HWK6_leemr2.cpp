@@ -1,4 +1,10 @@
-/* C++ includes */
+/*
+* Name: Michael Robert Lee, Victor Carri, Shilp Pancholi
+* MacID: leemr2, carriva, panchosm
+* Student Number: 1406823, 001406904, 1419055
+* Description: This file runs the program
+*/
+
 
 // Standard C++ headers
 #include <iostream> // cout, cin
@@ -13,7 +19,6 @@
 #include "Subtraction.h" // Subtraction class
 #include "Multiplication.h" // Multiplication class
 #include "Division.h" // Division class
-#include "Number.h" // Number class
 
 // Namespaces
 using namespace std;
@@ -30,10 +35,9 @@ bool checkOpp(string exp); //check if expression is arithmetically correct
 void removeBrackets(string& exp, size_t &strIndex); //removes unnessicary brackets from expression
 int bracketCount (string exp, bool retNum);  //counts brackets and returns based on boolean;
 string removeSpaces (string exp); //removes spaces from expression
-//Expression* strToExp(string& str); // Builds the ArithmeticExpression object, given a string
-ArithmeticExpression* strToExp(string& str);
+Expression* strToExp(string& str); //returns a built expression tree
 
-int main()
+int main() //main
 {
     bool reading = true; // Controls input loop
     char input[256]; // The user input
@@ -41,7 +45,8 @@ int main()
     //ArithmeticExpression ae = new ArithmeticExpression(); // Create the top-level expression
     string curToken; // The current token in the expression
     string sInput; // String which represents the input
-    Expression* aExp;
+    Expression* oldExp =NULL; //old expression
+    Expression* newExp = NULL; //new expression
 
     while (reading) // Read until user quits
     {
@@ -52,6 +57,19 @@ int main()
         if (!strcmp(input, "#")) // Check for the input which terminates the program (#)
         {
             reading = false; // End the input loop
+        }
+        else if (!strcmp(input,"@")) //if input is @
+        {
+            if (oldExp==NULL){ //if @ is entered before an expression has been
+                cout << "No expression has been entered. Please enter an expression first\n" << endl; //error msg
+            }
+            else{ //else
+                newExp = new Expression(oldExp); //copy old expression
+                newExp->increment(); //incriment expression
+                newExp->print(); // Print the Expression
+                cout << " = " << roundf(atof((newExp->evaluate()).c_str())*100)/100 << endl; //print value
+                oldExp = new Expression(newExp); //copy expression
+            }
         }
 
         /**
@@ -69,23 +87,24 @@ int main()
                 }
                 sInput=removeSpaces(sInput); //remove spaces
                 bracketLoc=0; //reset bracketLoc value
-                aExp = new ArithmeticExpression(strToExp(sInput)); // Convert the string to an Expression
-                aExp->print(); // Print the Expression
-                cout << " = " << roundf(atof((aExp->evaluate()).c_str())*100)/100 << endl;
+                if (oldExp != NULL) delete oldExp; // Free the memory allocated to aExp a
+                oldExp = new ArithmeticExpression(strToExp(sInput)); // Convert the string to an Expression
+                oldExp->print(); // Print the Expression
+                cout << " = " << roundf(atof((oldExp->evaluate()).c_str())*100)/100 << endl; //print value
                 //printf("=%0.2f\n",atof((aExp->evaluate()).c_str()));
-                delete aExp; // Free the memory allocated to aExp a
             }
 
             else // The expression is invalid
             {
                 // DEBUGGING - Print negative statement
-                clog << "Expression is not well formed" << endl;
+                clog << "Expression is not well formed" << endl; //print error
             }
 
-            clog << endl;
         }
+        cout << endl; //new line
     }
-    return 0;
+    if (oldExp!=NULL)delete oldExp; //if old expression is not null, delete oldExp which would also delete newExp
+    return 0;//default ret val
 }
 
 /** \brief Counts the number of openning and closing brackets in a string.  Can return either the difference between the two or the number of openning brackets
@@ -191,25 +210,13 @@ bool isValidExpr(string expr)
         {
             //clog << "Found invalid token" << endl;
             return false; // No need to look further - the expression is invalid
-            break;
+            break; //JUST IN CASE
         }
 
         else if (isNumericString(befPrevToken) && isAllSpaces(prevToken) && isNumericString(curToken)) // A sequence of "(number)(space)(number)"
         {
             //cout << "Returning false in if 2" << endl << "isNumericString(" << befPrevToken << ") = " << isNumericString(befPrevToken) << endl << "isAllSpaces(\"" << prevToken << "\") = " << isAllSpaces(prevToken) << endl << "isNumericString(" << curToken << ") = " << isNumericString(curToken) << endl;
             return false; // No need to look further
-        }
-
-        else
-        {
-            // DEBUGGING
-            //cout << "isValidExpr: Token at position " << oldSPos << " = \"" << curToken << "\"" << endl; // Print the token
-
-            // DEBUGGING
-            //cout << "isValidExpr: After assignment, oldSpos = " << oldSPos << endl;
-
-            // DEBUGGING
-            //cout << endl << endl;
         }
 
         //oldSPos = curSPos; // Store old position in string for next loop
@@ -264,9 +271,25 @@ bool checkOpp (string exp)
             //clog << "invalid token after number"<<endl;
             return false ; //return false if it is
         }
+        if (exp[i]=='('&&exp[i+1]=='-') //check for negative numbers
+        {
+            size_t j = i+2; //where digits should start
+            while (!(exp[j]==')')&&j<exp.length()) //if next char isn't a ) or j is bigger than the string
+            {
+                if (!isdigit(exp[j])) //if the char is a number
+                {
+                    return false; //return false
+                }
+                j++;//increment
+            }
+            if (j==i+2 || j==exp.length()) //if the digit after the - is a )
+            {
+                return false; //return false
+            }
+        }
     }
     return (bracketCount(exp, false)==0); //if the string passed all the tests, it is valid, and true is returned
-    }
+}
 
 /** \brief Gets the next token from the given arithmetic expression.
  *
@@ -381,74 +404,78 @@ string removeSpaces(string exp)
 }
 
 //Expression* strToExp(string &str){
-ArithmeticExpression* strToExp(string& str){
+Expression* strToExp(string& str){
     int level = 0;//inside parentheses check
     //case + or -
     //most right '+' or '-' (but not inside '()') search and split
-    for(int i = str.size()-1;i>=0;--i){
-        if(str[i] == ')'){
-            ++level;
-            continue;
+    for(int i = str.size()-1;i>=0;--i){ //for each digit going backwards
+        if(str[i] == ')'){ //ignore brackets
+            ++level; //to ignore brackets
+            continue; //go back to top of loop
         }
-        if(str[i] == '('){
-            --level;
-            continue;
+        if(str[i] == '('){ //ignoring brackets
+            --level; //reduce level
+            continue; //goto top of loop
         }
-        if(level>0) continue;
-        if (str[i] == '+'){
-            string left(str.substr(0,i));
-            string right(str.substr(i+1));
-            return new Addition (strToExp(left),strToExp(right));
-        } else if (str[i] == '-'){
-            string left(str.substr(0,i));
-            string right(str.substr(i+1));
-            return new Subtraction (strToExp(left),strToExp(right));
+        if(level>0) continue;//after ignoring brackets
+        if (str[i] == '+'){// if addition
+            string left(str.substr(0,i));//left side
+            string right(str.substr(i+1));//rhs
+            return new Addition (strToExp(left),strToExp(right));//create expression by converting lhs and rhs to expressions
+        } else if (str[i] == '-'){//if subtraction
+            string left(str.substr(0,i));//lhs
+            string right(str.substr(i+1));//rhs
+            return new Subtraction (strToExp(left),strToExp(right));//convert recursively to expression
         }
     }
 
     //case * or /
     //most right '*' or '/' (but not inside '()') search and split
     for(int i= str.size()-1; i>=0;--i){
-        if(str[i] == ')'){
-            ++level;
-            continue;
+        if(str[i] == ')'){ //ignore brackets
+            ++level; //increase level of brackets
+            continue; //top of loop
         }
-        if(str[i] == '('){
-            --level;
-            continue;
+        if(str[i] == '('){ //ignore brackets
+            --level; //decrease level
+            continue; //top of loop
         }
-        if(level>0) continue;
-        if(str[i] == '*'){
-            string left(str.substr(0,i));
-            string right(str.substr(i+1));
-            return new Multiplication(strToExp(left), strToExp(right));
-        }else if(str[i] == '/'){
-            string left(str.substr(0,i));
-            string right(str.substr(i+1));
-            return new Division(strToExp(left), strToExp(right));
+        if(level>0) continue;//continue until not in brackets
+        if(str[i] == '*'){//multiply
+            string left(str.substr(0,i));//lhs
+            string right(str.substr(i+1));//rhs
+            return new Multiplication(strToExp(left), strToExp(right));//return expression
+        }else if(str[i] == '/'){//division
+            string left(str.substr(0,i));//lhs
+            string right(str.substr(i+1));//rhs
+            return new Division(strToExp(left), strToExp(right));//recursive expression
         }
     }
-    if(str[0]=='('){
+    if(str[0]=='('){//brackets apear next
     //case ()
     //pull out inside and to strToExp
         for(size_t i=0;i<str.size();++i){
-            if(str[i]=='('){
-                ++level;
-                continue;
+            if(str[i]=='('){ //ingoring deeper levels of brackets
+                ++level;//increase level
+                continue;//top of loop
             }
-            if(str[i]==')'){
-                --level;
-                if(level==0){
-                    string exp(str.substr(1, i-1));
-                    return strToExp(exp);
+            if(str[i]==')'){//ignoring deeper brackets
+                --level;//decriment level
+                if(level==0){//if we're at base level
+                    if (str[1]=='-')//if it's a negative number (check opp will make sure of this)
+                    {
+                        return new Expression(str.substr(1,i-1));//return the negative number
+                    }
+                    string exp(str.substr(1, i-1));//else create expression with inside brackets
+                    return strToExp(exp);//recurse without brackets
                 }
-                continue;
+                continue;//top of loop
             }
         }
-    } else{
+    } else{//if just a num
         //case value
-        return new Number(str);
+        return new Expression(str);//return num
     }
-    cerr << "Error:never execute point" << endl;
+    cerr << "Error:never execute point" << endl; //error
     return NULL;//never
 }
