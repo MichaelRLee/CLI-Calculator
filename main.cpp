@@ -41,7 +41,7 @@ int main()
     //ArithmeticExpression ae = new ArithmeticExpression(); // Create the top-level expression
     string curToken; // The current token in the expression
     string sInput; // String which represents the input
-    ArithmeticExpression* aExp;
+    Expression* aExp;
 
     while (reading) // Read until user quits
     {
@@ -73,7 +73,7 @@ int main()
                 aExp->print(); // Print the Expression
                 cout << " = " << roundf(atof((aExp->evaluate()).c_str())*100)/100 << endl;
                 //printf("=%0.2f\n",atof((aExp->evaluate()).c_str()));
-                delete aExp; // Free the memory allocated to aExp
+                delete aExp; // Free the memory allocated to aExp a
             }
 
             else // The expression is invalid
