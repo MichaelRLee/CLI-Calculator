@@ -9,8 +9,7 @@ Expression::Expression()
 
 Expression::Expression(Expression* exp)
 {
-    this->value = exp->value;
-    this ->exp = exp->exp;
+    this->exp=exp;
 }
 
 
@@ -38,27 +37,32 @@ Expression& Expression::operator=(const Expression& rhs)
 
 string Expression::evaluate()
 {
-    return value;
+    if (exp!=NULL) return exp->evaluate();
+    else return value;
 }
 
 void Expression::print()
 {
-    cout << value;
+    if (exp!=NULL) exp->print();
+    else {
+        if (convert()<0) cout << "(" << value << ")";
+        else cout << value;
+    }
 }
 
 float Expression::convert() // Convert this number to a floating-point representation
 {
-    return atof(this->value.c_str()); // Convert it to a float
+    if (exp!=NULL) return exp->convert();
+    else return atof(this->value.c_str()); // Convert it to a float
 }
 
 void Expression::increment()
 {
-    stringstream temp;
-    temp << atoi(value.c_str())+1;
-    value = temp.str();
-}
-
-Expression* Expression::retExp()
-{
-    return this->exp;
+    if (exp!=NULL) exp->increment();
+    else
+    {
+        stringstream temp;
+        temp << atoi(value.c_str())+1;
+        value = temp.str();
+    }
 }

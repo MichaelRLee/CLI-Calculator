@@ -58,12 +58,12 @@ int main()
                 cout << "No expression has been entered. Please enter an expression first\n" << endl;
             }
             else{
-                //newExp = new Expression(oldExp);
+                newExp = new Expression(oldExp);
                 //if (oldExp != NULL) delete oldExp; // Free the memory allocated to aExp a
-                oldExp->increment();
-                oldExp->print(); // Print the Expression
-                cout << " = " << roundf(atof((oldExp->evaluate()).c_str())*100)/100 << endl;
-                //oldExp = new Expression(newExp);
+                newExp->increment();
+                newExp->print(); // Print the Expression
+                cout << " = " << roundf(atof((newExp->evaluate()).c_str())*100)/100 << endl;
+                oldExp = new Expression(newExp);
                 //if (newExp!=NULL)delete newExp;
             }
         }
@@ -100,7 +100,6 @@ int main()
         cout << endl;
     }
     if (oldExp!=NULL)delete oldExp;
-    if (newExp!=NULL)delete newExp;
     return 0;
 }
 
@@ -280,6 +279,22 @@ bool checkOpp (string exp)
             //clog << "invalid token after number"<<endl;
             return false ; //return false if it is
         }
+        if (exp[i]=='('&&exp[i+1]=='-')
+        {
+            size_t j = i+2;
+            while (!(exp[j]==')')&&j<exp.length())
+            {
+                if (!isdigit(exp[j]))
+                {
+                    return false;
+                }
+                j++;
+            }
+            if (j==i+2 || j==exp.length())
+            {
+                return false;
+            }
+        }
     }
     return (bracketCount(exp, false)==0); //if the string passed all the tests, it is valid, and true is returned
     }
@@ -455,6 +470,10 @@ Expression* strToExp(string& str){
             if(str[i]==')'){
                 --level;
                 if(level==0){
+                    if (str[1]=='-')
+                    {
+                        return new Expression(str.substr(1,i-1));
+                    }
                     string exp(str.substr(1, i-1));
                     return strToExp(exp);
                 }

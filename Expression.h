@@ -41,7 +41,6 @@ class Expression
         virtual void print(); // Prints the evaluated expression
         float convert ();
         virtual void increment();
-        Expression* retExp ();
     protected:
     private:
         string value;
