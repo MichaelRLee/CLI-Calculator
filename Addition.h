@@ -32,6 +32,8 @@ class Addition : public ArithmeticExpression
         /** \brief Prints the expression.
          */
         void print();
+                void increment();
+
     protected:
     private:
 };

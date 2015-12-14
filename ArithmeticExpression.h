@@ -8,7 +8,7 @@ class ArithmeticExpression : public Expression
     public:
 
         /** Default constructor */
-        ArithmeticExpression () {}
+        ArithmeticExpression();
 
         ArithmeticExpression(Expression* left, Expression* right);
 
@@ -63,10 +63,10 @@ class ArithmeticExpression : public Expression
          * \return A floating-point representation of the string.
          */
         float convert(string s);
+        void increment();
     protected:
         Expression *left; //!< Member variable "left"
         Expression *right; //!< Member variable "right"
-    private:
 };
 
 #endif // ARITHMETICEXPRESSION_H

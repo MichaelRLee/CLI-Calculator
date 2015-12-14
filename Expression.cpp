@@ -2,7 +2,16 @@
 
 Expression::Expression()
 {
-    //ctor
+    value="0";
+}
+
+Expression::Expression(Expression* exp)
+{
+    value=exp->evaluate();
+}
+
+Expression::Expression(string str):value(str)
+{
 }
 
 Expression::~Expression()
@@ -24,11 +33,23 @@ Expression& Expression::operator=(const Expression& rhs)
 
 string Expression::evaluate()
 {
-    return "";
+    return value;
 }
 
 void Expression::print()
 {
+    cout << value;
 }
 
+float Expression::convert() // Convert this number to a floating-point representation
+{
+    return atof(this->value.c_str()); // Convert it to a float
+}
 
+void Expression::increment()
+{
+    stringstream temp;
+    temp << atoi(value.c_str())+1;
+    cout << temp.str() <<endl;
+    value = temp.str();
+}

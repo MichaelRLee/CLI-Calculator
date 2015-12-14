@@ -19,6 +19,8 @@ class Multiplication : public ArithmeticExpression
         string evaluate ();
 
         void print ();
+                void increment();
+
     protected:
     private:
 };

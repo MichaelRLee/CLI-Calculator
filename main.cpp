@@ -30,8 +30,7 @@ bool checkOpp(string exp); //check if expression is arithmetically correct
 void removeBrackets(string& exp, size_t &strIndex); //removes unnessicary brackets from expression
 int bracketCount (string exp, bool retNum);  //counts brackets and returns based on boolean;
 string removeSpaces (string exp); //removes spaces from expression
-//Expression* strToExp(string& str); // Builds the ArithmeticExpression object, given a string
-ArithmeticExpression* strToExp(string& str);
+Expression* strToExp(string& str);
 
 int main()
 {
@@ -41,7 +40,8 @@ int main()
     //ArithmeticExpression ae = new ArithmeticExpression(); // Create the top-level expression
     string curToken; // The current token in the expression
     string sInput; // String which represents the input
-    Expression* aExp;
+    Expression* oldExp =NULL;
+    Expression* newExp = NULL;
 
     while (reading) // Read until user quits
     {
@@ -52,6 +52,21 @@ int main()
         if (!strcmp(input, "#")) // Check for the input which terminates the program (#)
         {
             reading = false; // End the input loop
+        }
+        else if (!strcmp(input,"@"))
+        {
+            if (oldExp==NULL){
+                cout << "No expression has been entered. Please enter an expression first\n" << endl;
+            }
+            else{
+                //newExp = new Expression(oldExp);
+                //if (oldExp != NULL) delete oldExp; // Free the memory allocated to aExp a
+                oldExp->increment();
+                oldExp->print(); // Print the Expression
+                cout << " = " << roundf(atof((oldExp->evaluate()).c_str())*100)/100 << endl;
+                //oldExp = new Expression(newExp);
+                //if (newExp!=NULL)delete newExp;
+            }
         }
 
         /**
@@ -69,11 +84,11 @@ int main()
                 }
                 sInput=removeSpaces(sInput); //remove spaces
                 bracketLoc=0; //reset bracketLoc value
-                aExp = new ArithmeticExpression(strToExp(sInput)); // Convert the string to an Expression
-                aExp->print(); // Print the Expression
-                cout << " = " << roundf(atof((aExp->evaluate()).c_str())*100)/100 << endl;
+                if (oldExp != NULL) delete oldExp; // Free the memory allocated to aExp a
+                oldExp = new ArithmeticExpression(strToExp(sInput)); // Convert the string to an Expression
+                oldExp->print(); // Print the Expression
+                cout << " = " << roundf(atof((oldExp->evaluate()).c_str())*100)/100 << endl;
                 //printf("=%0.2f\n",atof((aExp->evaluate()).c_str()));
-                delete aExp; // Free the memory allocated to aExp a
             }
 
             else // The expression is invalid
@@ -85,6 +100,7 @@ int main()
             clog << endl;
         }
     }
+    if (oldExp!=NULL)delete oldExp;
     return 0;
 }
 
@@ -381,7 +397,7 @@ string removeSpaces(string exp)
 }
 
 //Expression* strToExp(string &str){
-ArithmeticExpression* strToExp(string& str){
+Expression* strToExp(string& str){
     int level = 0;//inside parentheses check
     //case + or -
     //most right '+' or '-' (but not inside '()') search and split
@@ -447,7 +463,7 @@ ArithmeticExpression* strToExp(string& str){
         }
     } else{
         //case value
-        return new Number(str);
+        return new Expression(str);
     }
     cerr << "Error:never execute point" << endl;
     return NULL;//never

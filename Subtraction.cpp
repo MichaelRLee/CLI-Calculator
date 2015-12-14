@@ -45,3 +45,8 @@ void Subtraction::print()
     cout << ")";
     //cout << this->evaluate(); //prints evaluated expression
 }
+void Subtraction::increment()
+{
+    left -> increment();
+    right -> increment();
+}

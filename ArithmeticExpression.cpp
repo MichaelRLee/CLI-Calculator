@@ -1,12 +1,17 @@
 #include "ArithmeticExpression.h"
 
+ArithmeticExpression::ArithmeticExpression()
+{
+    left=NULL;
+    right=NULL;
+}
+
 ArithmeticExpression::ArithmeticExpression(Expression* left, Expression* right):left(left), right (right){}
 
-ArithmeticExpression::ArithmeticExpression(Expression* finalExp):left(finalExp){}
+ArithmeticExpression::ArithmeticExpression(Expression* finalExp):left(finalExp), right(NULL){}
 
 ArithmeticExpression::~ArithmeticExpression()
 {
-    //dtor
 }
 
 ArithmeticExpression::ArithmeticExpression(const ArithmeticExpression& other)
@@ -46,3 +51,11 @@ float ArithmeticExpression::convert(string s) //string s is passed through this 
     float input = atof (s.c_str()); //convert the string input into a float
     return input; //returns the string as a float.
 }
+
+
+void ArithmeticExpression::increment()
+{
+    left -> increment();
+    right -> increment();
+}
+

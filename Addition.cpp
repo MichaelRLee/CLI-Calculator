@@ -45,3 +45,10 @@ void Addition::print()
     cout << ")";
     //cout << this->evaluate(); // Print the evaluated expression
 }
+
+
+void Addition::increment()
+{
+    left -> increment();
+    right -> increment();
+}
