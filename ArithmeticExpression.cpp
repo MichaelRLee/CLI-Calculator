@@ -46,3 +46,8 @@ float ArithmeticExpression::convert(string s) //string s is passed through this 
     float input = atof (s.c_str()); //convert the string input into a float
     return input; //returns the string as a float.
 }
+
+void ArithmeticExpression::increment()
+{
+    left -> increment();
+}

@@ -63,6 +63,7 @@ class ArithmeticExpression : public Expression
          * \return A floating-point representation of the string.
          */
         float convert(string s);
+        void increment();
     protected:
         Expression *left; //!< Member variable "left"
         Expression *right; //!< Member variable "right"

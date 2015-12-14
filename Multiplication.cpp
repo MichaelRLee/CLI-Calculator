@@ -41,3 +41,9 @@ void Multiplication::print()
     cout << ")";
     //cout << this->evaluate();
 }
+
+void Multiplication::increment()
+{
+    left->increment();
+    right->increment();
+}

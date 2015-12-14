@@ -31,4 +31,8 @@ void Expression::print()
 {
 }
 
+void Expression::increment()
+{
+}
+
 

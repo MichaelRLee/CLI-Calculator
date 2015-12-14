@@ -35,6 +35,7 @@ class Expression
 
         virtual string evaluate(); // Evaluates the expression
         virtual void print(); // Prints the evaluated expression
+        virtual void increment();
     protected:
     private:
         //ArithmeticExpression myAE;
