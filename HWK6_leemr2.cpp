@@ -282,9 +282,9 @@ bool checkOpp (string exp)
                 }
                 j++;//increment
             }
-            if (j==i+2 || j==exp.length()) //if the digit after the -
+            if (j==i+2 || j==exp.length()) //if the digit after the - is a )
             {
-                return false;
+                return false; //return false
             }
         }
     }
@@ -408,74 +408,74 @@ Expression* strToExp(string& str){
     int level = 0;//inside parentheses check
     //case + or -
     //most right '+' or '-' (but not inside '()') search and split
-    for(int i = str.size()-1;i>=0;--i){
-        if(str[i] == ')'){
-            ++level;
-            continue;
+    for(int i = str.size()-1;i>=0;--i){ //for each digit going backwards
+        if(str[i] == ')'){ //ignore brackets
+            ++level; //to ignore brackets
+            continue; //go back to top of loop
         }
-        if(str[i] == '('){
-            --level;
-            continue;
+        if(str[i] == '('){ //ignoring brackets
+            --level; //reduce level
+            continue; //goto top of loop
         }
-        if(level>0) continue;
-        if (str[i] == '+'){
-            string left(str.substr(0,i));
-            string right(str.substr(i+1));
-            return new Addition (strToExp(left),strToExp(right));
-        } else if (str[i] == '-'){
-            string left(str.substr(0,i));
-            string right(str.substr(i+1));
-            return new Subtraction (strToExp(left),strToExp(right));
+        if(level>0) continue;//after ignoring brackets
+        if (str[i] == '+'){// if addition
+            string left(str.substr(0,i));//left side
+            string right(str.substr(i+1));//rhs
+            return new Addition (strToExp(left),strToExp(right));//create expression by converting lhs and rhs to expressions
+        } else if (str[i] == '-'){//if subtraction
+            string left(str.substr(0,i));//lhs
+            string right(str.substr(i+1));//rhs
+            return new Subtraction (strToExp(left),strToExp(right));//convert recursively to expression
         }
     }
 
     //case * or /
     //most right '*' or '/' (but not inside '()') search and split
     for(int i= str.size()-1; i>=0;--i){
-        if(str[i] == ')'){
-            ++level;
-            continue;
+        if(str[i] == ')'){ //ignore brackets
+            ++level; //increase level of brackets
+            continue; //top of loop
         }
-        if(str[i] == '('){
-            --level;
-            continue;
+        if(str[i] == '('){ //ignore brackets
+            --level; //decrease level
+            continue; //top of loop
         }
-        if(level>0) continue;
-        if(str[i] == '*'){
-            string left(str.substr(0,i));
-            string right(str.substr(i+1));
-            return new Multiplication(strToExp(left), strToExp(right));
-        }else if(str[i] == '/'){
-            string left(str.substr(0,i));
-            string right(str.substr(i+1));
-            return new Division(strToExp(left), strToExp(right));
+        if(level>0) continue;//continue until not in brackets
+        if(str[i] == '*'){//multiply
+            string left(str.substr(0,i));//lhs
+            string right(str.substr(i+1));//rhs
+            return new Multiplication(strToExp(left), strToExp(right));//return expression
+        }else if(str[i] == '/'){//division
+            string left(str.substr(0,i));//lhs
+            string right(str.substr(i+1));//rhs
+            return new Division(strToExp(left), strToExp(right));//recursive expression
         }
     }
-    if(str[0]=='('){
+    if(str[0]=='('){//brackets apear next
     //case ()
     //pull out inside and to strToExp
         for(size_t i=0;i<str.size();++i){
-            if(str[i]=='('){
-                ++level;
-                continue;
+            if(str[i]=='('){ //ingoring deeper levels of brackets
+                ++level;//increase level
+                continue;//top of loop
             }
-            if(str[i]==')'){
-                --level;
-                if(level==0){
-                    if (str[1]=='-')
+            if(str[i]==')'){//ignoring deeper brackets
+                --level;//decriment level
+                if(level==0){//if we're at base level
+                    if (str[1]=='-')//if it's a negative number (check opp will make sure of this)
                     {
-                        return new Expression(str.substr(1,i-1));
+                        return new Expression(str.substr(1,i-1));//return the negative number
                     }
-                    string exp(str.substr(1, i-1));
-                    return strToExp(exp);
+                    string exp(str.substr(1, i-1));//else create expression with inside brackets
+                    return strToExp(exp);//recurse without brackets
                 }
-                continue;
+                continue;//top of loop
             }
         }
-    } else{
+    } else{//if just a num
         //case value
-        return new Expression(str);
+        return new Expression(str);//return num
     }
-    cerr << "Error:never execute point" << endl;
+    cerr << "Error:never execute point" << endl; //error
     return NULL;//never
 }

@@ -5,33 +5,33 @@
 * Description: This file runs the program
 */
 
-#include "ArithmeticExpression.h"
+#include "ArithmeticExpression.h"//header
 
-ArithmeticExpression::ArithmeticExpression()
+ArithmeticExpression::ArithmeticExpression()//blank constructor
 {
-    left=NULL;
-    right=NULL;
+    left=NULL;//null val
+    right=NULL;//null val
 }
 
-ArithmeticExpression::ArithmeticExpression(Expression* left, Expression* right):left(left), right (right){}
+ArithmeticExpression::ArithmeticExpression(Expression* left, Expression* right):left(left), right (right){}//assigns left and right
 
-ArithmeticExpression::ArithmeticExpression(Expression* finalExp):left(finalExp), right(NULL){}
+ArithmeticExpression::ArithmeticExpression(Expression* finalExp):left(finalExp), right(NULL){}//if equation
 
-ArithmeticExpression::~ArithmeticExpression()
+ArithmeticExpression::~ArithmeticExpression()//doesn't need to delete, children will do it for it
 {
 }
 
-ArithmeticExpression::ArithmeticExpression(const ArithmeticExpression& other)
+ArithmeticExpression::ArithmeticExpression(const ArithmeticExpression& other)//"copy" constructor
 {
     this->left = new ArithmeticExpression(other.left); // Copy the other Expression to this one
     this->right = new ArithmeticExpression(other.right); // Copy the other Expression to this one
 }
 
-ArithmeticExpression& ArithmeticExpression::operator=(const ArithmeticExpression& rhs)
+ArithmeticExpression& ArithmeticExpression::operator=(const ArithmeticExpression& rhs)//real copy constructor
 {
     if (this == &rhs) return *this; // handle self assignment
     //assignment operator
-    return *this;
+    return *this;//return this
 }
 
 /** \brief Evaluates left and right expression and combines them with the appropriate operator.
@@ -46,7 +46,7 @@ string ArithmeticExpression::evaluate()
 */
 void ArithmeticExpression::print()
 {
-    left->print();
+    left->print();//print expression
 }
 
 /** \brief Converts a string (as returned by evaluate) to a float.
@@ -60,9 +60,9 @@ float ArithmeticExpression::convert(string s) //string s is passed through this 
 }
 
 
-void ArithmeticExpression::increment()
+void ArithmeticExpression::increment()//increases digits by one
 {
-    left -> increment();
-    if (right!=NULL)right -> increment();
+    left -> increment();//tell left hand to do it
+    if (right!=NULL)right -> increment();//tell right hand to do it if it's delcared
 }
 
