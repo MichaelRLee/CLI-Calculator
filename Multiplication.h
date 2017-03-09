@@ -5,31 +5,35 @@
 * Description: Header for multiplication stuff
 */
 
-#ifndef MULTIPLICATION_H //def gaurd
-#define MULTIPLICATION_H //header def
+#ifndef MULTIPLICATION_H 
+#define MULTIPLICATION_H 
 
-#include "ArithmeticExpression.h" //child of ArithmeticExpression
+#include "ArithmeticExpression.h" 
 
 
-
-class Multiplication : public ArithmeticExpression //class deff
+/*
+* This class will inherit methods and variables from Arithmetic Expression
+*/
+class Multiplication : public ArithmeticExpression
 {
-    public: //public variables and methods
-        Multiplication(Expression* left, Expression* right); //constructor with left and right hand side parameters
+    public: //initialize public variables/methods
+        //Constructor
+        Multiplication(Expression* left, Expression* right); 
 
-        virtual ~Multiplication(); //destructor
+        //Destructor
+        virtual ~Multiplication();
 
-        Multiplication (const Multiplication& other); //copy constructor
+        Multiplication (const Multiplication& other); 
 
-        Multiplication& operator=(const Multiplication& other); //= opperator def
+        Multiplication& operator=(const Multiplication& other); 
 
-        string evaluate (); //evaluate expression (multiplies)
+        string evaluate ();
 
-        void print (); //prints expression 
-        void increment(); //increment digits by 1
+        void print ();
+        void increment(); 
 
-    protected: //no protected values
-    private: //no private values
+    protected:
+    private: 
 };
 
-#endif // MULTIPLICATION_H
+#endif 

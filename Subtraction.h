@@ -5,43 +5,35 @@
 * Description: Header for finding the difference
 */
 
-#ifndef SUBTRACTION_H //include gaurd
-#define SUBTRACTION_H //header
+#ifndef SUBTRACTION_H 
+#define SUBTRACTION_H 
 
-#include "ArithmeticExpression.h"//extends ArithmeticExpression
+#include "ArithmeticExpression.h"
 
-class Subtraction : public ArithmeticExpression//class def
+
+/*
+* This class will inherit methods and variables from Arithmetic Expression
+*/
+class Subtraction : public ArithmeticExpression
 {
-    public: //public methods and variables
-        /** Default constructor */
+    public:  //initialize public variables/methods
+        // Constructor
         Subtraction(Expression* left, Expression* right);
 
-        /** Default destructor */
+        //Destructor
         virtual ~Subtraction();
 
-        /** Copy constructor
-         *  \param other Object to copy from
-         */
         Subtraction(const Subtraction& other);
 
-        /** Assignment operator
-         *  \param other Object to assign from
-         *  \return A reference to this
-         */
         Subtraction& operator=(const Subtraction& other);
 
-        /** \brief Evaluates the expression.
-         * \return A string representation of the result.
-         */
         string evaluate();
 
-        /** \brief Prints the expression.
-         */
         void print();
-        void increment();//will increment each digit recursively
+        void increment();
 
-    protected: //no protected values
-    private: //no private values
+    protected: 
+    private: 
 };
 
-#endif // SUBTRACTION_H
+#endif 

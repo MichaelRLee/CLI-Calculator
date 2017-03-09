@@ -5,21 +5,18 @@
 * Description: This file defines the properties common to all Expressions.
 */
 
-/* Include guard */
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
 
-// C++ includes
-#include <string> // string
-#include <iostream> //cout
-#include <sstream> // Stringstream
 
-// C includes
-#include <cstdlib> // atof
-#include <cstdio> // printf
+#include <string> 
+#include <iostream> 
+#include <sstream> 
 
-using namespace std; // For the types in the standard namespace
+#include <cstdlib> 
+#include <cstdio> 
 
+using namespace std; 
 class Expression
 {
     public:
@@ -27,51 +24,32 @@ class Expression
         //Expression(ArithmeticExpression* ae); // Copies a given arithmeticExpression into this one
         Expression ();
 
-        /** \brief Copy constructor. Copies another Expression's variables into this one.
-         *
-         * \param exp THe other Expression to copy from.
-         */
+        // Copies another Expression's variables into this one.
         Expression(Expression* exp);
 
-        /** \brief Creates an Expression given a value.
-         *
-         * \param str The value to store in this Expression.
-         */
+        // Creates an Expression given a value.
         Expression (string str);
 
-        /** Destroys an Expression object. */
+        // Destroys an Expression object.
         virtual ~Expression();
 
-        /** Copy constructor
-         *  \param other Object to copy from
-         */
+        // Copy constructor
         Expression(const Expression& other);
 
-        /** Assignment operator
-         *  \param other Object to assign from
-         *  \return A reference to this
-         */
+        // Assign from other object
         Expression& operator=(const Expression& other);
 
-        /** \brief Evaluates an Expression. Made virtual to allow for polymorphic overriding.
-         *
-         * \return A string representing the result of the evaluation of this Expression.
-         *
-         */
+        // Evaluate Expression
         virtual string evaluate(); // Evaluates the expression
 
-        /** \brief Prints the Expression to the standard output recursively.
-         */
+        // Prints the Expression to the standard output recursively.
+      
         virtual void print();
 
-        /** \brief Converts a value returned by an Expression or its children to floating-point
-         *          representation.
-         * \return A floating-point representation of the evaluated value of an Expression or its
-         *          children.
-         */
+        //Converts a string (as returned by evaluate) to a float.
         float convert ();
 
-        /** \brief Increments the numbers in an Expression.
+      /* Increments the numbers in this Expression
          */
         virtual void increment();
     protected:
