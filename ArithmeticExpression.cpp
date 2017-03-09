@@ -5,12 +5,13 @@
 * Description: Stores equations
 */
 
-#include "ArithmeticExpression.h"//header
+#include "ArithmeticExpression.h"
 
-ArithmeticExpression::ArithmeticExpression()//blank constructor
+//blank constructor
+ArithmeticExpression::ArithmeticExpression()
 {
-    left=NULL;//null val
-    right=NULL;//null val
+    left=NULL;
+    right=NULL;
 }
 
 ArithmeticExpression::ArithmeticExpression(Expression* left, Expression* right):left(left), right (right){}//assigns left and right
@@ -21,48 +22,45 @@ ArithmeticExpression::~ArithmeticExpression()//doesn't need to delete, children 
 {
 }
 
-ArithmeticExpression::ArithmeticExpression(const ArithmeticExpression& other)//"copy" constructor
+//Copy constructor into left and right components
+ArithmeticExpression::ArithmeticExpression(const ArithmeticExpression& other)
 {
-    this->left = new ArithmeticExpression(other.left); // Copy the other Expression to this one
-    this->right = new ArithmeticExpression(other.right); // Copy the other Expression to this one
+    this->left = new ArithmeticExpression(other.left); // Copy the left side of other Expression to left
+    this->right = new ArithmeticExpression(other.right); // Copy the right side of other Expression to right
 }
 
-ArithmeticExpression& ArithmeticExpression::operator=(const ArithmeticExpression& rhs)//real copy constructor
+//Copy whole constructor dependent on self assignment
+ArithmeticExpression& ArithmeticExpression::operator=(const ArithmeticExpression& rhs)
 {
-    if (this == &rhs) return *this; // handle self assignment
-    //assignment operator
-    return *this;//return this
+    if (this == &rhs) return *this; // Handle self assignment
+    return *this;
 }
 
-/** \brief Evaluates left and right expression and combines them with the appropriate operator.
-* \return A string representation of the result.
+/** 
+* Evaluates left and right expression and combines them with the appropriate operator return a string of the result.
 */
 string ArithmeticExpression::evaluate()
 {
     return left->evaluate(); // Evaluate the left half of the Expression
 }
 
-/** \brief Prints the evaluated expression.
-*/
+// Prints the evaluated expression.
 void ArithmeticExpression::print()
 {
-    left->print();//print expression
+    left->print();
 }
 
-/** \brief Converts a string (as returned by evaluate) to a float.
-* \param s The string representing the value to convert to a floating-point number.
-* \return A floating-point representation of the string.
-*/
-float ArithmeticExpression::convert(string s) //string s is passed through this function
+// Converts a string (as returned by evaluate) to a float.
+float ArithmeticExpression::convert(string s) 
 {
-    float input = atof (s.c_str()); //convert the string input into a float
-    return input; //returns the string as a float.
+    float input = atof (s.c_str());
+    return input; 
 }
 
-
-void ArithmeticExpression::increment()//increases digits by one
+//Increases digits by one
+void ArithmeticExpression::increment()
 {
-    left -> increment();//tell left hand to do it
-    if (right!=NULL)right -> increment();//tell right hand to do it if it's delcared
+    left -> increment();//increase the left-hand side
+    if (right!=NULL)right -> increment();//increase the right-hand side
 }
 

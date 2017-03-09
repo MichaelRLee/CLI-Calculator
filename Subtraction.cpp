@@ -2,58 +2,62 @@
 * Name: Michael Robert Lee, Victor Carri, Shilp Pancholi
 * MacID: leemr2, carriva, panchosm
 * Student Number: 1406823, 001406904, 1419055
-* Description: Finds the difference
+* Description: This class will handle the subtraction section of BEDMASS operations.
 */
 
 #include "Subtraction.h"
 
-Subtraction::Subtraction(Expression* left, Expression* right):ArithmeticExpression(left,right){}//assigns left and right
+//This constructor will  assign values to the left and to the right of the subtraction 
+Subtraction::Subtraction(Expression* left, Expression* right):ArithmeticExpression(left,right){}
 
-Subtraction::~Subtraction()//destructor
+//Destructor will delete the left and right values
+Subtraction::~Subtraction()
 {
     delete left;
     delete right;
 }
 
-Subtraction::Subtraction(const Subtraction& other)// a default constructor
+//Assigns arithmetic expression to default constructor
+Subtraction::Subtraction(const Subtraction& other)
 {
 
 }
 
-Subtraction& Subtraction::operator=(const Subtraction& rhs)// copy constructor
+//Copies another Subtraction object's members to this one.
+Subtraction& Subtraction::operator=(const Subtraction& rhs)
 {
-    if (this == &rhs) return *this; // handle self assignment
-    //assignment operator
+    if (this == &rhs) return *this; 
     return *this;
 }
 
-/** \brief Evaluates the expression.
-* \return A string representation of the result.
+/** 
+* This method will evaluate the arithmetic expression from the left half and the right half then return the ouptut as a string
 */
 string Subtraction::evaluate()
 {
-    string lEval = left->evaluate(); // Store the evaluated left half
-    string rEval = right->evaluate(); // Store the evaluated right half
-    float lNum = this->convert(lEval); // Convert the evaluated left half to a float
-    float rNum = this->convert(rEval); // Convert the evaluated right half to a float
-    stringstream ss; // Stringstream for converted a float to a string
-    ss << lNum-rNum; // Store the difference of the 2 halves in the stringstream
-    return ss.str(); // Convert the sum to a string and return it
+    string lEval = left->evaluate(); 
+    string rEval = right->evaluate(); 
+    float lNum = this->convert(lEval);
+    float rNum = this->convert(rEval);
+    stringstream ss; 
+    ss << lNum-rNum; 
+    return ss.str();
 }
 
-/** \brief Prints the expression.
+/** This method will print the subtraction expression
 */
 void Subtraction::print()
 {
-    cout << "(";//bracket
-    left -> print();//lhs
-    cout << "-";//minus
-    right -> print();//rhs
-    cout << ")";//bracket
-    //cout << this->evaluate(); //prints evaluated expression
+    cout << "(";
+    left -> print();
+    cout << "-";
+    right -> print();
+    cout << ")";
 }
-void Subtraction::increment()//increments digits by 1
+
+//Increment values in this Addition's left or right-hand sides by 1.
+void Subtraction::increment()
 {
-    left -> increment();//tell left to do it
-    right -> increment();//tell right to do it
+    left -> increment();
+    right -> increment();
 }
